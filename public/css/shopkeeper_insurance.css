@@ -1,0 +1,244 @@
+.shopkeeper-trust-section {
+  padding: 3rem 1rem;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+.shopkeeper-trust-container {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  gap: 2rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+.shopkeeper-trust-text {
+  flex: 1 1 400px;
+  font-weight: 900;
+  font-size: 4rem;
+  line-height: 1.2;
+  color: #000;
+}
+.shopkeeper-trust-text h2{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.shopkeeper-trust-highlight {
+  color: #f0ad00;
+  font-weight: 900;
+}
+.shopkeeper-trust-image-container {
+  position: relative;
+  flex: 1 1 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shopkeeper-yellow-blob {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: #f0ad00;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+.shopkeeper-trust-image {
+  position: relative;
+  max-width: 100%;
+  height: auto;
+  z-index: 1;
+}
+@media (max-width: 767px) {
+  .shopkeeper-trust-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .shopkeeper-trust-text {
+    font-size: 2.5rem;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  .shopkeeper-yellow-blob {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Shopkeeper Info Section */
+.shopkeeper-info-section {
+  background-color: #f0ad00;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.shopkeeper-info-container {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  gap: 2rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+  color: #000;
+}
+.shopkeeper-info-image {
+  flex: 1 1 400px;
+  max-width: 100%;
+  height: auto;
+}
+.shopkeeper-info-text {
+  flex: 1 1 400px;
+  color: #000;
+}
+.shopkeeper-info-text h2 {
+  font-weight: 900;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.shopkeeper-info-text p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+@media (max-width: 767px) {
+  .shopkeeper-info-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .shopkeeper-info-text h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Shopkeeper Why Section */
+.shopkeeper-why-section {
+  padding: 3rem 1rem;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+.shopkeeper-why-container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 1rem;
+}
+.shopkeeper-why-heading {
+  font-weight: 900;
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+.shopkeeper-why-highlight {
+  color: #f0ad00;
+}
+.shopkeeper-why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.shopkeeper-why-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+.shopkeeper-why-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-top: 0.3rem;
+}
+.shopkeeper-why-highlight-box {
+  background-color: #000;
+  color: #f0ad00;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.shopkeeper-why-icon-inline {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+@media (max-width: 767px) {
+  .shopkeeper-why-heading {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  .shopkeeper-why-item {
+    font-size: 1rem;
+  }
+  .shopkeeper-why-highlight-box {
+    font-size: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  .shopkeeper-why-icon-inline {
+    margin-top: 0.5rem;
+  }
+}
+
+/* Shopkeeper Reach Section */
+.shopkeeper-reach-section {
+  padding: 3rem 1rem;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.shopkeeper-reach-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 1rem;
+}
+.shopkeeper-reach-heading {
+  font-weight: 900;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+.shopkeeper-reach-highlight {
+  color: #f0ad00;
+  font-style: italic;
+  font-weight: 900;
+}
+.shopkeeper-reach-button {
+  display: inline-block;
+  background-color: #000;
+  color: #f0ad00;
+  padding: 0.75rem 3rem;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: background-color 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+.shopkeeper-reach-button:hover {
+  background-color: #333;
+}
+.shopkeeper-reach-subtext {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #000;
+}
+@media (max-width: 767px) {
+  .shopkeeper-reach-heading {
+    font-size: 2rem;
+  }
+  .shopkeeper-reach-button {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+  }
+  .shopkeeper-reach-subtext {
+    font-size: 0.9rem;
+  }
+}

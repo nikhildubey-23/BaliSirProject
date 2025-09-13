@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workmen_trust_section.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workmen_info_section.css') }}">
+
+<section class="workmen-trust-section">
+  <div class="workmen-trust-container">
+    <div class="workmen-trust-text">
+      <h2>
+        Because behind every worker is a<br />
+        <span class="workmen-trust-highlight">Family depending on them</span>
+      </h2>
+    </div>
+    <div class="workmen-trust-image-container">
+      <div class="yellow-blob"></div>
+      <img src="{{ url_for('static', filename='image/wc1.avif') }}" alt="Workmen Compensation Trust" class="workmen-trust-image" />
+    </div>
+  </div>
+</section>
+
+<section class="workmen-info-section">
+  <div class="workmen-info-container">
+    <img src="{{ url_for('static', filename='image/wc2.avif') }}" alt="What is Workmen Compensation Insurance" class="workmen-info-image" />
+    <div class="workmen-info-text">
+      <h2>What is Workmen Compensation Insurance?</h2>
+      <p>
+        Workmen Compensation Insurance also known as Employee Compensation Insurance is designed to protect employers and support employees in case of work-related injuries, disabilities, or unfortunate loss of life during the course of employment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workmen_why_section.css') }}">
+
+<section class="workmen-why-section">
+  <h2 class="workmen-why-title">Why it Matters ?</h2>
+  <div class="workmen-why-grid">
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc3.avif') }}" alt="Medical Expenses" class="workmen-why-icon" />
+      <p class="workmen-why-text">Covers medical expenses for treatment of workplace injuries</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc4.avif') }}" alt="Financial Support" class="workmen-why-icon" />
+      <p class="workmen-why-text">Financial support for family in case of unfortunate death</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc5.avif') }}" alt="Compensation" class="workmen-why-icon" />
+      <p class="workmen-why-text">Compensation for partial/total disability</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc6.avif') }}" alt="Peace of Mind" class="workmen-why-icon" />
+      <p class="workmen-why-text">Peace of mind for both employee and employer</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wv7.avif') }}" alt="Legal Compliance" class="workmen-why-icon" />
+      <p class="workmen-why-text">Legal compliance for employers under the Workmen Compensation Act</p>
+    </div>
+  </div>
+  <div class="workmen-cta">
+  <div class="workmen-cta-text">
+      work smart, work safe.<br />
+      Stay covered with <span class="workmen-cta-highlight">Bima with Bali</span>
+    </div>
+    
+    <a href="{{ url_for('get_now') }}" class="workmen-cta-button">REACH US</a>
+    <div class="workmen-cta-subtitle">Connect with us to get insured</div> 
+  </div>
+</section>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,2 @@
+- [x] Improve typography and layout for bima-video-section
+- [x] Enhance responsiveness with better media queries

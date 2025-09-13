@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shopkeeper_insurance.css') }}">
+<section class="shopkeeper-trust-section">
+  <div class="shopkeeper-trust-container">
+    <div class="shopkeeper-trust-text">
+      <h2>
+        Your shop is your livelihood, <br />
+        <span class="shopkeeper-trust-highlight">protect it before life gives you a shock!</span>
+      </h2>
+    </div>
+    <div class="shopkeeper-trust-image-container">
+      <div class="shopkeeper-yellow-blob"></div>
+      <img src="{{ url_for('static', filename='image/si1.avif') }}" alt="Shopkeeper Insurance Trust" class="shopkeeper-trust-image" />
+    </div>
+  </div>
+</section>
+<section class="shopkeeper-info-section">
+  <div class="shopkeeper-info-container">
+    <img src="{{ url_for('static', filename='image/si2.avif') }}" alt="What is Shopkeeper Insurance" class="shopkeeper-info-image" />
+    <div class="shopkeeper-info-text">
+      <h2>What is Shopkeeper Insurance?</h2>
+      <p>
+        Shopkeeper Insurance is a comprehensive policy specially designed for small and medium-sized shop owners. It protects your shop from unexpected events like fire, theft, damage by natural calamities etc
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="shopkeeper-why-section">
+  <div class="shopkeeper-why-container">
+    <h2 class="shopkeeper-why-heading">
+      Why Every <span class="shopkeeper-why-highlight">Shop</span> Needs It?
+    </h2>
+    <div class="shopkeeper-why-grid">
+      <div class="shopkeeper-why-item">
+        <img src="{{ url_for('static', filename='image/si3.avif') }}" alt="Legal Shield" class="shopkeeper-why-icon" />
+        <p>Shields you from legal liabilities in case of customer or employee accidents inside the shop.</p>
+      </div>
+      <div class="shopkeeper-why-item">
+        <img src="{{ url_for('static', filename='image/si4.avif') }}" alt="Fire Protection" class="shopkeeper-why-icon" />
+        <p>Protects against fire, theft, and natural disasters, safeguarding your shop from unexpected losses.</p>
+      </div>
+      <div class="shopkeeper-why-item">
+        <img src="{{ url_for('static', filename='image/si5.avif') }}" alt="Business Support" class="shopkeeper-why-icon" />
+        <p>Supports you during business interruptions with compensation for lost income due to closures.</p>
+      </div>
+      <div class="shopkeeper-why-item">
+        <img src="{{ url_for('static', filename='image/si6.avif') }}" alt="Goods Coverage" class="shopkeeper-why-icon" />
+        <p>Coverage for goods, furniture and even cash in safe.</p>
+      </div>
+      <div class="shopkeeper-why-item">
+        <img src="{{ url_for('static', filename='image/si7.avif') }}" alt="Peace of Mind" class="shopkeeper-why-icon" />
+        <p>Peace of mind during uncertain times with low premium, high protection tailored for retail businesses</p>
+      </div>
+      <div class="shopkeeper-why-item shopkeeper-why-highlight-box">
+        <p>
+          Whether you run a kirana store, a boutique, a stationery shop, or a general store, this insurance acts like a protective shield for your livelihood.
+          <img src="{{ url_for('static', filename='image/si8.avif') }}" alt="Protective Shield" class="shopkeeper-why-icon-inline" />
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<hr style="color: black; margin: 2rem 0;  />
+<section class="shopkeeper-reach-section">
+  <div class="shopkeeper-reach-container">
+    <h2 class="shopkeeper-reach-heading">
+      Let <span class="shopkeeper-reach-highlight">Bima with Bali</span> help you choose the right plan, Because your <span class="shopkeeper-reach-highlight">Dukaan</span> deserves <span class="shopkeeper-reach-highlight">Suraksha</span>.
+    </h2>
+    <a href="{{ url_for('get_now') }}" class="shopkeeper-reach-button">REACH US</a>
+    <p class="shopkeeper-reach-subtext">Connect with us to get insured</p>
+  </div>
+</section>
+{% endblock %}

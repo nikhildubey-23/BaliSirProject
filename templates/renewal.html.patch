@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="renewal-heading fw-bold" style="font-size: 4rem;">
+          “Secure your tomorrow renew with <em>Bima with Bali</em> and keep peace of mind just a click away”
+        </h2>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/re1.avif') }}" alt="Renewal" class="img-fluid" />
+      </div>
+    </div>
+  </div>
+</section>
+=======
+<section class="renewal-section py-5" style="background-color: #d9a90f;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="renewal-heading fw-bold" style="font-size: 4rem;">
+          “Secure your tomorrow renew with <em>Bima with Bali</em> and keep peace of mind just a click away”
+        </h2>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/re1.png') }}" alt="Renewal" class="img-fluid" />
+      </div>
+    </div>
+
+    <form>
+      <div class="row mt-4 g-3">
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name*</label>
+          <input type="text" class="form-control" id="firstName" required>
+        </div>
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name*</label>
+          <input type="text" class="form-control" id="lastName" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email">
+        </div>
+        <div class="col-md-6">
+          <label for="phone" class="form-label">Phone*</label>
+          <input type="tel" class="form-control" id="phone" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="policyNumber" class="form-label">Policy number*</label>
+          <input type="text" class="form-control" id="policyNumber" required>
+        </div>
+        <div class="col-md-6">
+          <label for="insuranceType" class="form-label">Insurance Type*</label>
+          <select class="form-select" id="insuranceType" required>
+            <option value="" selected disabled>Select Insurance Type</option>
+            <option value="motor">Motor</option>
+            <option value="health">Health</option>
+            <option value="travel">Travel</option>
+            <option value="marine">Marine</option>
+            <option value="shopkeeper">Shopkeeper</option>
+            <option value="workmen">Workmen Compensation</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="vehicleRC" class="form-label">Vehicle RC (only for motor renewal)</label>
+          <input class="form-control" type="file" id="vehicleRC" accept="image/*,application/pdf">
+        </div>
+        <div class="col-md-6">
+          <label for="previousInsurance" class="form-label">Previous Insurance copy *</label>
+          <input class="form-control" type="file" id="previousInsurance" accept="image/*,application/pdf" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="aadharCard" class="form-label">Aadhar card *</label>
+          <input class="form-control" type="file" id="aadharCard" accept="image/*,application/pdf" required>
+        </div>
+        <div class="col-md-6">
+          <label for="pan" class="form-label">PAN *</label>
+          <input class="form-control" type="file" id="pan" accept="image/*,application/pdf" required>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-dark w-100 rounded-pill">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

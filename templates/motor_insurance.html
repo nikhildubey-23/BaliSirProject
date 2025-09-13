@@ -1,0 +1,460 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 2rem;">
+  <div class="text-section" style="order: 1; flex: 1 1 300px; max-width: 50%;">
+    <h2 style="font-weight: bold; font-size: 4rem; margin-bottom: 1rem;">
+      Your journey is important. <span style="color: #f4b41a;">Let’s make sure it’s protected.</span>
+    </h2>
+  </div>
+  <div class="image-section" style="order: 2; flex: 1 1 300px; max-width: 45%;">
+    <img src="{{ url_for('static', filename='image/yourjourneyimg.avif') }}" alt="Motor Insurance Illustration" style="width: 100%; height: auto;" />
+  </div>
+</section>
+
+<section class="drive-worry-free-section" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 3rem;">
+  <div class="image-container" style="flex: 1 1 300px; max-width: 45%;">
+    <img src="{{ url_for('static', filename='image/carimg.avif') }}" alt="Drive Worry-Free with Motor Insurance" style="width: 100%; height: auto;" />
+  </div>
+  <div class="text-container" style="flex: 1 1 300px; max-width: 50%; margin-top: 1rem;">
+    <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+      Drive Worry-Free with Motor Insurance That Cares Because It’s More Than Just a Vehicle. It’s Your Journey
+    </h2>
+    <p style="font-weight: 600;">
+      At <em>Bima with Bali</em>, we understand that your vehicle is more than just metal and wheels. It’s your daily companion, your weekend getaway partner, and sometimes even your lifeline in emergencies. That’s why our motor insurance is built not just on policies and premiums, but on people.
+    </p>
+  </div>
+</section>
+
+<style>
+@media (max-width: 768px) {
+  .image-section {
+    display: none;
+  }
+  .text-section {
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .drive-worry-free-section {
+    flex-direction: column;
+  }
+  .image-container {
+    order: 1;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .text-container {
+    order: 2;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  /* Responsive table styles */
+  .responsive-table {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .responsive-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffe680;
+  }
+  .responsive-table th, .responsive-table td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+  }
+  .responsive-table thead tr {
+    background-color: #f4b41a;
+    color: black;
+    font-weight: bold;
+  }
+  .responsive-table tbody tr:nth-child(even) {
+    background-color: #ffeb99;
+  }
+  .responsive-table tbody tr:hover {
+    background-color: #ffe066;
+  }
+  .responsive-table th[onclick] {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-section {
+    display: none;
+  }
+  .text-section {
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .drive-worry-free-section {
+    flex-direction: column;
+  }
+  .image-container {
+    order: 1;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .text-container {
+    order: 2;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  /* Responsive table styles */
+  .responsive-table {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .responsive-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffe680;
+  }
+  .responsive-table th, .responsive-table td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+  }
+  .responsive-table thead tr {
+    background-color: #f4b41a;
+    color: black;
+    font-weight: bold;
+  }
+  .responsive-table tbody tr:nth-child(even) {
+    background-color: #ffeb99;
+  }
+  .responsive-table tbody tr:hover {
+    background-color: #ffe066;
+  }
+  .responsive-table th[onclick] {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-table thead tr th:first-child,
+  .responsive-table tbody tr td:first-child {
+    display: none;
+  }
+}
+</style>
+
+<div class="responsive-table" style="margin-top: 2rem;">
+  <table style="width: 100%; border-collapse: collapse; background-color: #ffe680;">
+    <thead>
+      <tr style="background-color: #f4b41a; color: black; font-weight: bold; text-align: center;">
+        <th style="padding: 10px; cursor: pointer;" onclick="window.location.href='/commercial'"></th>
+        <th style="padding: 10px; cursor: pointer; text-align:center" onclick="window.location.href='/car'">Insurance Detail's</th>
+        <th style="padding: 10px; cursor: pointer;" onclick="window.location.href='/wheeler2'"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 10px; text-align: center;">
+          <img src="{{ url_for('static', filename='image/truckimg.avif') }}" alt="Commercial Vehicle" style="width: 150px; height: auto;"/>
+        </td>
+        <td style="padding: 10px; font-weight: bold; font-size: 1.5rem; vertical-align: middle;">
+          Commercial Vehicle Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: middle;">
+          <table style="width: 100%; border-collapse: collapse; background-color: #ffeb99;">
+            <thead>
+              <tr>
+                <th colspan="3" style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">Insurance Detail</th>
+              </tr>
+              <tr>
+                <th style="border: 1px solid black; padding: 5px; text-align: center;">First-Party</th>
+                <th style="border: 1px solid black; padding: 5px; text-align: center;">Third-Party</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 5px; border-left: 1px solid black;">New Vehicle</td>
+                <td style="border: 1px solid black; padding: 5px; text-align: center;">1 year</td>
+                <td style="border: 1px solid black; padding: 5px; text-align: center;">1 years</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid black; padding: 5px;">Old Vehicle</td>
+                <td colspan="2" style="border: 1px solid black; padding: 5px; text-align: center;">Combined insurance for 1 year</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; text-align: center;">
+          <img src="{{ url_for('static', filename='image/whitecarimg.avif') }}" alt="Private Car" style="width: 150px; height: auto;"/>
+        </td>
+        <td style="padding: 10px; font-weight: bold; font-size: 1.5rem; vertical-align: middle;">
+          Private Car Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: middle;">
+          <table style="width: 100%; border-collapse: collapse; background-color: #ffeb99;">
+            <thead>
+              <tr>
+                <th colspan="3" style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">Insurance Detail</th>
+              </tr>
+              <tr>
+                <th style="border: 1px solid black; padding: 5px; text-align: center;">First-Party</th>
+                <th style="border: 1px solid black; padding: 5px; text-align: center;">Third-Party</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid black; padding: 5px;">New Vehicle</td>
+                <td style="border: 1px solid black; padding: 5px; text-align: center;">1 year</td>
+                <td style="border: 1px solid black; padding: 5px; text-align: center;">3 years</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid black; padding: 5px;">Old Vehicle</td>
+                <td colspan="2" style="border: 1px solid black; padding: 5px; text-align: center;">Combined insurance for 1 year</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; text-align: center;">
+          <img src="{{ url_for('static', filename='image/bickimg.avif') }}" alt="Two Wheeler" style="width: 150px; height: auto;"/>
+        </td>
+        <td style="padding: 10px; font-weight: bold; font-size: 1.5rem; vertical-align: middle;">
+          Two Wheeler Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: middle;">
+          <table style="width: 100%; border-collapse: collapse; background-color: #ffeb99;">
+            <thead>
+              <tr>
+                <th colspan="3" style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">Insurance Detail</th>
+              </tr>
+              <tr>
+                <th style="border: 1px solid black; padding: 5px; text-align: center;">First-Party</th>
+                <th style="border: 1px solid black; padding: 5px; text-align: center;">Third-Party</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>New Vehicle</td>
+                <td style="border: 1px solid black; text-align: center;">1 year</td>
+                <td style="border: 1px solid black; text-align: center;">5 years</td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: 1px solid black; text-align: center;">Old Vehicle</td>
+                <td style="border: 1px solid black; text-align: center;">Combined insurance for 1 year</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<section class="what-we-cover" style="margin-top: 3rem; text-align: center;">
+  <h2 style="font-weight: bold; font-size: 2.5rem; margin-bottom: 2rem; color: black;">
+    What We Cover
+  </h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; max-width: 900px; margin: 0 auto;">
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/comprehensivimg.avif') }}" alt="Comprehensive Coverage" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Comprehensive Coverage</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Accidents, theft, fire, and natural disasters. we’ve got it all covered
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/thirdpartyimg.avif') }}" alt="Third-Party Liability" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Third-Party Liability</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Protects you against legal liabilities from damage to others
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/owndamageimg.avif') }}" alt="Own Damage" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Own Damage</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Covers damage to your vehicle due to accidents or mishaps
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/addonsimg.avif') }}" alt="Add-Ons That Matter" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Add-Ons That Matter</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Zero depreciation, engine protection, roadside assistance, and more
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="insurance-we-offer" style="margin-top: 3rem; text-align: center;">
+  <hr style="border: none; border-top: 2px solid #222222; margin-bottom: 1rem;" />
+  <h2 style="font-weight: bold; font-size: 2.5rem; margin-bottom: 2rem; color: black;">
+    Insurance We offer
+  </h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 900px; margin: 0 auto; text-align: left;">
+    <div style="flex: 1 1 250px; min-width: 250px;">
+      <h3 style="background-color: #f4b41a; color: black; font-weight: 700; padding: 0.5rem 1rem; margin-bottom: 1rem;">
+        Third Party Liability Insurance
+      </h3>
+      <ul style="margin: 0; padding-left: 1.2rem; color: black; font-weight: 500;">
+        <li>If you accidentally injure someone</li>
+        <li>If there’s damage to someone else’s property</li>
+        <li>Legal liabilities you may face</li>
+      </ul>
+    </div>
+    <div style="flex: 1 1 250px; min-width: 250px;">
+      <h3 style="background-color: #f4b41a; color: black; font-weight: 700; padding: 0.5rem 1rem; margin-bottom: 1rem;">
+        Comprehensive Insurance
+      </h3>
+      <ul style="margin: 0; padding-left: 1.2rem; color: black; font-weight: 500;">
+        <li>Fire & Theft</li>
+        <li>Natural calamities like floods or earthquakes</li>
+        <li>Personal accident cover</li>
+        <li>Vandalism</li>
+      </ul>
+    </div>
+    <div style="flex: 1 1 250px; min-width: 250px;">
+      <h3 style="background-color: #f4b41a; color: black; font-weight: 700; padding: 0.5rem 1rem; margin-bottom: 1rem;">
+        Standalone Damage Cover
+      </h3>
+      <ul style="margin: 0; padding-left: 1.2rem; color: black; font-weight: 500;">
+        <li>New car owners</li>
+        <li>Those who want flexibility in choosing different insurers for TP and OD cover</li>
+      </ul>
+    </div>
+  </div>
+  <hr style="border: none; border-top: 2px solid #222222; margin-top: 2rem;" />
+</section>
+
+<section class="our-add-on-covers" style="margin-top: 3rem; text-align: center;">
+  <h2 style="font-weight: bold; font-size: 2.5rem; margin-bottom: 2rem; color: black;">
+    Our add-on covers
+  </h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; max-width: 900px; margin: 0 auto;">
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}" alt="Zero Depreciation Cover" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Zero Depreciation Cover</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          No reduction in claims for old parts
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/engineprotectionimg.avif') }}" alt="Engine Protection" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Engine Protection</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Especially useful during floods
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/roadsideassistanceimg.avif') }}" alt="Roadside Assistance" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Roadside Assistance</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Stuck in the middle of nowhere? Helps on the way!
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/returntoinvoicecoverimg.avif') }}" alt="Return to Invoice Cover" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Return to Invoice Cover</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Get full car value in total loss
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/ncbprotectionimg.avif') }}" alt="NCB protection" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">NCB protection</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Keeps your bonus safe, even after a claim
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 300px;">
+      <img src="{{ url_for('static', filename='image/consumablecoverimg.avif') }}" alt="consumable cover" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">consumable cover</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Covers nuts, bolts, oils etc
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="buyer-customer-toggle" style="margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <div style="flex: 1 1 300px; min-width: 280px;">
+    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+      <button id="btnFirstTime" style="flex: 1; padding: 0.5rem 1rem; background-color: #f4b41a; border: 2px solid black; border-radius: 20px; font-weight: 700; cursor: pointer;">First time Buyers</button>
+      <button id="btnExisting" style="flex: 1; padding: 0.5rem 1rem; background-color: transparent; border: 2px solid black; border-radius: 20px; font-weight: 700; cursor: pointer;">Existing Customers</button>
+    </div>
+    <div id="contentBox" style="background-color: #222222; color: #f4b41a; border-radius: 15px; padding: 1.5rem; min-height: 140px; font-weight: 500;">
+      <h3 style="font-weight: 700; margin-top: 0; margin-bottom: 0.5rem;">First-Time Buyer? We’ve got you.</h3>
+      <p style="margin: 0;">
+        Buying insurance can feel overwhelming, especially if it’s your first time. Our team will walk you through every step, explain the terms in simple language, and help you choose what’s right, not just what’s popular.
+      </p>
+    </div>
+  </div>
+  <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <img src="{{ url_for('static', filename='image/carsecurefileimg.avif') }}" alt="Insurance Illustration" style="width: 100%; height: auto; max-width: 350px;" />
+  </div>
+</section>
+
+<script>
+  const btnFirstTime = document.getElementById('btnFirstTime');
+  const btnExisting = document.getElementById('btnExisting');
+  const contentBox = document.getElementById('contentBox');
+
+  btnFirstTime.addEventListener('click', () => {
+    btnFirstTime.style.backgroundColor = '#f4b41a';
+    btnExisting.style.backgroundColor = 'transparent';
+    contentBox.innerHTML = `
+      <h3 style="font-weight: 700; margin-top: 0; margin-bottom: 0.5rem; color: #f4b41a;">First-Time Buyer? We’ve got you.</h3>
+      <p style="margin: 0; color: white;">
+        Buying insurance can feel overwhelming, especially if it’s your first time. Our team will walk you through every step, explain the terms in simple language, and help you choose what’s right, not just what’s popular.
+      </p>
+    `;
+  });
+
+  btnExisting.addEventListener('click', () => {
+    btnExisting.style.backgroundColor = '#f4b41a';
+    btnFirstTime.style.backgroundColor = 'transparent';
+    contentBox.innerHTML = `
+      <h3 style="font-weight: 700; margin-top: 0; margin-bottom: 0.5rem; color: #f4b41a;">Already Insured Elsewhere? Let’s make the switch easy.</h3>
+      <p style="margin: 0; color: white;">
+        We’ll help you transfer your existing policy, ensure continuous coverage, and maybe even offer better benefits all with zero paperwork stress.
+      </p>
+    `;
+  });
+</script>
+
+<section class="drive-smart-section" style="margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto; border-top: 1px dotted #222222; padding-top: 1.5rem;">
+  <div style="flex: 1 1 400px; min-width: 280px; font-size: 1.5rem; font-weight: 600; color: black;">
+    Drive <span style="color: #f4b41a; font-weight: 700;">smart</span>, Stay <span style="color: #f4b41a; font-weight: 700;">safe</span>, Get <span style="color: #f4b41a; font-weight: 700;">insured</span> with <em style="font-weight: 700; font-style: normal; color: #f4b41a;">Bima with Bali</em> – Because protection on the road starts with the right policy.
+  </div>
+  <div style="flex: 1 1 200px; min-width: 200px; text-align: center;">
+    <a href="{{ url_for('get_now') }}" style="display: inline-block; background-color: black; color: #f4b41a; font-weight: 700; padding: 0.75rem 2rem; border-radius: 25px; text-decoration: none; cursor: pointer;">
+      REACH US
+    </a>
+    <div style="margin-top: 0.5rem; font-weight: 600; color: black;">
+      Connect with us to get insured
+    </div>
+  </div>
+</section>
+
+{% endblock %}

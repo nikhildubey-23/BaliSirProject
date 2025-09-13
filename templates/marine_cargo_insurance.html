@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/marine_trust_section.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/marine_insurance_info_section.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coverage_offer_section.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/why_need_section.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/marine_coverage_section.css') }}">
+<section class="marine-trust-section">
+  <div class="marine-trust-container">
+    <div class="marine-trust-text">
+      <h2 class="marine-trust-text-large">
+        Because every shipment<br />
+        carries more than just cargo<br />
+        <span class="marine-trust-highlight">It carries trust</span>
+      </h2>
+    </div>
+    <div class="marine-trust-image-container">
+      <div class="yellow-blob"></div>
+      <img src="{{ url_for('static', filename='image/mrimg.avif') }}" alt="Marine Cargo Trust" class="marine-trust-image" />
+    </div>
+  </div>
+</section>
+
+<section class="marine-insurance-info-section">
+  <div class="marine-insurance-info-yellow-box">
+    <div class="marine-insurance-info-container">
+      <div class="marine-insurance-info-image-container">
+        <img src="{{ url_for('static', filename='image/mrtruckimg.avif') }}" alt="Marine Cargo Insurance" class="marine-insurance-info-image" />
+      </div>
+      <div class="marine-insurance-info-text white-text">
+        <h2>What is Marine Cargo Insurance?</h2>
+        <p>
+          This insurance protects your cargo from the moment it leaves your warehouse to the moment it reaches its destination. Whether you're importing machinery, exporting textiles, or sending essential supplies, we’ve got your back, every nautical mile of the way.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="why-need-section">
+  <h2 class="why-need-title">Why Do You Need It?</h2>
+  <div class="why-need-grid">
+    <div class="why-need-item">
+      <div class="why-need-item-content">
+        <img src="{{ url_for('static', filename='image/pro.avif') }}" alt="Protection Against Loss or Damage" class="why-need-icon" />
+        <div class="why-need-text">
+          <h3>Protection Against Loss or Damage</h3>
+          <p>Goods in transit are exposed to various risks: storms, accidents, theft, fire, or even mishandling. Marine cargo insurance covers financial losses in case your cargo is lost or damaged during shipment.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-need-item">
+      <div class="why-need-item-content">
+        <img src="{{ url_for('static', filename='image/leg.avif') }}" alt="Legal and Contractual Requirements" class="why-need-icon" />
+        <div class="why-need-text">
+          <h3>Legal and Contractual Requirements</h3>
+          <p>Sometimes, the buyer or the seller is contractually required (Incoterms like CIF or CIP) to provide insurance. Carriers’ liability is limited, so having your own insurance ensures broader protection.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-need-item">
+      <div class="why-need-item-content">
+        <img src="{{ url_for('static', filename='image/pe.avif') }}" alt="Peace of Mind for Businesses" class="why-need-icon" />
+        <div class="why-need-text">
+          <h3>Peace of Mind for Businesses</h3>
+          <p>Businesses can ship goods without constantly worrying about potential disasters. It provides a safety net, so companies can focus on operations rather than uncertainties.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-need-item">
+      <div class="why-need-item-content">
+        <img src="{{ url_for('static', filename='image/nat.avif') }}" alt="Natural Disasters and Piracy" class="why-need-icon" />
+        <div class="why-need-text">
+          <h3>Natural Disasters and Piracy</h3>
+          <p>Risks like cyclones, tsunamis, and piracy are unpredictable but real. Marine cargo insurance helps recover losses due to such events.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-need-item">
+      <div class="why-need-item-content">
+        <img src="{{ url_for('static', filename='image/gio.avif') }}" alt="Global Trade Confidence" class="why-need-icon" />
+        <div class="why-need-text">
+          <h3>Global Trade Confidence</h3>
+          <p>International trade involves multiple touchpoints—each increasing risk. Marine cargo insurance builds trust among trading partners, making international business smoother.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-need-item">
+      <div class="why-need-item-content">
+        <img src="{{ url_for('static', filename='image/cov.avif') }}" alt="Covers Gaps Not Handled by Carrier Liability" class="why-need-icon" />
+        <div class="why-need-text">
+          <h3>Covers Gaps Not Handled by Carrier Liability</h3>
+          <p>Shipping lines, freight forwarders, and transporters have limited liability. Insurance ensures full compensation beyond what the carrier may cover.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="coverage-offer-section">
+  <div class="coverage-offer-container">
+    <div class="coverage-offer-left">
+      <ul class="coverage-list black-bullets">
+        <li>Damage due to Storms, rough seas, and natural disasters.</li>
+        <li>Fire, explosion, or accidents during transit.</li>
+        <li>Handling damages. (loading/unloading)</li>
+        <li>Import & export shipments.</li>
+        <li>Inland transit.</li>
+        <li>Multi-modal transportation.</li>
+        <li>Theft or pilferage.</li>
+      </ul>
+    </div>
+    <div class="coverage-offer-right">
+      <h2>Who Is It For?</h2>
+      <ul class="coverage-list white-bullets">
+        <li>Exporters & Importers</li>
+        <li>Manufacturers & Traders</li>
+        <li>Logistics Companies</li>
+        <li>E-commerce Businesses</li>
+        <li>Anyone sending valuable goods across distances</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="marine-coverage-section">
+  <div class="marine-coverage-container">
+    <div class="marine-coverage-text">
+      <h2>
+        With marine cargo insurance, you’re covered <span class="highlight">Financially and Emotionally.</span>
+      </h2>
+    </div>
+    <div class="marine-coverage-action">
+      <a href="{{ url_for('get_now') }}" class="btn-reachout">REACH US</a>
+      <p class="reachout-subtitle">Connect with us to get insured</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/fire_burglary_section.css') }}">
+<section class="fire-burglary-protect-section">
+  <div class="fire-burglary-container">
+    <div class="fire-burglary-text">
+      <h2>
+        Protecting more<br />
+        than just walls<br />
+        <span class="highlight">we’re protecting your peace of mind</span>
+      </h2>
+    </div>
+    <div class="fire-burglary-image-container">
+      <div class="yellow-blob"></div>
+      <img src="{{ url_for('static', filename='image/fbi1img.avif') }}" alt="Fire Burglary Protection" class="fire-burglary-image" />
+    </div>
+  </div>
+</section>
+
+<section class="fire-burglary-info-section">
+  <div class="fire-burglary-info-container">
+    <div class="fire-burglary-info-image-container">
+      <img src="{{ url_for('static', filename='image/fbiimg2.avif') }}" alt="Fire & Burglary Insurance" class="fire-burglary-info-image" />
+    </div>
+    <div class="fire-burglary-info-text">
+      <h3>What is Fire & Burglary Insurance?</h3>
+      <p>
+        Life is full of surprises, Not all of them pleasant. Imagine waking up one day to find your shop, office, or home damaged by fire, or worse, looted. The emotional and financial blow can be overwhelming. That’s where Fire & Burglary Insurance steps in — like a friend who’s got your back when things go wrong.
+      </p>
+    </div>
+  </div>
+</section>
+<section class="fire-burglary-why-need-section">
+  <div class="fire-burglary-why-need-container">
+    <h3>Why Do You Need It?</h3>
+    <div class="fire-burglary-why-need-grid">
+      <div class="fire-burglary-why-need-item">
+        <img src="{{ url_for('static', filename='image/fbiimg3.avif') }}" alt="Recover Losses" />
+        <p><strong>Recover losses from damage caused by fire, lightning, explosions, etc.</strong></p>
+      </div>
+      <div class="fire-burglary-why-need-item">
+        <img src="{{ url_for('static', filename='image/fbiimg4.avif') }}" alt="Compensate for Stolen Goods" />
+        <p><strong>Compensate for stolen goods in the event of a break-in or theft.</strong></p>
+      </div>
+      <div class="fire-burglary-why-need-item">
+        <img src="{{ url_for('static', filename='image/fbiimg5.avif') }}" alt="Cover Repair Costs" />
+        <p><strong>Cover repair or reconstruction costs for damaged property</strong></p>
+      </div>
+      <div class="fire-burglary-why-need-item">
+        <img src="{{ url_for('static', filename='image/fbiimg6.avif') }}" alt="Minimize Business Interruption" />
+        <p><strong>Minimize business interruption and personal stress.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="fire-burglary-coverage-section">
+  <div class="fire-burglary-coverage-container">
+    <h3>Coverage we offer</h3>
+    <div class="fire-burglary-coverage-grid">
+      <div class="fire-burglary-coverage-item">
+        <h4>Fire Insurance</h4>
+        <ul>
+          <li>Riot, Strike, Malicious Damage</li>
+          <li>Natural calamities (like storms, floods, etc.)</li>
+          <li>Accidental damage due to fire or heat.</li>
+          <li>Fire accident</li>
+          <li>Lightning strike</li>
+          <li>Explosion/Implosion</li>
+        </ul>
+      </div>
+      <div class="fire-burglary-coverage-item">
+        <h4>Burglary Insurance</h4>
+        <ul>
+          <li>Theft by forceful entry</li>
+          <li>Loss or damage to contents due to break-in</li>
+          <li>Coverage for business stock, equipment, furniture, etc.</li>
+          <li>Optional: Coverage during transit or for cash stored securely</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="fire-burglary-last-section">
+  <div class="fire-burglary-last-container">
+    <div class="fire-burglary-last-text">
+      <h2>
+        At <em class="highlight">Bima with Bali</em> we don’t just talk insurance, we live the stories with you.
+      </h2>
+    </div>
+    <div class="fire-burglary-last-action">
+      <a href="{{ url_for('get_now') }}" class="reach-button">REACH US</a>
+      <p>Connect with us to get insured</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

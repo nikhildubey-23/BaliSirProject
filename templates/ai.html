@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}AI Chatbot - Bima With Bali Insurance{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #ffffff, #fffacd);
+    font-family: 'Arial', sans-serif;
+  }
+  .chat-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: linear-gradient(145deg, #ffffff, #f0f8ff);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 30px rgba(255, 215, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    border: 2px solid #ffd700;
+    position: relative;
+    overflow: hidden;
+  }
+  .chat-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffd700, #ffff00, #ffd700);
+    animation: glow 2s infinite;
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .chat-header {
+    background: linear-gradient(90deg, #ffd700, #ffff00);
+    padding: 20px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    text-shadow: 0 0 10px #ffffff;
+    font-size: 18px;
+  }
+  .chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000000;
+    font-size: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #ffd700 #f0f8ff;
+  }
+  .chat-messages::-webkit-scrollbar {
+    width: 8px;
+  }
+  .chat-messages::-webkit-scrollbar-track {
+    background: #f0f8ff;
+  }
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: #ffd700;
+    border-radius: 4px;
+  }
+  .chat-message {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chat-message.bot {
+    text-align: left;
+    background: linear-gradient(135deg, #ffffe0, #fffacd);
+    color: #000000;
+    align-self: flex-start;
+    max-width: 70%;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    border: 1px solid #ffd700;
+  }
+  .chat-message.user {
+    text-align: right;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #000000;
+    align-self: flex-end;
+    max-width: 70%;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    border: 1px solid #ffff00;
+  }
+  .chat-input-container {
+    display: flex;
+    border-top: 2px solid #ffd700;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+  }
+  #chat-input {
+    flex: 1;
+    border: 2px solid #ffd700;
+    border-radius: 25px;
+    padding: 12px 20px;
+    font-size: 16px;
+    outline: none;
+    background: #ffffff;
+    color: #000000;
+    font-family: 'Arial', sans-serif;
+  }
+  #chat-input::placeholder {
+    color: #666666;
+  }
+  #chat-send-btn {
+    background: linear-gradient(45deg, #ffd700, #ffff00);
+    border: 2px solid #ffff00;
+    padding: 12px 25px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000000;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    font-weight: bold;
+  }
+  #chat-send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+</style>
+
+<div class="chat-container">
+  <div class="chat-header">AI Chatbot</div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-message bot">Welcome to our AI chatbot! Ask me anything about insurance.</div>
+  </div>
+  <div class="chat-input-container">
+    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" />
+    <button id="chat-send-btn">&#9658;</button>
+  </div>
+</div>
+
+<script>
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSendBtn = document.getElementById('chat-send-btn');
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('chat-message', sender);
+    msgDiv.textContent = text;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  chatSendBtn.addEventListener('click', () => {
+    const userText = chatInput.value.trim();
+    if (!userText) return;
+    appendMessage(userText, 'user');
+    chatInput.value = '';
+
+    // Send message to backend API
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: userText }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      appendMessage(data.response, 'bot');
+    })
+    .catch(error => {
+      appendMessage('Error: ' + error.message, 'bot');
+    });
+  });
+
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      chatSendBtn.click();
+    }
+  });
+</script>
+{% endblock %}

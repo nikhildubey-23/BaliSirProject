@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="secure-journey-section" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 3rem;">
+  <div class="text-section" style="order: 1; flex: 1 1 300px; max-width: 50%; font-weight: 700; font-size: 4rem; color: black;">
+    Secure every journey with us and explore <span style="color: #f4b41a;">hassle free</span>
+  </div>
+  <div class="image-section" style="order: 2; flex: 1 1 300px; max-width: 45%;">
+    <img src="{{ url_for('static', filename='image/travimg.avif') }}" alt="Travel Insurance Illustration" style="width: 100%; height: auto;" />
+  </div>
+</section>
+
+<section class="what-is-travel-insurance" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 3rem; background-color: #f4b41a; padding: 1.5rem; border-radius: 8px; color: black; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <div class="image-section" style="flex: 1 1 300px; max-width: 45%; min-width: 280px;">
+    <img src="{{ url_for('static', filename='image/trav2img.avif') }}" alt="What is Travel Insurance" style="width: 100%; height: auto; border-radius: 8px;" />
+  </div>
+  <div class="text-section" style="flex: 1 1 300px; max-width: 50%; min-width: 280px; padding-left: 1rem;">
+    <h2 style="font-weight: bold; font-size: 2rem; margin-bottom: 1rem;">
+      What is Travel Insurance?
+    </h2>
+<p style="font-weight: 600; font-size: 1.1rem; line-height: 1.5;">
+      Travel insurance is a type of coverage that protects you from unexpected risks while traveling, whether it's a medical emergency abroad, a lost passport, delayed flights, or trip cancellations. It ensures that your finances, health, and belongings are taken care of while you're away from home, letting you focus on what really matters ‘enjoying your journey’.
+    </p>
+  </div>
+</section>
+
+<section class="why-travel-insurance-important" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; text-align: center;">
+  <h2 style="font-weight: bold; font-size: 2.5rem; margin-bottom: 2rem; color: black; text-align: left;">
+    Why is <span style="color: #f4b41a;">Travel Insurance</span> Important?
+  </h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem;">
+    <div style="display: flex; align-items: center; flex: 1 1 250px; min-width: 250px; text-align: left;">
+      <img src="{{ url_for('static', filename='image/covimg.avif') }}" alt="Medical emergencies coverage" style="width: 40px; height: 40px; margin-right: 1rem;" />
+<p style="margin: 0; font-weight: 600; font-size: 1.1rem;">
+        Covers medical emergencies and hospital bills abroad
+      </p>
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 250px; min-width: 250px; text-align: left;">
+      <img src="{{ url_for('static', filename='image/comimg.avif') }}" alt="Flight delays compensation" style="width: 40px; height: 40px; margin-right: 1rem;" />
+<p style="margin: 0; font-weight: 600; font-size: 1.1rem;">
+        Compensates for flight delays, cancellations or missed connections
+      </p>
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 250px; min-width: 250px; text-align: left;">
+      <img src="{{ url_for('static', filename='image/incimg.avif') }}" alt="COVID-19 coverage" style="width: 40px; height: 40px; margin-right: 1rem;" />
+<p style="margin: 0; font-weight: 600; font-size: 1.1rem;">
+        Includes COVID-19 related expenses and quarantines
+      </p>
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 250px; min-width: 250px; text-align: left;">
+      <img src="{{ url_for('static', filename='image/proimg.avif') }}" alt="Lost or delayed baggage protection" style="width: 40px; height: 40px; margin-right: 1rem;" />
+<p style="margin: 0; font-weight: 600; font-size: 1.1rem;">
+        Protects against lost or delayed baggage
+      </p>
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 250px; min-width: 250px; text-align: left;">
+      <img src="{{ url_for('static', filename='image/helimg.avif') }}" alt="Non-refundable trip costs" style="width: 40px; height: 40px; margin-right: 1rem;" />
+<p style="margin: 0; font-weight: 600; font-size: 1.1rem;">
+        Helps recover non-refundable costs of a canceled trip
+      </p>
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 250px; min-width: 250px; text-align: left;">
+      <img src="{{ url_for('static', filename='image/assimg.avif') }}" alt="Lost passport assistance" style="width: 40px; height: 40px; margin-right: 1rem;" />
+<p style="margin: 0; font-weight: 600; font-size: 1.1rem;">
+        Assists in case of lost passport or documents
+      </p>
+    </div>
+  </div>
+</section>
+<section class="coverage-we-offer" style="margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; text-align: center;">
+  <h2 style="font-weight: bold; font-size: 2.5rem; margin-bottom: 1rem; color: black;">
+    Coverage we offer
+  </h2>
+  <div style="background-color: #f4b41a; padding: 1rem 2rem; border-radius: 6px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; color: black; font-weight: 600; font-size: 1.1rem;">
+    <ul style="flex: 1 1 30%; min-width: 200px; list-style-position: inside; padding-left: 0; margin: 0;">
+      <li>Emergency evacuation or repatriation</li>
+      <li>Passport loss & documentation assistance</li>
+    </ul>
+    <ul style="flex: 1 1 30%; min-width: 200px; list-style-position: inside; padding-left: 0; margin: 0;">
+      <li>Medical emergencies & hospitalization</li>
+      <li>Trip cancellation or interruption</li>
+    </ul>
+    <ul style="flex: 1 1 30%; min-width: 200px; list-style-position: inside; padding-left: 0; margin: 0;">
+      <li>Delayed or lost baggage</li>
+      <li>COVID-19 treatment and quarantine expenses</li>
+    </ul>
+  </div>
+</section>
+<section class="who-should-have-this" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; text-align: center;">
+  <h2 style="font-weight: bold; font-size: 2.5rem; margin-bottom: 2rem; color: black; text-align: left;">
+    Who should have this ?
+  </h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem;">
+    <div style="display: flex; align-items: center; flex: 1 1 40%; min-width: 300px; text-align: left; color: #f4b41a; font-weight: 700; font-size: 1.1rem;">
+      <img src="{{ url_for('static', filename='image/intimg.avif') }}" alt="International and domestic travelers" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      International and domestic travelers
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 40%; min-width: 300px; text-align: left; color: #f4b41a; font-weight: 700; font-size: 1.1rem;">
+      <img src="{{ url_for('static', filename='image/freimg.avif') }}" alt="Frequent flyers and business travelers" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      Frequent flyers and business travelers
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 40%; min-width: 300px; text-align: left; color: #f4b41a; font-weight: 700; font-size: 1.1rem;">
+      <img src="{{ url_for('static', filename='image/solimg.avif') }}" alt="Solo backpackers, couples, and families" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      Solo backpackers, couples, and families
+    </div>
+    <div style="display: flex; align-items: center; flex: 1 1 40%; min-width: 300px; text-align: left; color: #f4b41a; font-weight: 700; font-size: 1.1rem;">
+      <img src="{{ url_for('static', filename='image/stuimg.avif') }}" alt="Students studying abroad" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      Students studying abroad
+    </div>
+  </div>
+</section>
+<section class="travel-smart-safe" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <div class="text-section" style="flex: 1 1 300px; max-width: 60%; font-weight: 700; font-size: 2rem; color: black;">
+    Travel Smart. Travel Safe. Travel Insured With <span style="font-style: italic; color: #f4b41a;">Bima with Bali</span>
+  </div>
+  <div class="button-section" style="flex: 1 1 200px; max-width: 35%; text-align: center;">
+    <a href="{{ url_for('get_now') }}" style="display: inline-block; background-color: black; color: #f4b41a; padding: 0.75rem 2rem; border-radius: 25px; font-weight: 700; text-decoration: none; letter-spacing: 1px;">
+      REACH US
+    </a>
+    <p style="margin-top: 0.5rem; font-weight: 700; color: black;">
+      Connect with us to get insured
+    </p>
+  </div>
+</section>
+{% endblock %}

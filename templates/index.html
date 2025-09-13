@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+<div class="container-fluid hero-section px-0">
+  <div class="row align-items-center mx-0">
+    <div class="col-12 position-relative d-flex justify-content-center px-0">
+      <div class="yellow-circle"></div>
+      <a href="{{ url_for('get_now') }}" style="width: 100%; position: relative;">
+        <img src="{{ url_for('static', filename='image/herosectionimage.avif') }}" alt="Family" class="hero-family-img" />
+        <div class="mobile-hero-content">
+          <h2>🛡️ Secure Your Family's Future</h2>
+          <p>✨ Get comprehensive insurance coverage today</p>
+          <span class="btn">🚀 Get Started</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Why Choose Us Section -->
+<div class="container-fluid why-choose-section">
+  <div class="row align-items-center">
+    <div class="col-md-5 text-center">
+      <img src="{{ url_for('static', filename='image/boy-image.avif') }}" alt="Why Choose Us" class="why-choose-img" />
+    </div>
+    <div class="col-md-7">
+      <h2 id="typing-text"></h2>
+      <div class="row">
+        <div class="col-6 feature-item">
+          <img src="{{ url_for('static', filename='image/clock-image.avif') }}" alt="Quick Claims" />
+          <h5>Quick Claims, No Confusion</h5>
+          <p>We don’t just settle claims– we solve problem. Fast fair and fuss-free</p>
+        </div>
+        <div class="col-6 feature-item">
+          <img src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}" alt="Transparent Pricing" />
+          <h5>Transparent Pricing</h5>
+          <p>No hidden fees. No fine print tricks. Just honest protection at fair prices.</p>
+        </div>
+        <div class="col-6 feature-item">
+          <img src="{{ url_for('static', filename='image/honestadvice.avif') }}" alt="Honest Advice" />
+          <h5>Honest Advice</h5>
+          <p>No more confusing . No pushing unnecessary policies. Just clear, honest guidance with your best interest at heart.</p>
+        </div>
+        <div class="col-6 feature-item">
+          <img src="{{ url_for('static', filename='image/realpeoplerealimage.avif') }}" alt="Real Support" />
+          <h5>Real People, Real Support</h5>
+          <p>When you call us, You won’t talk to bots–you’ll speak to trained professionals who understand both insurance and empathy.</p>
+        </div>
+        <div class="col-6 feature-item">
+          <img src="{{ url_for('static', filename='image/digitalconvinence.avif') }}" alt="Digital Convience" />
+          <h5>Digital convinence</h5>
+          <p>Get insured online in minutes, with help just a phone call away.</p>
+        </div>
+        <div class="col-6 feature-item">
+          <img src="{{ url_for('static', filename='image/freedomtochoose.avif') }}" alt="Freedom to Choose" />
+          <h5>Freedom to Choose</h5>
+          <p>We partner with multiple trusted insurers so you get the freedom to compare, customize, and choose what fits your life, not the other way around.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/typing.js') }}"></script>
+
+<div class="container-fluid services-section">
+  <h2><span class="typing-service">Our Services</span></h2>
+  <div class="service-item">
+    <img src="{{ url_for('static', filename='image/buynewpolicy.avif') }}" alt="Buy new policy" />
+    <h4><u>Buy new policy</u></h4>
+    <p>Buying insurance doesn’t have to be boring. Let’s simplify your policy purchase with expert tips and zero jargon.</p>
+  </div>
+  <div class="service-item">
+    <img src="{{ url_for('static', filename='image/renewpolicy.avif') }}" alt="Renew policy" />
+    <h4><u>Renew policy</u></h4>
+    <p>No queues. No chaos. Just quick renewals. Trust us to keep your policy active with zero hassle.</p>
+  </div>
+  <div class="service-item">
+    <img src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}" alt="Underwriting & claim" />
+    <h4><u>Underwriting & claim</u></h4>
+    <p>Underwriting and claims made simple. Get clear insights, quick support, and no complicated terms. Just the coverage you need, stress-free.</p>
+  </div>
+</div>
+
+<div class="container-fluid fast-claims-section text-center my-5">
+  <h3>Fast claims. Firm support. Always protected.</h3>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-2 col-6 fast-claim-box bg-warning text-dark p-4 m-2 rounded animate-fade-in">
+      <h5><u>Motor</u></h5>
+      <p>One crash can cost you lakhs,<br>Drive stress-free with coverage that saves your wallet!</p>
+    </div>
+    <div class="col-md-2 col-6 fast-claim-box bg-primary text-white p-4 m-2 rounded animate-fade-in delay-1">
+      <h5><u>Health</u></h5>
+      <p>Hospital bills can drain you,<br>Secure your health & wealth in one simple step!</p>
+    </div>
+    <div class="col-md-2 col-6 fast-claim-box bg-orange text-dark p-4 m-2 rounded animate-fade-in delay-2">
+      <h5><u>Fire & Bruglary</u></h5>
+      <p>Protect your home & shop from fire and theft before it’s too late, Don’t risk it!</p>
+    </div>
+    <div class="col-md-2 col-6 fast-claim-box bg-success text-dark p-4 m-2 rounded animate-fade-in delay-3">
+      <h5><u>Travel</u></h5>
+      <p>Flight delayed? Luggage lost?<br>Get paid instead of panicking, Insure your next trip now!</p>
+    </div>
+  </div>
+</div>
+
+<!-- New Section: The faith that Fuels us -->
+<div class="faith-section">
+  <div class="faith-text">
+    The faith that <span class="faith-highlight">Fuels us</span>
+  </div>
+  <div class="faith-stats">
+    <div class="number">50,000+</div>
+    <div class="text-bold">Happy customers</div>
+    <div class="text-small">and still counting..</div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 1rem;">
+  <img src="{{ url_for('static', filename='image/publiclogo.avif') }}" alt="Faith Image" style="max-width: 300%; height: auto; display: inline-block;" />
+</div>
+<br>
+
+</div>
+
+<div class="container-fluid partners-section my-5">
+  <h2 class="text-center fw-bold mb-4" style="font-size:3em;">Our Service Partners</h2>
+  <div class="row justify-content-center partners-logos">
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/unitedindia.avif') }}" alt="United India" class="partner-logo" />
+    </div>
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/tataagi.avif') }}" alt="Tata AIG" class="partner-logo" />
+    </div>
+
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/blueroundlogo.avif') }}" alt="Oriental Insurance" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/bajajlogo.avif') }}" alt="Bajaj Allianz" class="partner-logo" />
+    </div>
+
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/hdfclogo.avif') }}" alt="HDFC ERGO" class="partner-logo" />
+    </div>
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/libartylogo.avif') }}" alt="Liberty Insurance" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/magmalogo.avif') }}" alt="Magma HDI" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/icicilogo.avif') }}" alt="ICICI Lombard" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/iffcologo.avif') }}" alt="IFFCO Tokio" class="partner-logo" />
+    </div>
+
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/relincelogo.avif') }}" alt="Reliance General Insurance" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}" alt="Royal Sundaram" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/univercellogo.avif') }}" alt="Universal Sompo" class="partner-logo" />
+    </div>
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
+      <img src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}" alt="SBI General Insurance" class="partner-logo" />
+    </div>
+  </div>
+  <p class="text-center fw-bold mt-3"> Different Brokers</p>
+</div>
+
+<div class="container-fluid connect-section my-5">
+  <div class="row align-items-center">
+    <h2 class="fw-bold mb-4" style="text-align:center;font-size:3rem;">Connect With Us</h2>
+    <div class="col-md-6 text-center mb-4 mb-md-0">
+      <img src="{{ url_for('static', filename='image/contactwithusimage.avif') }}" alt="Connect With Us" class="img-fluid" style="height: 700px; border-radius: 10px;" />
+    </div>
+    <div class="col-md-6">
+      
+      <form class="connect-form" method="post" action="/contact">
+        <div class="row mb-3">
+          <div class="col-6">
+            <label for="firstName" class="form-label">First Name*</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required />
+          </div>
+          <div class="col-6">
+            <label for="lastName" class="form-label">Last Name*</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <label for="phone" class="form-label">Phone*</label>
+            <input type="tel" class="form-control" id="phone" name="phone" required />
+          </div>
+          <div class="col-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" />
+          </div>
+        </div>
+        <fieldset class="mb-3">
+          <legend class="col-form-label pt-0">I Want To*</legend>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="wantTo" id="buyPolicy" value="Buy policy" required />
+            <label class="form-check-label" for="buyPolicy">Buy policy</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="wantTo" id="renewPolicy" value="Renew Policy" />
+            <label class="form-check-label" for="renewPolicy">Renew Policy</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="wantTo" id="underwriteClaim" value="Underwrite Claim" />
+            <label class="form-check-label" for="underwriteClaim">Underwrite Claim</label>
+          </div>
+        </fieldset>
+        <div class="mb-3">
+          <label for="insuranceType" class="form-label">Insurance Type*</label>
+          <select class="form-select" id="insuranceType" name="insuranceType" required>
+            <option value="" disabled selected>Select Insurance Type</option>
+            <option value="Health">Health</option>
+            <option value="Motor">Motor</option>
+            <option value="Travel">Travel</option>
+            <option value="Fire & Burglary">Fire & Burglary</option>
+            <option value="Marine & cargo Insurance">Marine & cargo Insurance</option>
+            <option value="Workmen Compensation">Workmen Compensation</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-submit w-100">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonial Section -->
+<div class="container-fluid testimonial-section" style="background-color: #f0ad00; color: #000; padding: 3rem 1rem; text-align: center; font-family: 'Arial', sans-serif; position: relative; min-height: 130%;">
+  <h2 style="font-weight: 900; font-size: 5rem; margin-bottom: 1rem;">What our customers say</h2>
+  <div id="testimonial-name" style="font-weight: 700; color: #7a0000; font-size: 2.5rem; margin-bottom: 0.5rem; transition: opacity 0.5s ease;">Naveen Chandrakar</div>
+  <div id="testimonial-text" style="font-size: 2.2rem; max-width: 600px; margin: 0 auto 1.5rem auto; transition: opacity 0.5s ease;">
+    text 1
+  </div>
+  <div id="arrow-left" style="position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); font-size: 2rem; cursor: pointer; user-select: none; color: #000;">&#8592;</div>
+  <div id="arrow-right" style="position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); font-size: 2rem; cursor: pointer; user-select: none; color: #000;">&#8594;</div>
+  <div id="dots" style="display: flex; justify-content: center; gap: 0.5rem;">
+    <div class="dot active" data-index="0" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+    <div class="dot" data-index="1" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+    <div class="dot" data-index="2" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+    <div class="dot" data-index="3" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid faq-section my-5">
+  <h2 class="text-center mb-4" style="font-size: 3rem; font-weight: 700;">Frequently asked questions</h2>
+  <div class="faq-item">
+    <div class="faq-question" tabindex="0">
+      What is the policy period in general insurance?
+      <span class="faq-arrow">&#x25BC;</span>
+    </div>
+    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+      Usually 1 year, but multi-year options are available in motor and health insurance.
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" tabindex="0">
+      Does general insurance offer tax benefits?
+      <span class="faq-arrow">&#x25BC;</span>
+    </div>
+    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+      Yes, health insurance premiums are tax-deductible under Section 80D.
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" tabindex="0">
+      How is premium decided?
+      <span class="faq-arrow">&#x25BC;</span>
+    </div>
+    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+      Depends on age, sum insured, policy type, coverage, and risk factors.
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" tabindex="0">
+      Why is third-party motor insurance mandatory?
+      <span class="faq-arrow">&#x25BC;</span>
+    </div>
+    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+      It protects third parties from financial loss in case of an accident caused by the insured vehicle.
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" tabindex="0">
+      Do pre-existing diseases get covered?
+      <span class="faq-arrow">&#x25BC;</span>
+    </div>
+    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+      Yes, but usually after a waiting period of 1–4 years in health insurance.
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+      const currentlyActive = document.querySelector('.faq-answer.show');
+      if (currentlyActive && currentlyActive !== question.nextElementSibling) {
+        currentlyActive.classList.remove('show');
+        currentlyActive.style.maxHeight = null;
+      }
+      const answer = question.nextElementSibling;
+      if (answer.classList.contains('show')) {
+        answer.classList.remove('show');
+        answer.style.maxHeight = null;
+      } else {
+        answer.classList.add('show');
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+<style>
+  .faq-section {
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  .faq-item {
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 0;
+  }
+  .faq-question {
+    font-weight: 300;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-arrow {
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+  }
+  .faq-answer {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    overflow: hidden;
+  }
+  .faq-answer.show + .faq-arrow {
+    transform: rotate(180deg);
+  }
+</style>
+
+{% endblock %}
