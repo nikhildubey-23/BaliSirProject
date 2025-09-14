@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Top Things Your Travel Insurance Should Cover</h1>
+  <img src="{{ url_for('static', filename='image/b14c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Not all travel policies are created equal. Make sure your policy includes the following:</p>
+
+  <section class="must-have-covers mt-4">
+    <h3>Must-Have Covers</h3>
+    <ul class="list-unstyled">
+      <li>✅ Medical Expenses (including COVID-19)</li>
+      <li>✅ Trip Cancellation or Curtailment</li>
+      <li>✅ Loss of Passport or Luggage</li>
+      <li>✅ Flight Delay or Missed Connection</li>
+      <li>✅ Emergency Evacuation</li>
+      <li>✅ Personal Liability</li>
+    </ul>
+    <p style="color: orange; font-weight: 600;">
+      Pro Tip: If you're traveling with family or for an adventure trip, look for special plans with tailored coverage.
+    </p>
+  </section>
+</div>
+{% endblock %}

@@ -114,6 +114,31 @@ def blog_b11():
 def blog_b12():
     return render_template('blog_b12.html')
 
+# New routes for blog posts b13 to b18
+@app.route('/blog/b13')
+def blog_b13():
+    return render_template('blog_b13.html')
+
+@app.route('/blog/b14')
+def blog_b14():
+    return render_template('blog_b14.html')
+
+@app.route('/blog/b15')
+def blog_b15():
+    return render_template('blog_b15.html')
+
+@app.route('/blog/b16')
+def blog_b16():
+    return render_template('blog_b16.html')
+
+@app.route('/blog/b17')
+def blog_b17():
+    return render_template('blog_b17.html')
+
+@app.route('/blog/b18')
+def blog_b18():
+    return render_template('blog_b18.html')
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json

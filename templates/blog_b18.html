@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Home Insurance vs Home Loan Insurance, Know the Difference</h1>
+  <img src="{{ url_for('static', filename='image/b18c.avif') }}" alt="Insurance Claims Rejected" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+
+  <p>While they sound similar, home insurance and home loan insurance serve different purposes</p>
+
+  <section>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+      <thead style="background-color: #f9f1e7;">
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Feature</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Home Insurance</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Home Loan Insurance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;"><strong>Purpose</strong></td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Protects the property and contents</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Pays off the home loan if borrower dies</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;"><strong>Coverage</strong></td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Fire, theft, natural calamities, etc.</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Outstanding loan amount</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;"><strong>Beneficiary</strong></td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Homeowner</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Lender (Bank/NBFC)</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;"><strong>Optional</strong></td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Yes</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Often bundled with home loan</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top: 1rem;"><strong><span style="color: orange;">Takeaway:</span></strong> Home insurance protects your <strong>property</strong>; home loan insurance protects your <strong>loan liability</strong>.</p>
+  </section>
+</div>
+{% endblock %}
