@@ -163,6 +163,30 @@ def blog_b23():
 def blog_b24():
     return render_template('blog_b24.html')
 
+@app.route('/blog/b25')
+def blog_b25():
+    return render_template('blog_b25.html')
+
+@app.route('/blog/b26')
+def blog_b26():
+    return render_template('blog_b26.html')
+
+@app.route('/blog/b27')
+def blog_b27():
+    return render_template('blog_b27.html')
+
+@app.route('/blog/b28')
+def blog_b28():
+    return render_template('blog_b28.html')
+
+@app.route('/blog/b29')
+def blog_b29():
+    return render_template('blog_b29.html')
+
+@app.route('/blog/b30')
+def blog_b30():
+    return render_template('blog_b30.html')
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json

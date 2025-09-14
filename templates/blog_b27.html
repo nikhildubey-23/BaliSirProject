@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Third-Party vs Comprehensive Car Insurance. What’s the Best for You?</h1>
+    <img src="{{ url_for('static', filename='image/b27c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Choosing between third-party and comprehensive car insurance depends on your needs, vehicle age, and budget.</p>
+
+  <section>
+    <h3>Comparison Table :</h3>
+    <table style="width: 100%; border-collapse: collapse; background-color: #fff3e0;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px;">Feature</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Comprehensive Insurance</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Third-Party Insurance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;">Coverage</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Own damage + third-party</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Only third-party damage</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;">Premium</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Higher</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Lower</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;">Add-ons</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Available</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Not available</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;">Legal Requirement</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Optional</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Mandatory</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px;">Best For</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">New or high-value cars</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">Older vehicles or low usage</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Verdict:</strong> Go for comprehensive coverage if your car is relatively new or you want full protection. Third-party is best if you're only looking to meet legal requirements.</p>
+  </section>
+</div>
+{% endblock %}
