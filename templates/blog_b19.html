@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>What Does Home Insurance Typically Cover?</h1>
+  <img src="{{ url_for('static', filename='image/b19c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>CA standard home insurance policy covers both the structure of your house and its contents. Here's a breakdown.</p>
+
+  <h2>Coverage Includes:</h2>
+  <ul>
+    <li>Fire & Explosion</li>
+    <li>Natural Calamities like floods, earthquakes, storms</li>
+    <li>Burglary & Theft</li>
+    <li>Damage to Electrical Appliances</li>
+    <li>Structural Damage</li>
+    <li>Furniture, Electronics & Valuables (if opted)</li>
+  </ul>
+
+  <h2>What’s Usually Not Covered?</h2>
+  <ul>
+    <li>Gradual wear and tear</li>
+    <li>War or nuclear events</li>
+    <li>Damage due to negligence</li>
+  </ul>
+
+  <p>Note: Always read the fine print and consider opting for <strong>add-ons</strong> like jewelry or artwork protection.</p>
+</div>
+{% endblock %}
