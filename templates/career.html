@@ -1,5 +1,195 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>career page</h1>
-<p>This is the career page.</p>
+<section class="join-us-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="fw-bold display-5">
+          Join us in building a future where insurance feels like care, <span class="highlight-text">Not confusion.</span>
+        </h2>
+        <p class="mt-3">
+          At <strong>Bima with Bali</strong>, we're not just changing the way people look at insurance, we’re changing how they feel about it.
+        </p>
+        <h4 class="fw-bold highlight-text mt-4">Learn, Build and Grow</h4>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/cr1.avif') }}" alt="Join Us" class="img-fluid" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section py-5" style="background-color: #f0c419;">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5">What We’re All About ?</h2>
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <img src="{{ url_for('static', filename='image/cr2.avif') }}" alt="Purpose with Heart" class="mb-3" style="width: 60px; height: 60px;" />
+        <h5 class="fw-bold">Purpose with Heart</h5>
+        <p>We’re here to educate, empower and protect. If you’re someone who cares about impact, you’ll find meaning here.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{{ url_for('static', filename='image/cr3.avif') }}" alt="People First" class="mb-3" style="width: 60px; height: 60px;" />
+        <h5 class="fw-bold">People First</h5>
+        <p>We treat our team like family. Respect, trust, and support are our non-negotiable values.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{{ url_for('static', filename='image/cr4.avif') }}" alt="Growth That Matters" class="mb-3" style="width: 60px; height: 60px;" />
+        <h5 class="fw-bold">Growth That Matters</h5>
+        <p>Whether you’re just starting out or have years of experience, we’re committed to helping you grow professionally and personally.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="opportunities-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h3 class="fw-bold mb-4">
+          We’re always looking for passionate folks who love to
+          <span class="text-black">Opportunities at <span class="text-warning">Bima with Bali</span></span>
+        </h3>
+        <ul class="list-unstyled">
+          <li class="d-flex align-items-center mb-3">
+            <img src="{{ url_for('static', filename='image/cr5.avif') }}" alt="Simplify Icon" class="me-3" style="width: 30px; height: 30px;" />
+            <span class="fw-bold text-warning">Simplify the complex problems</span>
+          </li>
+          <li class="d-flex align-items-center mb-3">
+            <img src="{{ url_for('static', filename='image/cr6.avif') }}" alt="Educate Icon" class="me-3" style="width: 30px; height: 30px;" />
+            <span class="fw-bold text-warning">Educate and empower others</span>
+          </li>
+          <li class="d-flex align-items-center mb-3">
+            <img src="{{ url_for('static', filename='image/cr7.avif') }}" alt="Solve Icon" class="me-3" style="width: 30px; height: 30px;" />
+            <span class="fw-bold text-warning">Solve problems creatively</span>
+          </li>
+          <li class="d-flex align-items-center mb-3">
+            <img src="{{ url_for('static', filename='image/cr8.avif') }}" alt="Build Trust Icon" class="me-3" style="width: 30px; height: 30px;" />
+            <span class="fw-bold text-warning">Build trust with people from all walks of life</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/cr9.avif') }}" alt="Opportunities" class="img-fluid" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ready-leap-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="fw-bold display-5">
+          <span class="text-warning">Ready</span> to Take the Leap?
+        </h2>
+        <div class="d-none d-md-block">
+          <img src="{{ url_for('static', filename='image/cr10.avif') }}" alt="Megaphone" class="img-fluid" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-bold mb-3" style="border-bottom: 3px solid #000; display: inline-block;">How To Apply</h3>
+        <ul class="list-unstyled">
+          <li class="mb-3 d-flex align-items-start">
+            <img src="{{ url_for('static', filename='image/cr11.avif') }}" alt="Resume Icon" style="width: 24px; height: 24px; margin-right: 10px;" />
+            <span>Send your resume to us on our email <strong>bimawithbali@gmail.com</strong> (or) whatsapp on <strong>8642001409</strong></span>
+          </li>
+          <li class="mb-3 d-flex align-items-start">
+            <img src="{{ url_for('static', filename='image/cr12.avif') }}" alt="Info Icon" style="width: 24px; height: 24px; margin-right: 10px;" />
+            <span>A short note about why you’d like to be part of <strong>Bima with Bali</strong>.</span>
+          </li>
+          <li class="mb-3 d-flex align-items-start">
+            <img src="{{ url_for('static', filename='image/cr13.avif') }}" alt="Video Icon" style="width: 24px; height: 24px; margin-right: 10px;" />
+            <span>Anything else you’d like us to see video intro, blog post, Insta reel, anything!</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hiring-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="fw-bold display-5">
+          We are currently <span class="text-warning">hiring for !</span>
+        </h2>
+        <div class="d-none d-md-block">
+          <img src="{{ url_for('static', filename='image/cr14.avif') }}" alt="Hiring" class="img-fluid" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h5 class="fw-bold mb-3 text-end">Fill the form to apply</h5>
+        <form class="p-4" style="background-color: #f0c419; border-radius: 1rem;">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="First Name*" required />
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Last Name*" required />
+            </div>
+            <div class="col-md-6">
+              <input type="tel" class="form-control" placeholder="Phone*" required />
+            </div>
+            <div class="col-md-6">
+              <input type="email" class="form-control" placeholder="Email" />
+            </div>
+            <div class="col-md-6">
+              <select class="form-select" required>
+                <option value="" disabled selected>Position*</option>
+                <option value="position1">Field Sales Executive</option>
+                <option value="position2">Insurance Educator</option>
+                
+              </select>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <label class="btn btn-dark mb-0" for="resumeUpload">+ Upload File</label>
+              <input type="file" id="resumeUpload" class="d-none" required />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-dark w-100 rounded-pill">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="open-positions-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-4">Open Positions</h2>
+        <hr />
+        <div class="mb-4">
+          <p><strong>Job:</strong> Field Sales Executive</p>
+          <p>
+            <strong>Job Description:</strong>
+            <a href="{{ url_for('static', filename='image/Fieldsalesexecutive.docx') }}" download>Click Here</a>
+          </p>
+          <p><strong>Experience:</strong> Freshers to 1-3 years</p>
+          <p><strong>Location:</strong> Bilaspur, Chattishgarh</p>
+        </div>
+        <div>
+          <p><strong>Job:</strong> Insurance Educator</p>
+          <p>
+            <strong>Job Description:</strong>
+            <a href="{{ url_for('static', filename='image/InsuranceEducators.docx') }}" download>Click Here</a>
+          </p>
+          <p><strong>Experience:</strong> 2-5 years</p>
+          <p><strong>Location:</strong> Bilaspur, Chattishgarh</p>
+        </div>
+      </div>
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="fw-bold display-5">
+          <span class="text-warning">Bima with Bali</span> - Insurance with a Heart, Career with a Purpose!
+        </h2>
+        <a href="{{ url_for('get_now') }}" class="btn btn-dark rounded-pill mt-4 px-4 py-2">Reach Us</a>
+        <p class="mt-3 fw-bold">Connect with us to get insured</p>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

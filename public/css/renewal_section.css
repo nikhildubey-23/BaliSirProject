@@ -1,0 +1,31 @@
+.join-us-section {
+  background-color: #fff;
+}
+
+.join-us-section .highlight-text {
+  color: #d9a90f; /* golden yellow */
+}
+
+.join-us-section h2 {
+  font-weight: 700;
+}
+
+.join-us-section p {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.join-us-section h4 {
+  margin-top: 1.5rem;
+  font-weight: 700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .join-us-section h2 {
+    font-size: 1.75rem;
+  }
+  .join-us-section h4 {
+    font-size: 1.25rem;
+  }
+}
