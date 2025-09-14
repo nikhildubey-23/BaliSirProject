@@ -89,6 +89,31 @@ def blog_b5():
 def blog_b6():
     return render_template('blog_b6.html')
 
+# New routes for blog posts b7 to b12
+@app.route('/blog/b7')
+def blog_b7():
+    return render_template('blog_b7.html')
+
+@app.route('/blog/b8')
+def blog_b8():
+    return render_template('blog_b8.html')
+
+@app.route('/blog/b9')
+def blog_b9():
+    return render_template('blog_b9.html')
+
+@app.route('/blog/b10')
+def blog_b10():
+    return render_template('blog_b10.html')
+
+@app.route('/blog/b11')
+def blog_b11():
+    return render_template('blog_b11.html')
+
+@app.route('/blog/b12')
+def blog_b12():
+    return render_template('blog_b12.html')
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json

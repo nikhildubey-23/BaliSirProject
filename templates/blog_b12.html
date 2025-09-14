@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Travel Insurance for Students: What You Need to Know</h1>
+  <p>If you're going abroad for studies, student travel insurance is a must—often mandated by universities.</p>
+  <img src="{{ url_for('static', filename='image/b12c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+
+  <section class="student-travel-features mt-4">
+    <h3>Key Features of Student Travel Insurance</h3>
+    <ul>
+      <li><strong>Medical coverage</strong> (including pre-existing conditions, depending on policy)</li>
+      <li>Loss of documents or laptop</li>
+      <li><strong>Tuition fee reimbursement</strong> if you need to withdraw mid-semester</li>
+      <li>Baggage and personal liability coverage</li>
+      <li>Sponsor protection in case of sponsor’s untimely demise</li>
+    </ul>
+
+    <p><span style="color: orange; font-weight: bold;">Pro Tip:</span> Check if your university accepts Indian insurance or requires local coverage. Always compare student-specific plans for best value.</p>
+  </section>
+</div>
+{% endblock %}

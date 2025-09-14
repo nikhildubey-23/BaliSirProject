@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Add-On Covers You Didn’t Know You Could Buy</h1>
+  <img src="{{ url_for('static', filename='image/b9c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Add-ons (or riders) enhance your basic policy. Here are lesser-known but useful ones</p>
+
+  <section class="smart-addons mt-4">
+    <h3>Surprising Yet Smart Add-Ons:</h3>
+    <ul>
+      <li><strong>Key Replacement Cover</strong> (for car/bike)</li>
+      <li><strong>Daily Hospital Cash</strong> (under health insurance)</li>
+      <li><strong>Loss of Rent</strong> (under home insurance)</li>
+      <li><strong>Trip Cancellation Cover</strong> (under travel insurance)</li>
+      <li><strong>Adventure Sports Rider</strong> (for thrill-seekers)</li>
+      <li><strong>Pet Injury Cover</strong> (for car accidents involving pets)</li>
+    </ul>
+
+    <p><span style="color: orange; font-weight: bold;">Tip:</span> These may cost extra, but they provide <strong>custom protection</strong> and are worth the price for many.</p>
+  </section>
+</div>
+{% endblock %}

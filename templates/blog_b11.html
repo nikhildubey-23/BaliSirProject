@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>International vs Domestic Travel Insurance – What’s the Difference?</h1>
+    <img src="{{ url_for('static', filename='image/b11c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+
+  <section class="travel-insurance-comparison mt-4">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Domestic Travel Insurance</th>
+          <th>International Travel Insurance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Scope</td>
+          <td>Within India</td>
+          <td>Outside India</td>
+        </tr>
+        <tr>
+          <td>Coverage</td>
+          <td>Medical, trip delays, baggage loss</td>
+          <td>Includes emergency evacuation, hospitalization abroad</td>
+        </tr>
+        <tr>
+          <td>Cost</td>
+          <td>Lower premiums</td>
+          <td>Higher due to global risks</td>
+        </tr>
+        <tr>
+          <td>Visa Requirement</td>
+          <td>Not mandatory</td>
+          <td>Often mandatory for Schengen, US, UAE, etc.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}
