@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Understanding Insurance Terminology: A Simplified Guide</h1>
+  <p>Insurance jargon confusing you? Here are the basics simplified: Term meanings and explanations to help you navigate your insurance policy.</p>
+  <div class="row align-items-center">
+    <div class="col-md-6 text-center">
+      <img src="{{ url_for('static', filename='image/b3.avif') }}" alt="Insurance Terminology" class="img-fluid mb-3" style="width: 100%; height: 400px; object-fit: cover;" />
+    </div>
+    <div class="col-md-6">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Premium</td>
+            <td>Amount you pay for insurance</td>
+          </tr>
+          <tr>
+            <td>Sum Insured</td>
+            <td>Maximum amount payable by insurer</td>
+          </tr>
+          <tr>
+            <td>Deductible</td>
+            <td>The part you pay before claim kicks in</td>
+          </tr>
+          <tr>
+            <td>No Claim Bonus (NCB)</td>
+            <td>Discount for not claiming in a year</td>
+          </tr>
+          <tr>
+            <td>IDV</td>
+            <td>Insured Declared Value – car’s market value</td>
+          </tr>
+          <tr>
+            <td>Rider/Add-on</td>
+            <td>Extra coverage on top of base policy</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Bookmark this page for quick reference while buying insurance!</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -65,6 +65,18 @@ def career():
 def blog():
     return render_template('blog.html')
 
+@app.route('/blog/b1')
+def blog_b1():
+    return render_template('blog_b1.html')
+
+@app.route('/blog/b2')
+def blog_b2():
+    return render_template('blog_b2.html')
+
+@app.route('/blog/b3')
+def blog_b3():
+    return render_template('blog_b3.html')
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json

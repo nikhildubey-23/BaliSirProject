@@ -1,5 +1,70 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>blogpage</h1>
-<p>This is the blog page.</p>
+<div class="container py-5">
+  <div class="row g-4">
+    <!-- Card 1 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b1') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b1.avif') }}" class="card-img-top" alt="Renewing Your General Insurance" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 8</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Renewing Your General Insurance: Tips and Checklist</h5>
+            <p class="card-text">Renewing your policy on time ensures uninterrupted protection. Renewal…</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 2 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b2') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b2.avif') }}" class="card-img-top" alt="How to Read and Understand Your Insurance Policy" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 1</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">How to Read and Understand Your Insurance Policy…</h5>
+            <p class="card-text">Don’t skip the fine print! Here's how to break down your policy: What to Check: ✅…</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 3 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b3') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b3.avif') }}" class="card-img-top" alt="Understanding Insurance Terminology" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 2</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Understanding Insurance Terminology: A…</h5>
+            <p class="card-text">Insurance jargon confusing you? Here are the basics simplified: Term Meaning…</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 {% endblock %}
