@@ -77,6 +77,18 @@ def blog_b2():
 def blog_b3():
     return render_template('blog_b3.html')
 
+@app.route('/blog/b4')
+def blog_b4():
+    return render_template('blog_b4.html')
+
+@app.route('/blog/b5')
+def blog_b5():
+    return render_template('blog_b5.html')
+
+@app.route('/blog/b6')
+def blog_b6():
+    return render_template('blog_b6.html')
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json

@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container py-5">
   <h1>Renewing Your General Insurance: Tips and Checklist</h1>
-  <img src="{{ url_for('static', filename='image/b1.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: 400px; object-fit: cover;" />
+  <img src="{{ url_for('static', filename='image/b1c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
   <p>Renewing your policy on time ensures <strong>uninterrupted protection</strong>.</p>
 
   <h4>Renewal Checklist:</h4>
@@ -15,19 +15,5 @@
   </ul>
 
   <p><strong>Auto-renewal</strong> via credit card or online wallet helps avoid lapses!</p>
-
-  <section class="blog-footer-section mt-4 d-flex justify-content-between align-items-center">
-    <div class="social-icons d-flex gap-3">
-      <a href="#"><img src="{{ url_for('static', filename='image/facebook.png') }}" alt="Facebook" style="height:24px; width:24px;" /></a>
-      <a href="#"><img src="{{ url_for('static', filename='image/twitter.png') }}" alt="X" style="height:24px; width:24px;" /></a>
-      <a href="#"><img src="{{ url_for('static', filename='image/linkedin.png') }}" alt="LinkedIn" style="height:24px; width:24px;" /></a>
-      <a href="#"><img src="{{ url_for('static', filename='image/link.png') }}" alt="Link" style="height:24px; width:24px;" /></a>
-    </div>
-    <div class="blog-stats d-flex gap-3 align-items-center">
-      <span>3 views</span>
-      <span>0 comments</span>
-      <span>1 ❤️</span>
-    </div>
-  </section>
 </div>
 {% endblock %}

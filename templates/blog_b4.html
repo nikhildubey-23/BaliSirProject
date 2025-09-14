@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container ">
+  <h1>Top Reasons Why Insurance Claims Get Rejected</h1>
+  <img src="{{ url_for('static', filename='image/b4c.avif') }}" alt="Insurance Claims Rejected" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Claim rejections hurt. Here’s how to avoid them:</p>
+
+  <p><strong>Common Reasons:</strong></p>
+  <ul>
+    <li>Non-disclosure of facts (pre-existing illnesses, vehicle mods)</li>
+    <li>Expired policy</li>
+    <li>Lack of documentation</li>
+    <li>Claiming exclusions (wear & tear, negligence)</li>
+    <li>Policy not covering the specific incident</li>
+  </ul>
+
+  <p>Always read your <strong>policy wordings</strong>, disclose honestly, and file on time.</p>
+</div>
+{% endblock %}
