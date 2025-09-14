@@ -1,8 +1,122 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1>Contact Page</h1>
-    <p>This is a placeholder for the contact page. You can edit this content later.</p>
-</div>
+<section class="contact-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
+        <img src="{{ url_for('static', filename='image/co1.avif') }}" alt="Contact Us" class="img-fluid" />
+      </div>
+      <div class="col-md-6">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="contact-box">
+              <img src="{{ url_for('static', filename='image/wh1.avif') }}" alt="WhatsApp" />
+              <div class="contact-info">
+                <strong>Whatsapp</strong>
+                <span>+91 84620-01409</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="contact-box">
+              <img src="{{ url_for('static', filename='image/em1.avif') }}" alt="Email" />
+              <div class="contact-info">
+                <strong>Email</strong>
+                <span>Support@bimawithbali.com</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="contact-box">
+              <img src="{{ url_for('static', filename='image/su1.avif') }}" alt="24/7 Support" />
+              <div class="contact-info">
+                <strong>24/7 support</strong>
+                <span>+91 84620-01409</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="contact-box">
+              <img src="{{ url_for('static', filename='image/bu1.avif') }}" alt="Buy/Renew Policy" />
+              <div class="contact-info">
+                <strong>Buy/Renew policy</strong>
+                <span>+91 84620-01409</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="map-contact-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-4">Get in touch</h2>
+        <form>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="firstName" class="form-label">First Name*</label>
+              <input type="text" class="form-control" id="firstName" required />
+            </div>
+            <div class="col-md-6">
+              <label for="lastName" class="form-label">Last Name*</label>
+              <input type="text" class="form-control" id="lastName" required />
+            </div>
+            <div class="col-md-6">
+              <label for="phone" class="form-label">Phone*</label>
+              <input type="tel" class="form-control" id="phone" required />
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" />
+            </div>
+            <div class="col-12">
+              <label class="form-label d-block">I Want To*</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="action" id="buyPolicy" value="buy" required />
+                <label class="form-check-label" for="buyPolicy">Buy policy</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="action" id="renewPolicy" value="renew" required />
+                <label class="form-check-label" for="renewPolicy">Renew Policy</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="action" id="underwriteClaim" value="underwrite" required />
+                <label class="form-check-label" for="underwriteClaim">Underwrite Claim</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="insuranceType" class="form-label">Insurance Type*</label>
+              <select class="form-select" id="insuranceType" required>
+                <option value="" selected disabled>Select Insurance Type</option>
+                <option value="motor">Motor</option>
+                <option value="health">Health</option>
+                <option value="travel">Travel</option>
+                <option value="marine">Marine</option>
+                <option value="shopkeeper">Shopkeeper</option>
+                <option value="workmen">Workmen Compensation</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary w-100 rounded-pill">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <h2 class="fw-bold text-warning mb-4">Visit Us</h2>
+        <p>Shop no.5, Ambe business center, magarpara, Bilaspur, Chattishgarh.</p>
+        <p class="fw-bold text-warning">Working Hours:</p>
+        <p>Mon - Sat : 11:00 am to 8:30 pm</p>
+        <div class="ratio ratio-4x3">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3552.8105679623486!2d82.14328497511165!3d22.078887879846384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a280b6b8dd7a907%3A0x1e4110d50ffe1d2a!2sAmbe%20Business%20Centre!5e1!3m2!1sen!2sin!4v1757824876077!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
