@@ -121,7 +121,7 @@
       </div>
       <div class="col-md-6">
         <h5 class="fw-bold mb-3 text-end">Fill the form to apply</h5>
-        <form id="contactForm" class="p-4" style="background-color: #f0c419; border-radius: 1rem;">
+        <form id="contactForm" class="contact-form p-4" style="background-color: #f0c419; border-radius: 1rem;">
           <div class="row g-3">
             <div class="col-md-6">
               <input type="text" id="firstName" class="form-control" placeholder="First Name*" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
@@ -195,6 +195,9 @@
 <script>
   document.getElementById('contactForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    const submitButton = document.querySelector('#contactForm .btn-dark');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
 
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
@@ -225,9 +228,13 @@
       } else if (data.error) {
         document.getElementById('form-message').textContent = 'Error: ' + data.error;
       }
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit';
     })
     .catch(error => {
       document.getElementById('form-message').textContent = 'Error: ' + error;
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit';
     });
   });
 </script>

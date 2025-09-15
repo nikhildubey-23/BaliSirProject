@@ -56,7 +56,7 @@
     <div class="row align-items-center">
       <div class="col-md-6">
         <h2 class="fw-bold mb-4">Get in touch</h2>
-        <form>
+        <form class="contact-form">
           <div class="row g-3">
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name*</label>
@@ -124,6 +124,10 @@
 <script>
   document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
+    const submitButton = document.querySelector('.btn-primary');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     const phone = document.getElementById('phone').value;
@@ -151,12 +155,17 @@
       const messageDiv = document.getElementById('form-message');
       if (data.message) {
         messageDiv.innerHTML = '<div class="alert alert-success">Email sent successfully!</div>';
+        document.querySelector('form').reset();
       } else {
         messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
       }
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit';
     })
     .catch(error => {
       document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error sending email.</div>';
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit';
     });
   });
 </script>
