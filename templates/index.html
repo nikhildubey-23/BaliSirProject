@@ -22,6 +22,10 @@
   </div>
 </div>
 
+
+
+ 
+
 <!-- Why Choose Us Section -->
 <div class="container-fluid why-choose-section">
   <div class="row align-items-center">
@@ -224,7 +228,7 @@
     </div>
     <div class="col-md-6">
 
-      <form class="connect-form" method="post" action="/contact">
+      <form id="contactForm" class="connect-form">
 <style>
   @media (max-width: 768px) {
     .connect-section .img-fluid {
@@ -264,21 +268,21 @@
         <div class="row mb-3">
           <div class="col-6">
             <label for="firstName" class="form-label">First Name*</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" required />
+            <input type="text" class="form-control" id="firstName" name="firstName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
           </div>
           <div class="col-6">
             <label for="lastName" class="form-label">Last Name*</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" required />
+            <input type="text" class="form-control" id="lastName" name="lastName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-6">
             <label for="phone" class="form-label">Phone*</label>
-            <input type="tel" class="form-control" id="phone" name="phone" required />
+            <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]+" title="Only numbers allowed" required />
           </div>
           <div class="col-6">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" />
+            <label for="email" class="form-label">Email*</label>
+            <input type="email" class="form-control" id="email" name="email" required />
           </div>
         </div>
         <fieldset class="mb-3">
@@ -311,6 +315,7 @@
         </div>
         <button type="submit" class="btn btn-submit w-100">Submit</button>
       </form>
+      <div id="form-message" style="text-align:center; font-weight:bold; margin-top: 15px; color: green;"></div>
     </div>
   </div>
 </div>
@@ -464,5 +469,43 @@
     100% { transform: translateX(-100%); }
   }
 </style>
+<script>
+   document.getElementById('contactForm').addEventListener('submit', function(event) {
+     event.preventDefault();
+
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const wantTo = document.querySelector('input[name="wantTo"]:checked')?.value;
+    const insuranceType = document.getElementById('insuranceType').value;
+
+    fetch('/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        to: "sparksolutionfreelancing@gmail.com", 
+        name: firstName + " " + lastName, 
+        email: email, 
+        subject: wantTo + " - " + insuranceType, 
+        message: `Phone: ${phone}\n\nInsurance Type: ${insuranceType}\n\nMessage: ${wantTo}`
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        document.getElementById('form-message').textContent = data.message;
+        document.getElementById('contactForm').reset();
+      } else if (data.error) {
+        document.getElementById('form-message').textContent = 'Error: ' + data.error;
+      }
+    })
+    .catch(error => {
+      document.getElementById('form-message').textContent = 'Error: ' + error;
+    });
+  });
+</script>
 
 {% endblock %}

@@ -1,6 +1,9 @@
 import os
 import google.generativeai as genai
 from flask import Flask, render_template, request, jsonify
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__, static_folder='public')
 
@@ -8,6 +11,12 @@ app = Flask(__name__, static_folder='public')
 api_key = os.environ.get('GEMINI_API_KEY', 'AIzaSyBNDr4rWhCFZoDGgVqN1l4YbtnVBHfUWNM')
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
+
+# Email server configuration
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+SMTP_USERNAME = "sparksolutionfreelancing@gmail.com"  # Replace with your Gmail address
+SMTP_PASSWORD = "oqny rnem dbap yofq "      # Replace with your Gmail App Password
 
 @app.route('/')
 def home():
@@ -186,6 +195,44 @@ def blog_b29():
 @app.route('/blog/b30')
 def blog_b30():
     return render_template('blog_b30.html')
+
+@app.route('/send-email', methods=['POST'])
+def send_email():
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+    app.logger.info("Received send-email request")
+    data = request.json
+    app.logger.debug(f"Request data: {data}")
+    to_email = data.get('to')
+    name = data.get('name')
+    from_email = data.get('email')
+    subject = data.get('subject')
+    message = data.get('message')
+
+    if not all([to_email, name, from_email, subject, message]):
+        app.logger.error("Missing required fields")
+        return jsonify({"error": "Missing required fields"}), 400
+
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = SMTP_USERNAME
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        body = f"Name: {name}\nEmail: {from_email}\n\nMessage:\n{message}"
+        msg.attach(MIMEText(body, 'plain'))
+
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.starttls()
+        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+        server.sendmail(SMTP_USERNAME, to_email, msg.as_string())
+        server.quit()
+
+        app.logger.info("Email sent successfully")
+        return jsonify({"message": "Email sent successfully"}), 200
+    except Exception as e:
+        app.logger.error(f"Error sending email: {e}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
