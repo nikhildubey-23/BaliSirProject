@@ -55,6 +55,7 @@
     font-size: 16px;
     scrollbar-width: thin;
     scrollbar-color: #ffd700 #f0f8ff;
+    scroll-behavior: smooth;
   }
   .chat-messages::-webkit-scrollbar {
     width: 8px;
@@ -112,6 +113,9 @@
     background: #ffffff;
     color: #000000;
     font-family: 'Arial', sans-serif;
+    resize: none;
+    height: 50px;
+    overflow-y: auto;
   }
   #chat-input::placeholder {
     color: #666666;
