@@ -106,6 +106,7 @@
             </div>
           </div>
         </form>
+        <div id="form-message" class="mt-3"></div>
       </div>
       <div class="col-md-6">
         <h2 class="fw-bold text-warning mb-4">Visit Us</h2>
@@ -119,4 +120,45 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const action = document.querySelector('input[name="action"]:checked').value;
+    const insuranceType = document.getElementById('insuranceType').value;
+
+    const message = `First Name: ${firstName}\nLast Name: ${lastName}\nPhone: ${phone}\nEmail: ${email}\nAction: ${action}\nInsurance Type: ${insuranceType}`;
+
+    fetch('/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: 'sparksolutionfreelancing@gmail.com',
+        name: `${firstName} ${lastName}`,
+        email: email,
+        subject: 'Contact Form Submission',
+        message: message
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      const messageDiv = document.getElementById('form-message');
+      if (data.message) {
+        messageDiv.innerHTML = '<div class="alert alert-success">Email sent successfully!</div>';
+      } else {
+        messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+      }
+    })
+    .catch(error => {
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error sending email.</div>';
+    });
+  });
+</script>
+
 {% endblock %}

@@ -235,7 +235,7 @@ def send_email():
         msg.attach(MIMEText(body, 'plain'))
 
         # Attach files if any
-        file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan']
+        file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan', 'resume']
         for field in file_fields:
             if field in files and files[field].filename:
                 file = files[field]

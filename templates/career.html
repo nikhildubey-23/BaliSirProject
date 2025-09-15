@@ -121,37 +121,37 @@
       </div>
       <div class="col-md-6">
         <h5 class="fw-bold mb-3 text-end">Fill the form to apply</h5>
-        <form class="p-4" style="background-color: #f0c419; border-radius: 1rem;">
+        <form id="contactForm" class="p-4" style="background-color: #f0c419; border-radius: 1rem;">
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="First Name*" required />
+              <input type="text" id="firstName" class="form-control" placeholder="First Name*" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
             </div>
             <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="Last Name*" required />
+              <input type="text" id="lastName" class="form-control" placeholder="Last Name*" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
             </div>
             <div class="col-md-6">
-              <input type="tel" class="form-control" placeholder="Phone*" required />
+              <input type="tel" id="phone" class="form-control" placeholder="Phone*" pattern="[0-9]+" title="Only numbers allowed" required />
             </div>
             <div class="col-md-6">
-              <input type="email" class="form-control" placeholder="Email" />
+              <input type="email" id="email" class="form-control" placeholder="Email*" required />
             </div>
             <div class="col-md-6">
-              <select class="form-select" required>
+              <select id="position" class="form-select" required>
                 <option value="" disabled selected>Position*</option>
-                <option value="position1">Field Sales Executive</option>
-                <option value="position2">Insurance Educator</option>
-                
+                <option value="Field Sales Executive">Field Sales Executive</option>
+                <option value="Insurance Educator">Insurance Educator</option>
               </select>
             </div>
             <div class="col-md-6 d-flex align-items-center">
-              <label class="btn btn-dark mb-0" for="resumeUpload">+ Upload File</label>
-              <input type="file" id="resumeUpload" class="d-none" required />
+              <label class="btn btn-dark mb-0" for="resumeUpload">+ Upload you resume</label>
+              <input type="file" id="resumeUpload" class="d-none" accept=".pdf,.doc,.docx" required />
             </div>
             <div class="col-12">
               <button type="submit" class="btn btn-dark w-100 rounded-pill">Submit</button>
             </div>
           </div>
         </form>
+        <div id="form-message" style="text-align:center; font-weight:bold; margin-top: 15px; color: green;"></div>
       </div>
     </div>
   </div>
@@ -192,4 +192,44 @@
     </div>
   </div>
 </section>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const position = document.getElementById('position').value;
+
+    const formData = new FormData();
+    formData.append('to', 'sparksolutionfreelancing@gmail.com');
+    formData.append('name', firstName + " " + lastName);
+    formData.append('email', email);
+    formData.append('subject', "Job Application - " + position);
+    formData.append('message', `Phone: ${phone}\nPosition: ${position}`);
+
+    // Append resume
+    const resume = document.getElementById('resumeUpload').files[0];
+    if (resume) formData.append('resume', resume);
+
+    fetch('/send-email', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        document.getElementById('form-message').textContent = data.message;
+        document.getElementById('contactForm').reset();
+      } else if (data.error) {
+        document.getElementById('form-message').textContent = 'Error: ' + data.error;
+      }
+    })
+    .catch(error => {
+      document.getElementById('form-message').textContent = 'Error: ' + error;
+    });
+  });
+</script>
+
 {% endblock %}
