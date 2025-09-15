@@ -141,107 +141,107 @@
 }
 </style>
 
-<div class="responsive-table" style="margin-top: 2rem;">
-  <table style="width: 100%; border-collapse: collapse; background-color: #ffe680;">
-    <thead>
-      <tr style="background-color: #f4b41a; color: black; font-weight: bold; text-align: center;">
-        <th style="padding: 10px; cursor: pointer;" onclick="window.location.href='/commercial'"></th>
-        <th style="padding: 10px; cursor: pointer; text-align:center" onclick="window.location.href='/car'">Insurance Detail's</th>
-        <th style="padding: 10px; cursor: pointer;" onclick="window.location.href='/wheeler2'"></th>
+<div class="table-responsive mt-4">
+  <table class="table table-bordered table-hover">
+    <thead class="table-warning">
+      <tr>
+        <th></th>
+        <th class="text-center">Insurance Detail's</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="padding: 10px; text-align: center;">
-          <img src="{{ url_for('static', filename='image/truckimg.avif') }}" alt="Commercial Vehicle" style="width: 150px; height: auto;"/>
+        <td class="text-center align-middle">
+          <img src="{{ url_for('static', filename='image/truckimg.avif') }}" alt="Commercial Vehicle" class="img-fluid" style="max-width: 150px; height: auto;" />
         </td>
-        <td style="padding: 10px; font-weight: bold; font-size: 1.5rem; vertical-align: middle;">
+        <td class="align-middle fw-bold fs-4">
           Commercial Vehicle Insurance
         </td>
-        <td style="padding: 10px; vertical-align: middle;">
-          <table style="width: 100%; border-collapse: collapse; background-color: #ffeb99;">
-            <thead>
+        <td class="align-middle">
+          <table class="table table-bordered mb-0">
+            <thead class="table-light">
               <tr>
-                <th colspan="3" style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">Insurance Detail</th>
+                <th colspan="3" class="text-center fw-bold">Insurance Detail</th>
               </tr>
               <tr>
-                <th style="border: 1px solid black; padding: 5px; text-align: center;">First-Party</th>
-                <th style="border: 1px solid black; padding: 5px; text-align: center;">Third-Party</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 5px; border-left: 1px solid black;">New Vehicle</td>
-                <td style="border: 1px solid black; padding: 5px; text-align: center;">1 year</td>
-                <td style="border: 1px solid black; padding: 5px; text-align: center;">1 years</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid black; padding: 5px;">Old Vehicle</td>
-                <td colspan="2" style="border: 1px solid black; padding: 5px; text-align: center;">Combined insurance for 1 year</td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; text-align: center;">
-          <img src="{{ url_for('static', filename='image/whitecarimg.avif') }}" alt="Private Car" style="width: 150px; height: auto;"/>
-        </td>
-        <td style="padding: 10px; font-weight: bold; font-size: 1.5rem; vertical-align: middle;">
-          Private Car Insurance
-        </td>
-        <td style="padding: 10px; vertical-align: middle;">
-          <table style="width: 100%; border-collapse: collapse; background-color: #ffeb99;">
-            <thead>
-              <tr>
-                <th colspan="3" style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">Insurance Detail</th>
-              </tr>
-              <tr>
-                <th style="border: 1px solid black; padding: 5px; text-align: center;">First-Party</th>
-                <th style="border: 1px solid black; padding: 5px; text-align: center;">Third-Party</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid black; padding: 5px;">New Vehicle</td>
-                <td style="border: 1px solid black; padding: 5px; text-align: center;">1 year</td>
-                <td style="border: 1px solid black; padding: 5px; text-align: center;">3 years</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid black; padding: 5px;">Old Vehicle</td>
-                <td colspan="2" style="border: 1px solid black; padding: 5px; text-align: center;">Combined insurance for 1 year</td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; text-align: center;">
-          <img src="{{ url_for('static', filename='image/bickimg.avif') }}" alt="Two Wheeler" style="width: 150px; height: auto;"/>
-        </td>
-        <td style="padding: 10px; font-weight: bold; font-size: 1.5rem; vertical-align: middle;">
-          Two Wheeler Insurance
-        </td>
-        <td style="padding: 10px; vertical-align: middle;">
-          <table style="width: 100%; border-collapse: collapse; background-color: #ffeb99;">
-            <thead>
-              <tr>
-                <th colspan="3" style="border: 1px solid black; padding: 5px; text-align: center; font-weight: bold;">Insurance Detail</th>
-              </tr>
-              <tr>
-                <th style="border: 1px solid black; padding: 5px; text-align: center;">First-Party</th>
-                <th style="border: 1px solid black; padding: 5px; text-align: center;">Third-Party</th>
+                <th class="text-center">First-Party</th>
+                <th class="text-center">Third-Party</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>New Vehicle</td>
-                <td style="border: 1px solid black; text-align: center;">1 year</td>
-                <td style="border: 1px solid black; text-align: center;">5 years</td>
+                <td class="text-center">1 year</td>
+                <td class="text-center">1 years</td>
               </tr>
               <tr>
-                <td colspan="2" style="border: 1px solid black; text-align: center;">Old Vehicle</td>
-                <td style="border: 1px solid black; text-align: center;">Combined insurance for 1 year</td>
+                <td>Old Vehicle</td>
+                <td colspan="2" class="text-center">Combined insurance for 1 year</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-center align-middle">
+          <img src="{{ url_for('static', filename='image/whitecarimg.avif') }}" alt="Private Car" class="img-fluid" style="max-width: 150px; height: auto;" />
+        </td>
+        <td class="align-middle fw-bold fs-4">
+          Private Car Insurance
+        </td>
+        <td class="align-middle">
+          <table class="table table-bordered mb-0">
+            <thead class="table-light">
+              <tr>
+                <th colspan="3" class="text-center fw-bold">Insurance Detail</th>
+              </tr>
+              <tr>
+                <th class="text-center">First-Party</th>
+                <th class="text-center">Third-Party</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>New Vehicle</td>
+                <td class="text-center">1 year</td>
+                <td class="text-center">3 years</td>
+              </tr>
+              <tr>
+                <td>Old Vehicle</td>
+                <td colspan="2" class="text-center">Combined insurance for 1 year</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-center align-middle">
+          <img src="{{ url_for('static', filename='image/bickimg.avif') }}" alt="Two Wheeler" class="img-fluid" style="max-width: 150px; height: auto;" />
+        </td>
+        <td class="align-middle fw-bold fs-4">
+          Two Wheeler Insurance
+        </td>
+        <td class="align-middle">
+          <table class="table table-bordered mb-0">
+            <thead class="table-light">
+              <tr>
+                <th colspan="3" class="text-center fw-bold">Insurance Detail</th>
+              </tr>
+              <tr>
+                <th class="text-center">First-Party</th>
+                <th class="text-center">Third-Party</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>New Vehicle</td>
+                <td class="text-center">1 year</td>
+                <td class="text-center">5 years</td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center">Old Vehicle</td>
+                <td class="text-center">Combined insurance for 1 year</td>
               </tr>
             </tbody>
           </table>
