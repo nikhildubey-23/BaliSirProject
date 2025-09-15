@@ -86,6 +86,18 @@
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     border: 1px solid #ffd700;
   }
+  .chat-message.bot h2 {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+    color: #333;
+  }
+  .chat-message.bot h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 10px 0 5px 0;
+    color: #555;
+  }
   .chat-message.user {
     text-align: right;
     background: linear-gradient(135deg, #ffd700, #ffed4e);
@@ -159,7 +171,17 @@
   function appendMessage(text, sender) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('chat-message', sender);
-    msgDiv.textContent = text;
+    // Process markdown-like headings
+    text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<h3>$1</h3>');
+    text = text.replace(/\*\*(.*?)\*\*/g, '<h2>$1</h2>');
+    // Sanitize and convert special characters to HTML entities to prevent raw symbols
+    msgDiv.innerHTML = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "<")
+      .replace(/>/g, ">")
+      .replace(/\*/g, "-")  // Replace remaining * with dash for bullets
+      .replace(/-/g, "&#8211;")   // Replace - with en dash
+      .replace(/\n/g, "<br>");    // Preserve line breaks
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
