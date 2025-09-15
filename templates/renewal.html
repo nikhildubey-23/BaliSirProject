@@ -14,67 +14,118 @@
     </div>
   </div>
 
-  <section class="renewal-section py-5 px-5 my-3" style="border-radius:2rem; background-color: #d9a90f; width: 100%; display: flex; justify-content: center; align-items: center;">
-    <form>
-      <div class="row mt-4 g-3">
-        <div class="col-md-6">
-          <label for="firstName" class="form-label">First Name*</label>
-          <input type="text" class="form-control" id="firstName" required>
+    <section class="renewal-section py-5 px-5 my-3" style="border-radius:2rem; background-color: #d9a90f; width: 100%; display: flex; justify-content: center; align-items: center;">
+      <form id="contactForm">
+        <div class="row mt-4 g-3">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">First Name*</label>
+            <input type="text" class="form-control" id="firstName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required>
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Last Name*</label>
+            <input type="text" class="form-control" id="lastName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required>
+          </div>
+  
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email*</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Phone*</label>
+            <input type="tel" class="form-control" id="phone" pattern="[0-9]+" title="Only numbers allowed" required>
+          </div>
+  
+          <div class="col-md-6">
+            <label for="policyNumber" class="form-label">Policy number*</label>
+            <input type="text" class="form-control" id="policyNumber" required>
+          </div>
+          <div class="col-md-6">
+            <label for="insuranceType" class="form-label">Insurance Type*</label>
+            <select class="form-select" id="insuranceType" required>
+              <option value="" selected disabled>Select Insurance Type</option>
+              <option value="motor">Motor</option>
+              <option value="health">Health</option>
+              <option value="travel">Travel</option>
+              <option value="marine">Marine</option>
+              <option value="shopkeeper">Shopkeeper</option>
+              <option value="workmen">Workmen Compensation</option>
+            </select>
+          </div>
+  
+          <div class="col-md-6">
+            <label for="vehicleRC" class="form-label">Vehicle RC (only for motor renewal)</label>
+            <input class="form-control" type="file" id="vehicleRC" accept="image/*,application/pdf">
+          </div>
+          <div class="col-md-6">
+            <label for="previousInsurance" class="form-label">Previous Insurance copy *</label>
+            <input class="form-control" type="file" id="previousInsurance" accept="image/*,application/pdf" required>
+          </div>
+  
+          <div class="col-md-6">
+            <label for="aadharCard" class="form-label">Aadhar card *</label>
+            <input class="form-control" type="file" id="aadharCard" accept="image/*,application/pdf" required>
+          </div>
+          <div class="col-md-6">
+            <label for="pan" class="form-label">PAN *</label>
+            <input class="form-control" type="file" id="pan" accept="image/*,application/pdf" required>
+          </div>
+  
+          <div class="col-12">
+            <button type="submit" class="btn btn-dark w-100 rounded-pill">Submit</button>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label for="lastName" class="form-label">Last Name*</label>
-          <input type="text" class="form-control" id="lastName" required>
-        </div>
+      </form>
+      <div id="form-message" style="text-align:center; font-weight:bold; margin-top: 15px; color: green;"></div>
+    </section>
 
-        <div class="col-md-6">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email">
-        </div>
-        <div class="col-md-6">
-          <label for="phone" class="form-label">Phone*</label>
-          <input type="tel" class="form-control" id="phone" required>
-        </div>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-        <div class="col-md-6">
-          <label for="policyNumber" class="form-label">Policy number*</label>
-          <input type="text" class="form-control" id="policyNumber" required>
-        </div>
-        <div class="col-md-6">
-          <label for="insuranceType" class="form-label">Insurance Type*</label>
-          <select class="form-select" id="insuranceType" required>
-            <option value="" selected disabled>Select Insurance Type</option>
-            <option value="motor">Motor</option>
-            <option value="health">Health</option>
-            <option value="travel">Travel</option>
-            <option value="marine">Marine</option>
-            <option value="shopkeeper">Shopkeeper</option>
-            <option value="workmen">Workmen Compensation</option>
-          </select>
-        </div>
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const policyNumber = document.getElementById('policyNumber').value;
+    const insuranceType = document.getElementById('insuranceType').value;
 
-        <div class="col-md-6">
-          <label for="vehicleRC" class="form-label">Vehicle RC (only for motor renewal)</label>
-          <input class="form-control" type="file" id="vehicleRC" accept="image/*,application/pdf">
-        </div>
-        <div class="col-md-6">
-          <label for="previousInsurance" class="form-label">Previous Insurance copy *</label>
-          <input class="form-control" type="file" id="previousInsurance" accept="image/*,application/pdf" required>
-        </div>
+    const formData = new FormData();
+    formData.append('to', 'sparksolutionfreelancing@gmail.com');
+    formData.append('name', firstName + " " + lastName);
+    formData.append('email', email);
+    formData.append('subject', "Renewal - " + insuranceType);
+    formData.append('message', `Phone: ${phone}\nPolicy Number: ${policyNumber}\nInsurance Type: ${insuranceType}`);
 
-        <div class="col-md-6">
-          <label for="aadharCard" class="form-label">Aadhar card *</label>
-          <input class="form-control" type="file" id="aadharCard" accept="image/*,application/pdf" required>
-        </div>
-        <div class="col-md-6">
-          <label for="pan" class="form-label">PAN *</label>
-          <input class="form-control" type="file" id="pan" accept="image/*,application/pdf" required>
-        </div>
+    // Append files
+    const vehicleRC = document.getElementById('vehicleRC').files[0];
+    if (vehicleRC) formData.append('vehicleRC', vehicleRC);
 
-        <div class="col-12">
-          <button type="submit" class="btn btn-dark w-100 rounded-pill">Submit</button>
-        </div>
-      </div>
-    </form>
-  </section>
+    const previousInsurance = document.getElementById('previousInsurance').files[0];
+    if (previousInsurance) formData.append('previousInsurance', previousInsurance);
+
+    const aadharCard = document.getElementById('aadharCard').files[0];
+    if (aadharCard) formData.append('aadharCard', aadharCard);
+
+    const pan = document.getElementById('pan').files[0];
+    if (pan) formData.append('pan', pan);
+
+    fetch('/send-email', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        document.getElementById('form-message').textContent = data.message;
+        document.getElementById('contactForm').reset();
+      } else if (data.error) {
+        document.getElementById('form-message').textContent = 'Error: ' + data.error;
+      }
+    })
+    .catch(error => {
+      document.getElementById('form-message').textContent = 'Error: ' + error;
+    });
+  });
+</script>
 
 {% endblock %}

@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, jsonify
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
 app = Flask(__name__, static_folder='public')
 
@@ -201,13 +203,23 @@ def send_email():
     import logging
     logging.basicConfig(level=logging.DEBUG)
     app.logger.info("Received send-email request")
-    data = request.json
-    app.logger.debug(f"Request data: {data}")
-    to_email = data.get('to')
-    name = data.get('name')
-    from_email = data.get('email')
-    subject = data.get('subject')
-    message = data.get('message')
+
+    if request.is_json:
+        data = request.json
+        app.logger.debug(f"Request data: {data}")
+        to_email = data.get('to')
+        name = data.get('name')
+        from_email = data.get('email')
+        subject = data.get('subject')
+        message = data.get('message')
+        files = {}
+    else:
+        to_email = request.form.get('to')
+        name = request.form.get('name')
+        from_email = request.form.get('email')
+        subject = request.form.get('subject')
+        message = request.form.get('message')
+        files = request.files
 
     if not all([to_email, name, from_email, subject, message]):
         app.logger.error("Missing required fields")
@@ -221,6 +233,17 @@ def send_email():
 
         body = f"Name: {name}\nEmail: {from_email}\n\nMessage:\n{message}"
         msg.attach(MIMEText(body, 'plain'))
+
+        # Attach files if any
+        file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan']
+        for field in file_fields:
+            if field in files and files[field].filename:
+                file = files[field]
+                part = MIMEBase('application', 'octet-stream')
+                part.set_payload(file.read())
+                encoders.encode_base64(part)
+                part.add_header('Content-Disposition', f'attachment; filename={file.filename}')
+                msg.attach(part)
 
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
