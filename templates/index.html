@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>html, body { overflow-x: hidden; }</style>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
@@ -109,6 +110,45 @@
 </div>
 
 <!-- New Section: The faith that Fuels us -->
+<style>
+  .faith-section {
+    background: linear-gradient(135deg, #f0ad00, #d49a00);
+    color: #fff;
+    text-align: center;
+    padding: 3rem 1rem;
+    border-radius: 15px;
+    font-family: 'Arial Black', Arial, sans-serif;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    max-width: 600px;
+    margin: 2rem auto;
+  }
+  .faith-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .faith-highlight {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  .faith-stats {
+    font-size: 2rem;
+  }
+  .number {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+  .text-bold {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .text-small {
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+</style>
 <div class="faith-section">
   <div class="faith-text">
     The faith that <span class="faith-highlight">Fuels us</span>
@@ -121,7 +161,7 @@
 </div>
 
 <div style="text-align: center; margin-top: 1rem;">
-  <img src="{{ url_for('static', filename='image/publiclogo.avif') }}" alt="Faith Image" style="max-width: 300%; height: auto; display: inline-block;" />
+  <img src="{{ url_for('static', filename='image/publiclogo.avif') }}" alt="Faith Image" style="max-width: 100%; height: auto; display: inline-block;" />
 </div>
 <br>
 
@@ -240,10 +280,10 @@
 </div>
 
 <!-- Testimonial Section -->
-<div class="container-fluid testimonial-section" style="background-color: #f0ad00; color: #000; padding: 3rem 1rem; text-align: center; font-family: 'Arial', sans-serif; position: relative; min-height: 130%;">
-  <h2 style="font-weight: 900; font-size: 5rem; margin-bottom: 1rem;">What our customers say</h2>
-  <div id="testimonial-name" style="font-weight: 700; color: #7a0000; font-size: 2.5rem; margin-bottom: 0.5rem; transition: opacity 0.5s ease;">Naveen Chandrakar</div>
-  <div id="testimonial-text" style="font-size: 2.2rem; max-width: 600px; margin: 0 auto 1.5rem auto; transition: opacity 0.5s ease;">
+<div class="container-fluid testimonial-section" style="background-color: #f0ad00; color: #000; padding: 2rem 1rem; text-align: center; font-family: 'Arial', sans-serif; position: relative; height: 700px; border-radius:2rem;">
+  <h2 style="font-weight: 900; font-size: 3rem; margin-bottom: 1rem;">What our customers say</h2>
+  <div id="testimonial-name" style="font-weight: 700; color: #7a0000; font-size: 2rem; margin-bottom: 0.5rem; transition: opacity 0.5s ease;">Naveen Chandrakar</div>
+  <div id="testimonial-text" style="font-size: 1.8rem; max-width: 600px; margin: 0 auto 1.5rem auto; transition: opacity 0.5s ease;">
     text 1
   </div>
   <div id="arrow-left" style="position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); font-size: 2rem; cursor: pointer; user-select: none; color: #000;">&#8592;</div>
@@ -354,6 +394,31 @@
   }
   .faq-answer.show + .faq-arrow {
     transform: rotate(180deg);
+  }
+</style>
+
+<style>
+  @media (max-width: 768px) {
+    .partners-logos {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      animation: slidePartners 20s linear infinite;
+    }
+    .partners-logos > div {
+      flex: 0 0 auto;
+      width: 120px;
+    }
+    .partner-logo {
+      width: 100%;
+      height: auto;
+    }
+  }
+  @keyframes slidePartners {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
   }
 </style>
 
