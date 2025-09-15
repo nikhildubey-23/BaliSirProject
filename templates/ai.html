@@ -11,13 +11,13 @@
   .chat-container {
     max-width: 900px;
     margin: 2rem auto;
-    background: linear-gradient(145deg, #ffffff, #f0f8ff);
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 30px rgba(255, 215, 0, 0.1);
+    background: linear-gradient(135deg, #fff8dc, #fffacd);
+    border-radius: 30px;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), inset 0 0 40px rgba(255, 223, 0, 0.2);
     display: flex;
     flex-direction: column;
-    height: 800px;
-    border: 2px solid #ffd700;
+    height: 750px;
+    border: 3px solid #ffda44;
     position: relative;
     overflow: hidden;
   }
@@ -36,15 +36,15 @@
     50% { opacity: 0.7; }
   }
   .chat-header {
-    background: linear-gradient(90deg, #ffd700, #ffff00);
-    padding: 20px;
-    font-weight: bold;
+    background: linear-gradient(90deg, #ffda44, #fffacd);
+    padding: 25px;
+    font-weight: 900;
     color: #000000;
     text-align: center;
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-    text-shadow: 0 0 10px #ffffff;
-    font-size: 18px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    text-shadow: 0 0 15px #fffacd;
+    font-size: 22px;
   }
   .chat-messages {
     flex: 1;
@@ -97,11 +97,12 @@
   }
   .chat-input-container {
     display: flex;
-    border-top: 2px solid #ffd700;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-bottom-left-radius: 18px;
-    border-bottom-right-radius: 18px;
+    border-top: 3px solid #ffda44;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    gap: 10px;
   }
   #chat-input {
     flex: 1;
@@ -123,8 +124,8 @@
   #chat-send-btn {
     background: linear-gradient(45deg, #ffd700, #ffff00);
     border: 2px solid #ffff00;
-    padding: 12px 25px;
-    margin-left: 15px;
+    padding: 12px 20px;
+    margin: 0;
     cursor: pointer;
     font-size: 18px;
     color: #000000;
