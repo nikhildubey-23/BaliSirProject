@@ -176,6 +176,74 @@
   margin-top: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.meet-our-team-section {
+  padding: 3rem 1rem;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+.meet-our-team-heading {
+  font-weight: 900;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  margin-bottom: 2rem;
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+.yellow-arc-left,
+.yellow-arc-right {
+  background-color: #FFD600;
+  padding: 0 0.5rem;
+  border-radius: 50%;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.team-images-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  width: auto;
+  animation: slideRightToLeft 20s linear infinite;
+  transform: translateX(100%);
+}
+
+.team-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #FFD600;
+  padding: 5px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+@keyframes slideRightToLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (max-width: 767px) {
+  .meet-our-team-heading {
+    font-size: 1.5rem;
+  }
+  .team-image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 @media (max-width: 768px) {
   .bima-video-section {
     display: none;
