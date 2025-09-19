@@ -12,7 +12,13 @@ app = Flask(__name__, static_folder='public')
 # Configure Gemini API
 api_key = os.environ.get('GEMINI_API_KEY', 'AIzaSyBNDr4rWhCFZoDGgVqN1l4YbtnVBHfUWNM')
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel(
+    'gemini-1.5-flash',
+    generation_config=genai.GenerationConfig(
+        temperature=0.0,
+        max_output_tokens=150,
+    )
+)
 
 # Email server configuration
 SMTP_SERVER = "smtp.gmail.com"
@@ -262,9 +268,16 @@ def chat():
     data = request.json
     user_message = data.get('message', '')
 
+    # Prepend instructions to restrict chatbot responses to insurance/bima topics, short and precise
+    prompt = (
+        "Only answer insurance or bima questions. Keep answers short, precise, detailed. "
+        "If unrelated, say 'I only answer insurance questions.' "
+        "Question: " + user_message
+    )
+
     # Use Gemini API to generate response
     try:
-        response = model.generate_content(user_message)
+        response = model.generate_content(prompt)
         response_text = response.text
     except Exception as e:
         response_text = f"Error generating response: {str(e)}"

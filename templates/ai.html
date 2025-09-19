@@ -5,162 +5,123 @@
 {% block content %}
 <style>
   body {
-    background: linear-gradient(135deg, #ffffff, #fffacd);
-    font-family: 'Arial', sans-serif;
-  }
-  .chat-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    background: linear-gradient(135deg, #fff8dc, #fffacd);
-    border-radius: 30px;
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), inset 0 0 40px rgba(255, 223, 0, 0.2);
+    background-color: #f7f7f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    height: 750px;
-    border: 3px solid #ffda44;
-    position: relative;
+  }
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+    margin: 2rem auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
     overflow: hidden;
-  }
-  .chat-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #ffd700, #ffff00, #ffd700);
-    animation: glow 2s infinite;
-  }
-  @keyframes glow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    height: 80vh;
   }
   .chat-header {
-    background: linear-gradient(90deg, #ffda44, #fffacd);
-    padding: 25px;
-    font-weight: 900;
-    color: #000000;
-    text-align: center;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    text-shadow: 0 0 15px #fffacd;
-    font-size: 22px;
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #fafafa;
   }
   .chat-messages {
     flex: 1;
-    padding: 20px;
+    padding: 1rem 1.5rem;
     overflow-y: auto;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000000;
-    font-size: 16px;
+    background-color: #ffffff;
     scrollbar-width: thin;
-    scrollbar-color: #ffd700 #f0f8ff;
-    scroll-behavior: smooth;
+    scrollbar-color: #cbd5e1 transparent;
   }
   .chat-messages::-webkit-scrollbar {
     width: 8px;
   }
   .chat-messages::-webkit-scrollbar-track {
-    background: #f0f8ff;
+    background: transparent;
   }
   .chat-messages::-webkit-scrollbar-thumb {
-    background: #ffd700;
+    background-color: #cbd5e1;
     border-radius: 4px;
   }
   .chat-message {
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    border-radius: 15px;
-    animation: fadeIn 0.5s ease-in;
+    max-width: 70%;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    line-height: 1.4;
+    animation: fadeIn 0.3s ease-in;
+    word-wrap: break-word;
   }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .chat-message.bot {
-    text-align: left;
-    background: linear-gradient(135deg, #ffffe0, #fffacd);
-    color: #000000;
+    background-color: #f3f4f6;
+    color: #111827;
     align-self: flex-start;
-    max-width: 70%;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    border: 1px solid #ffd700;
-  }
-  .chat-message.bot h2 {
-    font-size: 1.3em;
-    font-weight: bold;
-    margin: 15px 0 10px 0;
-    color: #333;
-  }
-  .chat-message.bot h3 {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin: 10px 0 5px 0;
-    color: #555;
+    border-top-left-radius: 0;
   }
   .chat-message.user {
-    text-align: right;
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
-    color: #000000;
+    background-color: #2563eb;
+    color: white;
     align-self: flex-end;
-    max-width: 70%;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    border: 1px solid #ffff00;
+    border-top-right-radius: 0;
   }
   .chat-input-container {
     display: flex;
-    border-top: 3px solid #ffda44;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    gap: 10px;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #fafafa;
   }
   #chat-input {
     flex: 1;
-    border: 2px solid #ffd700;
-    border-radius: 25px;
-    padding: 12px 20px;
-    font-size: 16px;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 9999px;
     outline: none;
-    background: #ffffff;
-    color: #000000;
-    font-family: 'Arial', sans-serif;
-    resize: none;
-    height: 50px;
-    overflow-y: auto;
+    background-color: #e5e7eb;
+    color: #111827;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   #chat-input::placeholder {
-    color: #666666;
+    color: #6b7280;
   }
   #chat-send-btn {
-    background: linear-gradient(45deg, #ffd700, #ffff00);
-    border: 2px solid #ffff00;
-    padding: 12px 20px;
-    margin: 0;
+    background-color: #2563eb;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 0 1rem;
+    margin-left: 0.75rem;
+    border-radius: 9999px;
     cursor: pointer;
-    font-size: 18px;
-    color: #000000;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    font-weight: bold;
+    transition: background-color 0.2s ease;
   }
   #chat-send-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    background-color: #1d4ed8;
   }
 </style>
 
-<div class="chat-container">
-  <div class="chat-header">AI Chatbot</div>
-  <div class="chat-messages" id="chat-messages">
-    <div class="chat-message bot">Welcome to our AI chatbot! Ask me anything about insurance.</div>
+<div class="chat-container" role="main" aria-label="Chat interface">
+  <div class="chat-header" aria-live="polite" aria-atomic="true">AI Chatbot</div>
+  <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
+    <div class="chat-message bot" role="article" aria-label="Welcome message from AI chatbot">Welcome to our AI chatbot! Ask me anything about insurance.</div>
   </div>
-  <div class="chat-input-container">
-    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" />
-    <button id="chat-send-btn">&#9658;</button>
-  </div>
+  <form class="chat-input-container" onsubmit="event.preventDefault(); chatSendBtn.click();">
+    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
+    <button id="chat-send-btn" type="submit" aria-label="Send message">&#9658;</button>
+  </form>
 </div>
 
 <script>
@@ -192,20 +153,32 @@
     appendMessage(userText, 'user');
     chatInput.value = '';
 
-    // Send message to backend API
+    // Send message to backend API with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
     fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ message: userText }),
+      signal: controller.signal
     })
-    .then(response => response.json())
+    .then(response => {
+      clearTimeout(timeoutId);
+      return response.json();
+    })
     .then(data => {
       appendMessage(data.response, 'bot');
     })
     .catch(error => {
-      appendMessage('Error: ' + error.message, 'bot');
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        appendMessage('Error: Request timed out. Please try again.', 'bot');
+      } else {
+        appendMessage('Error: ' + error.message, 'bot');
+      }
     });
   });
 
@@ -216,3 +189,5 @@
   });
 </script>
 {% endblock %}
+
+{% block footer %}{% endblock %}
