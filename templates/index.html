@@ -395,20 +395,25 @@
   </div>
 </div>
 <script>
+  console.log('FAQ script loaded');
   document.querySelectorAll('.faq-question').forEach(question => {
     question.addEventListener('click', () => {
-      const currentlyActive = document.querySelector('.faq-answer.show');
-      if (currentlyActive && currentlyActive !== question.nextElementSibling) {
-        currentlyActive.classList.remove('show');
-        currentlyActive.style.maxHeight = null;
-      }
+      console.log('FAQ question clicked');
       const answer = question.nextElementSibling;
-      if (answer.classList.contains('show')) {
-        answer.classList.remove('show');
-        answer.style.maxHeight = null;
-      } else {
+      const isOpen = answer.classList.contains('show');
+
+      // Close all open faq answers
+      document.querySelectorAll('.faq-answer.show').forEach(openAnswer => {
+        openAnswer.classList.remove('show');
+        openAnswer.style.maxHeight = null;
+        openAnswer.previousElementSibling.classList.remove('active');
+      });
+
+      if (!isOpen) {
+        // Open the clicked question's answer if it was not open
         answer.classList.add('show');
         answer.style.maxHeight = answer.scrollHeight + "px";
+        question.classList.add('active');
       }
     });
   });
@@ -441,6 +446,9 @@
     overflow: hidden;
   }
   .faq-answer.show + .faq-arrow {
+    transform: rotate(180deg);
+  }
+  .faq-question.active .faq-arrow {
     transform: rotate(180deg);
   }
 </style>
