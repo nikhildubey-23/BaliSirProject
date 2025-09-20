@@ -1,138 +1,881 @@
 {% extends "base.html" %}
-{% block content %}
 
-<section class="marine-trust-section">
-  <div class="marine-trust-container">
-    <div class="marine-trust-text">
-      <h2 class="marine-trust-text-large">
-        Because every shipment<br />
-        carries more than just cargo<br />
-        <span class="marine-trust-highlight">It carries trust</span>
-      </h2>
-    </div>
-    <div class="marine-trust-image-container">
-      <div class="yellow-blob"></div>
-      <img src="{{ url_for('static', filename='image/mrimg.avif') }}" alt="Marine Cargo Trust" class="marine-trust-image" />
+{% block content %}
+<style>
+  /* Modern Motor Insurance Page Styling */
+  .hero-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .hero-section h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-section .highlight {
+    background: linear-gradient(135deg, #fff 0%, #f0ad00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-section img {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .hero-section img:hover {
+    transform: translateY(-5px);
+  }
+
+  .drive-worry-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .drive-worry-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .drive-worry-section h2 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .drive-worry-section .lead {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .drive-worry-section img {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+  }
+
+  .drive-worry-section img:hover {
+    transform: translateY(-5px);
+  }
+
+  .insurance-table-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .insurance-table-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .insurance-table-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin: 2rem 0;
+  }
+
+  .insurance-table-container .table {
+    background: #ffe680;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .insurance-table-container .table thead {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    color: white;
+  }
+
+  .insurance-table-container .table tbody tr:nth-child(even) {
+    background-color: #ffeb99;
+  }
+
+  .insurance-table-container .table tbody tr:hover {
+    background-color: #ffe066;
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+  }
+
+  .insurance-table-container img {
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .insurance-table-container img:hover {
+    transform: scale(1.1);
+  }
+
+  .coverage-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .coverage-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .coverage-section h2 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .coverage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .coverage-item {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid #f0ad00;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .coverage-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .coverage-item img {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    padding: 10px;
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+  }
+
+  .coverage-item h3 {
+    color: #f0ad00;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+    padding: 0;
+  }
+
+  .offer-card li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .offer-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #f0ad00;
+    font-weight: bold;
+  }
+
+  .addons-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .addons-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .addons-section h2 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .addon-item {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid #f0ad00;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .addon-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .addon-item img {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    padding: 10px;
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+  }
+
+  .addon-item h3 {
+    color: #f0ad00;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .addon-item p {
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .toggle-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .toggle-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .toggle-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .toggle-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    padding: 1rem 2rem;
+    border: 2px solid white;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: white;
+  }
+
+  .toggle-btn.active {
+    background: white;
+    color: #f0ad00;
+  }
+
+  .toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .content-box {
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    border-radius: 20px;
+    padding: 2rem;
+    min-height: 140px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .content-box h3 {
+    color: #f0ad00;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .content-box p {
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+    border-top: 1px dotted #333;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .cta-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .cta-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .cta-text .highlight {
+    color: #f0ad00;
+    font-weight: 700;
+  }
+
+  .cta-text em {
+    font-weight: 700;
+    font-style: normal;
+    color: #f0ad00;
+  }
+
+  .cta-button {
+    text-align: center;
+  }
+
+  .cta-button a {
+    display: inline-block;
+    background: #333;
+    color: #f0ad00;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .cta-button a:hover {
+    background: #f0ad00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .cta-caption {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 3rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .hero-section h2 {
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .drive-worry-section {
+      padding: 3rem 0;
+    }
+
+    .coverage-grid,
+    .addons-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .offers-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .toggle-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .cta-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .cta-text {
+      font-size: 1.2rem;
+    }
+
+    .insurance-table-container {
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .coverage-item,
+    .addon-item {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-section,
+  .drive-worry-section,
+  .insurance-table-section,
+  .coverage-section,
+  .insurance-offers-section,
+  .addons-section,
+  .toggle-section,
+  .cta-section {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .hero-section { animation-delay: 0.1s; }
+  .drive-worry-section { animation-delay: 0.2s; }
+  .insurance-table-section { animation-delay: 0.3s; }
+  .coverage-section { animation-delay: 0.4s; }
+  .insurance-offers-section { animation-delay: 0.5s; }
+  .addons-section { animation-delay: 0.6s; }
+  .toggle-section { animation-delay: 0.7s; }
+  .cta-section { animation-delay: 0.8s; }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="mb-4">
+          Your journey is important. <span class="highlight">Let's make sure it's protected.</span>
+        </h2>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/yourjourneyimg.avif') }}" alt="Motor Insurance Illustration" class="img-fluid" />
+      </div>
     </div>
   </div>
 </section>
 
-<section class="marine-insurance-info-section">
-  <div class="marine-insurance-info-yellow-box">
-    <div class="marine-insurance-info-container">
-      <div class="marine-insurance-info-image-container">
-        <img src="{{ url_for('static', filename='image/mrtruckimg.avif') }}" alt="Marine Cargo Insurance" class="marine-insurance-info-image" />
+<!-- Drive Worry-Free Section -->
+<section class="drive-worry-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <img src="{{ url_for('static', filename='image/carimg.avif') }}" alt="Drive Worry-Free with Motor Insurance" class="img-fluid" />
       </div>
-      <div class="marine-insurance-info-text white-text">
-        <h2>What is Marine Cargo Insurance?</h2>
-        <p>
-          This insurance protects your cargo from the moment it leaves your warehouse to the moment it reaches its destination. Whether you're importing machinery, exporting textiles, or sending essential supplies, we’ve got your back, every nautical mile of the way.
+      <div class="col-md-6">
+        <h2 class="mb-4">
+          Drive Worry-Free with Motor Insurance That Cares Because It's More Than Just a Vehicle. It's Your Journey
+        </h2>
+        <p class="lead">
+          At <em>Bima with Bali</em>, we understand that your vehicle is more than just metal and wheels. It's your daily companion, your weekend getaway partner, and sometimes even your lifeline in emergencies. That's why our motor insurance is built not just on policies and premiums, but on people.
         </p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Insurance Table Section -->
+<section class="insurance-table-section">
+  <div class="container">
+    <div class="insurance-table-container">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-warning">
+            <tr>
+              <th></th>
+              <th class="text-center">Insurance Detail's</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center align-middle">
+                <img src="{{ url_for('static', filename='image/truckimg.avif') }}" alt="Commercial Vehicle" class="img-fluid" style="max-width: 150px; height: auto;" />
+              </td>
+              <td class="align-middle fw-bold fs-4">
+                Commercial Vehicle Insurance
+              </td>
+              <td class="align-middle">
+                <table class="table table-bordered mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th colspan="3" class="text-center fw-bold">Insurance Detail</th>
+                    </tr>
+                    <tr>
+                      <th class="text-center">First-Party</th>
+                      <th class="text-center">Third-Party</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>New Vehicle</td>
+                      <td class="text-center">1 year</td>
+                      <td class="text-center">1 years</td>
+                    </tr>
+                    <tr>
+                      <td>Old Vehicle</td>
+                      <td colspan="2" class="text-center">Combined insurance for 1 year</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center align-middle">
+                <img src="{{ url_for('static', filename='image/whitecarimg.avif') }}" alt="Private Car" class="img-fluid" style="max-width: 150px; height: auto;" />
+              </td>
+              <td class="align-middle fw-bold fs-4">
+                Private Car Insurance
+              </td>
+              <td class="align-middle">
+                <table class="table table-bordered mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th colspan="3" class="text-center fw-bold">Insurance Detail</th>
+                    </tr>
+                    <tr>
+                      <th class="text-center">First-Party</th>
+                      <th class="text-center">Third-Party</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>New Vehicle</td>
+                      <td class="text-center">1 year</td>
+                      <td class="text-center">3 years</td>
+                    </tr>
+                    <tr>
+                      <td>Old Vehicle</td>
+                      <td colspan="2" class="text-center">Combined insurance for 1 year</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center align-middle">
+                <img src="{{ url_for('static', filename='image/bickimg.avif') }}" alt="Two Wheeler" class="img-fluid" style="max-width: 150px; height: auto;" />
+              </td>
+              <td class="align-middle fw-bold fs-4">
+                Two Wheeler Insurance
+              </td>
+              <td class="align-middle">
+                <table class="table table-bordered mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th colspan="3" class="text-center fw-bold">Insurance Detail</th>
+                    </tr>
+                    <tr>
+                      <th class="text-center">First-Party</th>
+                      <th class="text-center">Third-Party</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>New Vehicle</td>
+                      <td class="text-center">1 year</td>
+                      <td class="text-center">5 years</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="text-center">Old Vehicle</td>
+                      <td class="text-center">Combined insurance for 1 year</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
-<section class="why-need-section">
-  <h2 class="why-need-title">Why Do You Need It?</h2>
-  <div class="why-need-grid">
-    <div class="why-need-item">
-      <div class="why-need-item-content">
-        <img src="{{ url_for('static', filename='image/pro.avif') }}" alt="Protection Against Loss or Damage" class="why-need-icon" />
-        <div class="why-need-text">
-          <h3>Protection Against Loss or Damage</h3>
-          <p>Goods in transit are exposed to various risks: storms, accidents, theft, fire, or even mishandling. Marine cargo insurance covers financial losses in case your cargo is lost or damaged during shipment.</p>
+<!-- What We Cover Section -->
+<section class="coverage-section">
+  <div class="container">
+    <h2>What We Cover</h2>
+    <div class="coverage-grid">
+      <div class="coverage-item">
+        <img src="{{ url_for('static', filename='image/comprehensivimg.avif') }}" alt="Comprehensive Coverage" />
+        <div>
+          <h3>Comprehensive Coverage</h3>
+          <p>Accidents, theft, fire, and natural disasters. we've got it all covered</p>
         </div>
       </div>
-    </div>
-    <div class="why-need-item">
-      <div class="why-need-item-content">
-        <img src="{{ url_for('static', filename='image/leg.avif') }}" alt="Legal and Contractual Requirements" class="why-need-icon" />
-        <div class="why-need-text">
-          <h3>Legal and Contractual Requirements</h3>
-          <p>Sometimes, the buyer or the seller is contractually required (Incoterms like CIF or CIP) to provide insurance. Carriers’ liability is limited, so having your own insurance ensures broader protection.</p>
+      <div class="coverage-item">
+        <img src="{{ url_for('static', filename='image/thirdpartyimg.avif') }}" alt="Third-Party Liability" />
+        <div>
+          <h3>Third-Party Liability</h3>
+          <p>Protects you against legal liabilities from damage to others</p>
         </div>
       </div>
-    </div>
-    <div class="why-need-item">
-      <div class="why-need-item-content">
-        <img src="{{ url_for('static', filename='image/pe.avif') }}" alt="Peace of Mind for Businesses" class="why-need-icon" />
-        <div class="why-need-text">
-          <h3>Peace of Mind for Businesses</h3>
-          <p>Businesses can ship goods without constantly worrying about potential disasters. It provides a safety net, so companies can focus on operations rather than uncertainties.</p>
+      <div class="coverage-item">
+        <img src="{{ url_for('static', filename='image/owndamageimg.avif') }}" alt="Own Damage" />
+        <div>
+          <h3>Own Damage</h3>
+          <p>Covers damage to your vehicle due to accidents or mishaps</p>
         </div>
       </div>
-    </div>
-    <div class="why-need-item">
-      <div class="why-need-item-content">
-        <img src="{{ url_for('static', filename='image/nat.avif') }}" alt="Natural Disasters and Piracy" class="why-need-icon" />
-        <div class="why-need-text">
-          <h3>Natural Disasters and Piracy</h3>
-          <p>Risks like cyclones, tsunamis, and piracy are unpredictable but real. Marine cargo insurance helps recover losses due to such events.</p>
-        </div>
-      </div>
-    </div>
-    <div class="why-need-item">
-      <div class="why-need-item-content">
-        <img src="{{ url_for('static', filename='image/gio.avif') }}" alt="Global Trade Confidence" class="why-need-icon" />
-        <div class="why-need-text">
-          <h3>Global Trade Confidence</h3>
-          <p>International trade involves multiple touchpoints—each increasing risk. Marine cargo insurance builds trust among trading partners, making international business smoother.</p>
-        </div>
-      </div>
-    </div>
-    <div class="why-need-item">
-      <div class="why-need-item-content">
-        <img src="{{ url_for('static', filename='image/cov.avif') }}" alt="Covers Gaps Not Handled by Carrier Liability" class="why-need-icon" />
-        <div class="why-need-text">
-          <h3>Covers Gaps Not Handled by Carrier Liability</h3>
-          <p>Shipping lines, freight forwarders, and transporters have limited liability. Insurance ensures full compensation beyond what the carrier may cover.</p>
+      <div class="coverage-item">
+        <img src="{{ url_for('static', filename='image/addonsimg.avif') }}" alt="Add-Ons That Matter" />
+        <div>
+          <h3>Add-Ons That Matter</h3>
+          <p>Zero depreciation, engine protection, roadside assistance, and more</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
-
-
-<section class="coverage-offer-section">
-  <div class="coverage-offer-container">
-    <div class="coverage-offer-left">
-      <ul class="coverage-list black-bullets">
-        <li>Damage due to Storms, rough seas, and natural disasters.</li>
-        <li>Fire, explosion, or accidents during transit.</li>
-        <li>Handling damages. (loading/unloading)</li>
-        <li>Import & export shipments.</li>
-        <li>Inland transit.</li>
-        <li>Multi-modal transportation.</li>
-        <li>Theft or pilferage.</li>
-      </ul>
-    </div>
-    <div class="coverage-offer-right">
-      <h2>Who Is It For?</h2>
-      <ul class="coverage-list white-bullets">
-        <li>Exporters & Importers</li>
-        <li>Manufacturers & Traders</li>
-        <li>Logistics Companies</li>
-        <li>E-commerce Businesses</li>
-        <li>Anyone sending valuable goods across distances</li>
-      </ul>
-    </div>
-  </div>
-</section>
-<section class="marine-coverage-section">
-  <div class="marine-coverage-container">
-    <div class="marine-coverage-text">
-      <h2>
-        With marine cargo insurance, you’re covered <span class="highlight">Financially and Emotionally.</span>
-      </h2>
-    </div>
-    <div class="marine-coverage-action">
-      <a href="{{ url_for('get_now') }}" class="btn-reachout">REACH US</a>
-      <p class="reachout-subtitle">Connect with us to get insured</p>
+<!-- Insurance We Offer Section -->
+<section class="insurance-offers-section">
+  <div class="container">
+    <h2>Insurance We offer</h2>
+    <div class="offers-grid">
+      <div class="offer-card">
+        <h3>Third Party Liability Insurance</h3>
+        <ul>
+          <li>If you accidentally injure someone</li>
+          <li>If there's damage to someone else's property</li>
+          <li>Legal liabilities you may face</li>
+        </ul>
+      </div>
+      <div class="offer-card">
+        <h3>Comprehensive Insurance</h3>
+        <ul>
+          <li>Fire & Theft</li>
+          <li>Natural calamities like floods or earthquakes</li>
+          <li>Personal accident cover</li>
+          <li>Vandalism</li>
+        </ul>
+      </div>
+      <div class="offer-card">
+        <h3>Standalone Damage Cover</h3>
+        <ul>
+          <li>New car owners</li>
+          <li>Those who want flexibility in choosing different insurers for TP and OD cover</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- Add-on Covers Section -->
+<section class="addons-section">
+  <div class="container">
+    <h2>Our add-on covers</h2>
+    <div class="addons-grid">
+      <div class="addon-item">
+        <img src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}" alt="Zero Depreciation Cover" />
+        <div>
+          <h3>Zero Depreciation Cover</h3>
+          <p>No reduction in claims for old parts</p>
+        </div>
+      </div>
+      <div class="addon-item">
+        <img src="{{ url_for('static', filename='image/engineprotectionimg.avif') }}" alt="Engine Protection" />
+        <div>
+          <h3>Engine Protection</h3>
+          <p>Especially useful during floods</p>
+        </div>
+      </div>
+      <div class="addon-item">
+        <img src="{{ url_for('static', filename='image/roadsideassistanceimg.avif') }}" alt="Roadside Assistance" />
+        <div>
+          <h3>Roadside Assistance</h3>
+          <p>Stuck in the middle of nowhere? Helps on the way!</p>
+        </div>
+      </div>
+      <div class="addon-item">
+        <img src="{{ url_for('static', filename='image/returntoinvoicecoverimg.avif') }}" alt="Return to Invoice Cover" />
+        <div>
+          <h3>Return to Invoice Cover</h3>
+          <p>Get full car value in total loss</p>
+        </div>
+      </div>
+      <div class="addon-item">
+        <img src="{{ url_for('static', filename='image/ncbprotectionimg.avif') }}" alt="NCB protection" />
+        <div>
+          <h3>NCB protection</h3>
+          <p>Keeps your bonus safe, even after a claim</p>
+        </div>
+      </div>
+      <div class="addon-item">
+        <img src="{{ url_for('static', filename='image/consumablecoverimg.avif') }}" alt="consumable cover" />
+        <div>
+          <h3>consumable cover</h3>
+          <p>Covers nuts, bolts, oils etc</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Buyer/Customer Toggle Section -->
+<section class="toggle-section">
+  <div class="container">
+    <div class="toggle-container">
+      <div>
+        <div class="toggle-buttons">
+          <button id="btnFirstTime" class="toggle-btn active">First time Buyers</button>
+          <button id="btnExisting" class="toggle-btn">Existing Customers</button>
+        </div>
+        <div id="contentBox" class="content-box">
+          <h3>First-Time Buyer? We've got you.</h3>
+          <p>
+            Buying insurance can feel overwhelming, especially if it's your first time. Our team will walk you through every step, explain the terms in simple language, and help you choose what's right, not just what's popular.
+          </p>
+        </div>
+      </div>
+      <div class="text-center">
+        <img src="{{ url_for('static', filename='image/carsecurefileimg.avif') }}" alt="Insurance Illustration" class="img-fluid" style="max-width: 350px;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-container">
+      <div class="cta-text">
+        Drive <span class="highlight">smart</span>, Stay <span class="highlight">safe</span>, Get <span class="highlight">insured</span> with <em>Bima with Bali</em> – Because protection on the road starts with the right policy.
+      </div>
+      <div class="cta-button">
+        <a href="{{ url_for('get_now') }}">REACH US</a>
+        <div class="cta-caption">Connect with us to get insured</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btnFirstTime = document.getElementById('btnFirstTime');
+  const btnExisting = document.getElementById('btnExisting');
+  const contentBox = document.getElementById('contentBox');
+
+  btnFirstTime.addEventListener('click', () => {
+    btnFirstTime.classList.add('active');
+    btnExisting.classList.remove('active');
+    contentBox.innerHTML = `
+      <h3 style="color: #f0ad00; font-weight: 700; margin-bottom: 1rem;">First-Time Buyer? We've got you.</h3>
+      <p style="margin: 0; line-height: 1.6;">
+        Buying insurance can feel overwhelming, especially if it's your first time. Our team will walk you through every step, explain the terms in simple language, and help you choose what's right, not just what's popular.
+      </p>
+    `;
+  });
+
+  btnExisting.addEventListener('click', () => {
+    btnExisting.classList.add('active');
+    btnFirstTime.classList.remove('active');
+    contentBox.innerHTML = `
+      <h3 style="color: #f0ad00; font-weight: 700; margin-bottom: 1rem;">Already Insured Elsewhere? Let's make the switch easy.</h3>
+      <p style="margin: 0; line-height: 1.6;">
+        We'll help you transfer your existing policy, ensure continuous coverage, and maybe even offer better benefits all with zero paperwork stress.
+      </p>
+    `;
+  });
+</script>
+
+
+
 {% endblock %}

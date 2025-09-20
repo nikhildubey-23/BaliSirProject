@@ -1,13 +1,430 @@
 {% extends "base.html" %}
-{% block content %}
 
-<section class="fire-burglary-protect-section">
-  <div class="fire-burglary-container">
-    <div class="fire-burglary-text">
+{% block content %}
+<style>
+  /* Modern Fire & Burglary Insurance Page Styling */
+  .fire-burglary-hero-section {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #f0ad00 100%);
+    padding: 5rem 0;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .fire-burglary-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .fire-burglary-hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fire-burglary-hero-text h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .fire-burglary-hero-text .highlight {
+    background: linear-gradient(135deg, #fff 0%, #f0ad00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+
+  .fire-burglary-image-container {
+    position: relative;
+    text-align: center;
+  }
+
+  .yellow-blob {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    border-radius: 50%;
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  .fire-burglary-image {
+    position: relative;
+    z-index: 2;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .fire-burglary-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .fire-burglary-info-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .fire-burglary-info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .fire-burglary-info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fire-burglary-info-text h3 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .fire-burglary-info-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .fire-burglary-info-image {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+  }
+
+  .fire-burglary-info-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .fire-burglary-why-need-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fire-burglary-why-need-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .fire-burglary-why-need-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fire-burglary-why-need-container h3 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .fire-burglary-why-need-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .fire-burglary-why-need-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    color: #333;
+  }
+
+  .fire-burglary-why-need-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  .fire-burglary-why-need-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    padding: 15px;
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+  }
+
+  .fire-burglary-why-need-item p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .fire-burglary-coverage-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .fire-burglary-coverage-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .fire-burglary-coverage-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fire-burglary-coverage-container h3 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .fire-burglary-coverage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  .fire-burglary-coverage-item {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid #f0ad00;
+  }
+
+  .fire-burglary-coverage-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .fire-burglary-coverage-item h4 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    color: white;
+    font-weight: 700;
+    padding: 1rem;
+    margin: -2rem -2rem 1.5rem -2rem;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+  }
+
+  .fire-burglary-coverage-item ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .fire-burglary-coverage-item li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .fire-burglary-coverage-item li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #f0ad00;
+    font-weight: bold;
+  }
+
+  .fire-burglary-last-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fire-burglary-last-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .fire-burglary-last-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fire-burglary-last-text h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: white;
+  }
+
+  .fire-burglary-last-text .highlight {
+    background: linear-gradient(135deg, #fff 0%, #f0ad00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .fire-burglary-last-action {
+    text-align: center;
+  }
+
+  .reach-button {
+    display: inline-block;
+    background: white;
+    color: #f0ad00;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .reach-button:hover {
+    background: #f0ad00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .fire-burglary-last-action p {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .fire-burglary-hero-section {
+      padding: 3rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .fire-burglary-hero-container,
+    .fire-burglary-info-container,
+    .fire-burglary-last-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .fire-burglary-hero-text h2 {
+      font-size: 2rem;
+    }
+
+    .fire-burglary-why-need-grid,
+    .fire-burglary-coverage-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .fire-burglary-coverage-item {
+      padding: 1.5rem;
+    }
+
+    .fire-burglary-why-need-item {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fire-burglary-hero-section,
+  .fire-burglary-info-section,
+  .fire-burglary-why-need-section,
+  .fire-burglary-coverage-section,
+  .fire-burglary-last-section {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .fire-burglary-hero-section { animation-delay: 0.1s; }
+  .fire-burglary-info-section { animation-delay: 0.2s; }
+  .fire-burglary-why-need-section { animation-delay: 0.3s; }
+  .fire-burglary-coverage-section { animation-delay: 0.4s; }
+  .fire-burglary-last-section { animation-delay: 0.5s; }
+</style>
+
+<!-- Hero Section -->
+<section class="fire-burglary-hero-section">
+  <div class="fire-burglary-hero-container">
+    <div class="fire-burglary-hero-text">
       <h2>
         Protecting more<br />
         than just walls<br />
-        <span class="highlight">we’re protecting your peace of mind</span>
+        <span class="highlight">we're protecting your peace of mind</span>
       </h2>
     </div>
     <div class="fire-burglary-image-container">
@@ -17,6 +434,7 @@
   </div>
 </section>
 
+<!-- Info Section -->
 <section class="fire-burglary-info-section">
   <div class="fire-burglary-info-container">
     <div class="fire-burglary-info-image-container">
@@ -25,11 +443,13 @@
     <div class="fire-burglary-info-text">
       <h3>What is Fire & Burglary Insurance?</h3>
       <p>
-        Life is full of surprises, Not all of them pleasant. Imagine waking up one day to find your shop, office, or home damaged by fire, or worse, looted. The emotional and financial blow can be overwhelming. That’s where Fire & Burglary Insurance steps in — like a friend who’s got your back when things go wrong.
+        Life is full of surprises, Not all of them pleasant. Imagine waking up one day to find your shop, office, or home damaged by fire, or worse, looted. The emotional and financial blow can be overwhelming. That's where Fire & Burglary Insurance steps in — like a friend who's got your back when things go wrong.
       </p>
     </div>
   </div>
 </section>
+
+<!-- Why Need Section -->
 <section class="fire-burglary-why-need-section">
   <div class="fire-burglary-why-need-container">
     <h3>Why Do You Need It?</h3>
@@ -53,6 +473,8 @@
     </div>
   </div>
 </section>
+
+<!-- Coverage Section -->
 <section class="fire-burglary-coverage-section">
   <div class="fire-burglary-coverage-container">
     <h3>Coverage we offer</h3>
@@ -80,11 +502,13 @@
     </div>
   </div>
 </section>
+
+<!-- Final CTA Section -->
 <section class="fire-burglary-last-section">
   <div class="fire-burglary-last-container">
     <div class="fire-burglary-last-text">
       <h2>
-        At <em class="highlight">Bima with Bali</em> we don’t just talk insurance, we live the stories with you.
+        At <em class="highlight">Bima with Bali</em> we don't just talk insurance, we live the stories with you.
       </h2>
     </div>
     <div class="fire-burglary-last-action">
@@ -93,4 +517,5 @@
     </div>
   </div>
 </section>
+
 {% endblock %}

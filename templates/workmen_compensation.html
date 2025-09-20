@@ -1,8 +1,328 @@
 {% extends "base.html" %}
+
 {% block content %}
-<section class="workmen-trust-section">
-  <div class="workmen-trust-container">
-    <div class="workmen-trust-text">
+<style>
+  /* Modern Workmen Compensation Insurance Page Styling */
+  .workmen-hero-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .workmen-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .workmen-hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .workmen-hero-text h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .workmen-hero-text .workmen-trust-highlight {
+    background: linear-gradient(135deg, #fff 0%, #f0ad00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+
+  .workmen-trust-image-container {
+    position: relative;
+    text-align: center;
+  }
+
+  .yellow-blob {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    border-radius: 50%;
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  .workmen-trust-image {
+    position: relative;
+    z-index: 2;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .workmen-trust-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .workmen-info-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .workmen-info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .workmen-info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .workmen-info-text h2 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .workmen-info-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .workmen-info-image {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+  }
+
+  .workmen-info-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .workmen-why-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .workmen-why-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .workmen-why-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .workmen-why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .workmen-why-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    color: #333;
+  }
+
+  .workmen-why-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  .workmen-why-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    padding: 15px;
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+  }
+
+  .workmen-why-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .workmen-cta {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+    text-align: center;
+    border-top: 1px dotted #333;
+  }
+
+  .workmen-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .workmen-cta-text {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .workmen-cta-highlight {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .workmen-cta-button {
+    display: inline-block;
+    background: #333;
+    color: #f0ad00;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+  }
+
+  .workmen-cta-button:hover {
+    background: #f0ad00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .workmen-cta-subtitle {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .workmen-hero-section {
+      padding: 3rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .workmen-hero-container,
+    .workmen-info-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .workmen-hero-text h2 {
+      font-size: 2rem;
+    }
+
+    .workmen-why-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .workmen-why-item {
+      padding: 1.5rem;
+    }
+
+    .workmen-cta-text {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .workmen-hero-section,
+  .workmen-info-section,
+  .workmen-why-section,
+  .workmen-cta {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .workmen-hero-section { animation-delay: 0.1s; }
+  .workmen-info-section { animation-delay: 0.2s; }
+  .workmen-why-section { animation-delay: 0.3s; }
+  .workmen-cta { animation-delay: 0.4s; }
+</style>
+
+<!-- Hero Section -->
+<section class="workmen-hero-section">
+  <div class="workmen-hero-container">
+    <div class="workmen-hero-text">
       <h2>
         Because behind every worker is a<br />
         <span class="workmen-trust-highlight">Family depending on them</span>
@@ -15,6 +335,7 @@
   </div>
 </section>
 
+<!-- Info Section -->
 <section class="workmen-info-section">
   <div class="workmen-info-container">
     <img src="{{ url_for('static', filename='image/wc2.avif') }}" alt="What is Workmen Compensation Insurance" class="workmen-info-image" />
@@ -27,8 +348,9 @@
   </div>
 </section>
 
+<!-- Why It Matters Section -->
 <section class="workmen-why-section">
-  <h2 class="workmen-why-title">Why it Matters ?</h2>
+  <h2 class="workmen-why-title">Why it Matters?</h2>
   <div class="workmen-why-grid">
     <div class="workmen-why-item">
       <img src="{{ url_for('static', filename='image/wc3.avif') }}" alt="Medical Expenses" class="workmen-why-icon" />
@@ -51,18 +373,17 @@
       <p class="workmen-why-text">Legal compliance for employers under the Workmen Compensation Act</p>
     </div>
   </div>
-  <div class="workmen-cta">
+</section>
+
+<!-- CTA Section -->
+<section class="workmen-cta">
   <div class="workmen-cta-text">
-      work smart, work safe.<br />
-      Stay covered with <span class="workmen-cta-highlight">Bima with Bali</span>
-    </div>
-    
-    <a href="{{ url_for('get_now') }}" class="workmen-cta-button">REACH US</a>
-    <div class="workmen-cta-subtitle">Connect with us to get insured</div> 
+    work smart, work safe.<br />
+    Stay covered with <span class="workmen-cta-highlight">Bima with Bali</span>
   </div>
+
+  <a href="{{ url_for('get_now') }}" class="workmen-cta-button">REACH US</a>
+  <div class="workmen-cta-subtitle">Connect with us to get insured</div>
 </section>
 
 {% endblock %}
-
-
-
