@@ -1,15 +1,279 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+  /* Modern Contact Page Styling */
+  .contact-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 2rem 0;
+    border-radius: 50px 50px 50px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .contact-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+  }
+
+  .contact-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-color: #f0ad00;
+  }
+
+  .contact-box:hover::before {
+    left: 100%;
+  }
+
+  .contact-box img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-box:hover img {
+    transform: scale(1.1);
+  }
+
+  .contact-info strong {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-info span {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .map-contact-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .map-contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .contact-form {
+    background: white;
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(240, 173, 0, 0.2);
+  }
+
+  .contact-form .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-form .form-control,
+  .contact-form .form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+  }
+
+  .contact-form .form-control:focus,
+  .contact-form .form-select:focus {
+    border-color: #f0ad00;
+    box-shadow: 0 0 0 0.2rem rgba(240, 173, 0, 0.25);
+    background: white;
+  }
+
+  .contact-form .form-check-input:checked {
+    background-color: #f0ad00;
+    border-color: #f0ad00;
+  }
+
+  .contact-form .form-check-label {
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .contact-form .btn-primary {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(240, 173, 0, 0.3);
+  }
+
+  .contact-form .btn-primary:hover {
+    background: linear-gradient(135deg, #d49a00, #e55a2b);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(240, 173, 0, 0.4);
+  }
+
+  .contact-form .btn-primary:disabled {
+    background: #ccc;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .visit-info h2 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .visit-info p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .working-hours {
+    background: rgba(240, 173, 0, 0.1);
+    border-radius: 15px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid #f0ad00;
+  }
+
+  .working-hours strong {
+    color: #f0ad00;
+  }
+
+  .map-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 3px solid rgba(240, 173, 0, 0.2);
+  }
+
+  .map-container iframe {
+    border-radius: 17px;
+  }
+
+  /* Alert Messages */
+  .alert {
+    border-radius: 15px;
+    border: none;
+    font-weight: 500;
+  }
+
+  .alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+  }
+
+  .alert-danger {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-section {
+      padding: 2rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .contact-box {
+      padding: 1.5rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-form {
+      padding: 2rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .map-contact-section {
+      padding: 3rem 0;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .contact-box {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .contact-box:nth-child(1) { animation-delay: 0.1s; }
+  .contact-box:nth-child(2) { animation-delay: 0.2s; }
+  .contact-box:nth-child(3) { animation-delay: 0.3s; }
+  .contact-box:nth-child(4) { animation-delay: 0.4s; }
+</style>
+
 <section class="contact-section">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
-        <img src="{{ url_for('static', filename='image/co1.avif') }}" alt="Contact Us" class="img-fluid" />
+    <div class="row">
+      <!-- Image at the top -->
+      <div class="col-12 text-center mb-5">
+        <img src="{{ url_for('static', filename='image/co1.jpg') }}" alt="Contact Us" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: 100%;" />
       </div>
-      <div class="col-md-6">
-        <div class="row g-3">
-          <div class="col-6" style="width:100%">
+
+      <!-- All contact methods below the image -->
+      <div class="col-12">
+        <div class="row g-3 justify-content-center">
+          <div class="col-md-6 col-lg-3">
             <a href="https://wa.me/918462001409" target="_blank">
               <div class="contact-box">
                 <img src="{{ url_for('static', filename='image/wh1.avif') }}" alt="WhatsApp" />
@@ -20,7 +284,7 @@
               </div>
             </a>
           </div>
-          <div class="col-6"style="width:100%">
+          <div class="col-md-6 col-lg-3">
             <a href="mailto:Support@bimawithbali.com">
               <div class="contact-box">
                 <img src="{{ url_for('static', filename='image/em1.avif') }}" alt="Email" />
@@ -31,7 +295,7 @@
               </div>
             </a>
           </div>
-          <div class="col-6"style="width:100%">
+          <div class="col-md-6 col-lg-3">
             <a href="tel:+918462001409">
               <div class="contact-box">
                 <img src="{{ url_for('static', filename='image/su1.avif') }}" alt="24/7 Support" />
@@ -42,7 +306,7 @@
               </div>
             </a>
           </div>
-          <div class="col-6"style="width:100%">
+          <div class="col-md-6 col-lg-3">
             <a href="tel:+918462001409">
               <div class="contact-box">
                 <img src="{{ url_for('static', filename='image/bu1.avif') }}" alt="Buy/Renew Policy" />
@@ -118,12 +382,16 @@
         <div id="form-message" class="mt-3"></div>
       </div>
       <div class="col-md-6">
-        <h2 class="fw-bold text-warning mb-4">Visit Us</h2>
-        <p>Shop no.5, Ambe business center, magarpara, Bilaspur, Chattishgarh.</p>
-        <p class="fw-bold text-warning">Working Hours:</p>
-        <p>Mon - Sat : 11:00 am to 8:30 pm</p>
-        <div class="ratio ratio-4x3">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3552.8105679623486!2d82.14328497511165!3d22.078887879846384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a280b6b8dd7a907%3A0x1e4110d50ffe1d2a!2sAmbe%20Business%20Centre!5e1!3m2!1sen!2sin!4v1757824876077!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="visit-info">
+          <h2 class="fw-bold mb-4">Visit Us</h2>
+          <p>Shop no.5, Ambe business center, magarpara, Bilaspur, Chattishgarh.</p>
+          <div class="working-hours">
+            <p class="fw-bold text-warning">Working Hours:</p>
+            <p>Mon - Sat : 11:00 am to 8:30 pm</p>
+          </div>
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3552.8105679623486!2d82.14328497511165!3d22.078887879846384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a280b6b8dd7a907%3A0x1e4110d50ffe1d2a!2sAmbe%20Business%20Centre!5e1!3m2!1sen!2sin!4v1757824876077!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
         </div>
       </div>
     </div>
