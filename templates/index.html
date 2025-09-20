@@ -2,113 +2,354 @@
 
 {% block content %}
 <style>html, body { overflow-x: hidden; }</style>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<!-- Modern Hero Section -->
+<div class="hero-section position-relative overflow-hidden" style="background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%); min-height: 100vh; display: flex; align-items: center; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); cursor: pointer; padding-top: 4rem; padding-bottom: 4rem;">
+  <!-- Animated background elements -->
 
-<div class="container-fluid hero-section px-0 fade-in">
-  <div class="row align-items-center mx-0">
-    <div class="col-12 position-relative d-flex justify-content-center px-0">
-      <div class="yellow-circle"></div>
-      <a href="{{ url_for('get_now') }}" style="width: 100%; position: relative;">
-        <img src="{{ url_for('static', filename='image/herosectionimage.avif') }}" alt="Family" class="hero-family-img" />
-        <div class="mobile-hero-content">
-          <h2>🛡️ Secure Your Family's Future</h2>
-          <p>✨ Get comprehensive insurance coverage today</p>
-          <span class="btn">🚀 Get Started</span>
+  <!-- Floating elements -->
+  <div class="position-absolute" style="top: 10%; left: 5%; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 6s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0,0,0,0.2);"></div>
+  <div class="position-absolute" style="top: 20%; right: 10%; width: 40px; height: 40px; background: rgba(255,255,255,0.15); border-radius: 50%; animation: float 8s ease-in-out infinite reverse; box-shadow: 0 4px 15px rgba(0,0,0,0.2);"></div>
+  <div class="position-absolute" style="bottom: 30%; left: 15%; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 7s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0,0,0,0.2);"></div>
+
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8 mx-auto text-center text-white">
+        <!-- Main heading with animation -->
+        <div class="mb-4">
+          <h1 class="display-2 fw-bold mb-3 animate-slide-up" style="animation-delay: 0.2s; font-size: 4rem;">
+            <span class="d-block" style="font-size: 5.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-weight: 900;">
+              <span style="color: #e60000ff; transition: all 0.3s ease;">Yes</span>
+              <span style="color: #ffffff;"> you name the risk</span>
+            </span>
+            <span class="d-block" style="font-size: 5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">we insure</span>
+          </h1>
+          <div class="w-75 mx-auto" style="height: 6px; background: rgba(255,255,255,0.4); border-radius: 3px; margin-bottom: 2rem;"></div>
         </div>
-      </a>
+
+        <!-- Subheading -->
+        <p class="lead mb-4 fs-4 fw-light animate-slide-up" style="animation-delay: 0.4s; max-width: 600px; margin: 0 auto 2rem; color: #000000;">
+          ✨ Get comprehensive insurance coverage today with our expert guidance and personalized solutions
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center animate-slide-up" style="animation-delay: 0.6s;">
+          <a href="{{ url_for('get_now') }}" class="btn btn-light btn-lg px-5 py-3 fw-bold shadow-lg hover-lift" style="border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.2);">
+            🚀 Get Started Now
+          </a>
+          <button class="btn btn-outline-light btn-lg px-5 py-3 fw-bold" onclick="scrollToSection('services')" style="border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.2);">
+            📋 Explore Services
+          </button>
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="row mt-5 pt-4 animate-slide-up" style="animation-delay: 0.8s;">
+          <div class="col-4">
+            <div class="text-center" style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+              <div class="fs-2 fw-bold text-warning mb-1">50k+</div>
+              <div class="small opacity-75">Happy Clients</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-center" style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+              <div class="fs-2 fw-bold text-warning mb-1">15+</div>
+              <div class="small opacity-75">Years Experience</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-center" style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+              <div class="fs-2 fw-bold text-warning mb-1">24/7</div>
+              <div class="small opacity-75">Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4 animate-bounce">
+    <div class="text-white opacity-75">
+      <i class="fas fa-chevron-down fs-4"></i>
     </div>
   </div>
 </div>
+
+<!-- Custom styles for animations -->
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
+  }
+
+  /* Hero section hover effects */
+  .hero-section {
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .hero-section:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4500 50%, #ff6347 100%);
+  }
+
+  .hero-section:hover .position-absolute {
+    animation-duration: 4s;
+  }
+
+  .hero-section:hover h1 {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+
+  .hero-section:hover h1 span:first-child span:first-child {
+    color: #ff0000 !important;
+    transform: scale(1.1);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+  }
+
+  .hero-section:hover .btn {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: 80vh !important;
+      padding: 2rem 0;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem !important;
+    }
+
+    .hero-section h1 span {
+      font-size: 3rem !important;
+    }
+
+    .lead {
+      font-size: 1.1rem !important;
+    }
+
+    .hero-section .row .col-4 {
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .hero-section h1 {
+      font-size: 2rem !important;
+    }
+
+    .hero-section h1 span {
+      font-size: 2.5rem !important;
+    }
+
+    .hero-section .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-section .d-flex {
+      flex-direction: column !important;
+    }
+  }
+</style>
+
+<!-- JavaScript for smooth scrolling -->
+<script>
+  function scrollToSection(sectionId) {
+    const element = document.querySelector('.container.py-5'); // Services section
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }
+
+  // Add Font Awesome for icons if not already included
+  if (!document.querySelector('link[href*="font-awesome"]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+    document.head.appendChild(link);
+  }
+</script>
 
 
 
  
 
 <!-- Why Choose Us Section -->
-<div class="container-fluid why-choose-section fade-in">
+<div class="container-fluid py-5 fade-in">
   <div class="row align-items-center">
+     <h2 id="typing-text" class="display-4 fw-bold mb-4" style="text-align:center;">Why Choose Us.</h2>
     <div class="col-md-5 text-center">
-      <img src="{{ url_for('static', filename='image/boy-image.avif') }}" alt="Why Choose Us" class="why-choose-img" />
+      <img src="{{ url_for('static', filename='image/boy-image.avif') }}" alt="Why Choose Us" class="img-fluid rounded" />
     </div>
     <div class="col-md-7">
-      <h2 id="typing-text"></h2>
-      <div class="row">
-        <div class="col-6 feature-item">
-          <img src="{{ url_for('static', filename='image/clock-image.avif') }}" alt="Quick Claims" />
-          <h5>Quick Claims, No Confusion</h5>
-          <p>We don’t just settle claims– we solve problem. Fast fair and fuss-free</p>
+     
+      <div class="row g-4">
+        <div class="col-6 col-md-4">
+          <div class="text-center p-3">
+            <img src="{{ url_for('static', filename='image/clock-image.avif') }}" alt="Quick Claims" class="mb-3" style="width: 60px; height: 60px;" />
+            <h5 class="fw-bold mb-2">Quick Claims, No Confusion</h5>
+            <p class="text-muted small">We don't just settle claims– we solve problem. Fast fair and fuss-free</p>
+          </div>
         </div>
-        <div class="col-6 feature-item">
-          <img src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}" alt="Transparent Pricing" />
-          <h5>Transparent Pricing</h5>
-          <p>No hidden fees. No fine print tricks. Just honest protection at fair prices.</p>
+        <div class="col-6 col-md-4">
+          <div class="text-center p-3">
+            <img src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}" alt="Transparent Pricing" class="mb-3" style="width: 60px; height: 60px;" />
+            <h5 class="fw-bold mb-2">Transparent Pricing</h5>
+            <p class="text-muted small">No hidden fees. No fine print tricks. Just honest protection at fair prices.</p>
+          </div>
         </div>
-        <div class="col-6 feature-item">
-          <img src="{{ url_for('static', filename='image/honestadvice.avif') }}" alt="Honest Advice" />
-          <h5>Honest Advice</h5>
-          <p>No more confusing . No pushing unnecessary policies. Just clear, honest guidance with your best interest at heart.</p>
+        <div class="col-6 col-md-4">
+          <div class="text-center p-3">
+            <img src="{{ url_for('static', filename='image/honestadvice.avif') }}" alt="Honest Advice" class="mb-3" style="width: 60px; height: 60px;" />
+            <h5 class="fw-bold mb-2">Honest Advice</h5>
+            <p class="text-muted small">No more confusing . No pushing unnecessary policies. Just clear, honest guidance with your best interest at heart.</p>
+          </div>
         </div>
-        <div class="col-6 feature-item">
-          <img src="{{ url_for('static', filename='image/realpeoplerealimage.avif') }}" alt="Real Support" />
-          <h5>Real People, Real Support</h5>
-          <p>When you call us, You won’t talk to bots–you’ll speak to trained professionals who understand both insurance and empathy.</p>
+        <div class="col-6 col-md-4">
+          <div class="text-center p-3">
+            <img src="{{ url_for('static', filename='image/realpeoplerealimage.avif') }}" alt="Real Support" class="mb-3" style="width: 60px; height: 60px;" />
+            <h5 class="fw-bold mb-2">Real People, Real Support</h5>
+            <p class="text-muted small">When you call us, You won't talk to bots–you'll speak to trained professionals who understand both insurance and empathy.</p>
+          </div>
         </div>
-        <div class="col-6 feature-item">
-          <img src="{{ url_for('static', filename='image/digitalconvinence.avif') }}" alt="Digital Convience" />
-          <h5>Digital convinence</h5>
-          <p>Get insured online in minutes, with help just a phone call away.</p>
+        <div class="col-6 col-md-4">
+          <div class="text-center p-3">
+            <img src="{{ url_for('static', filename='image/digitalconvinence.avif') }}" alt="Digital Convience" class="mb-3" style="width: 60px; height: 60px;" />
+            <h5 class="fw-bold mb-2">Digital convinence</h5>
+            <p class="text-muted small">Get insured online in minutes, with help just a phone call away.</p>
+          </div>
         </div>
-        <div class="col-6 feature-item">
-          <img src="{{ url_for('static', filename='image/freedomtochoose.avif') }}" alt="Freedom to Choose" />
-          <h5>Freedom to Choose</h5>
-          <p>We partner with multiple trusted insurers so you get the freedom to compare, customize, and choose what fits your life, not the other way around.</p>
+        <div class="col-6 col-md-4">
+          <div class="text-center p-3">
+            <img src="{{ url_for('static', filename='image/freedomtochoose.avif') }}" alt="Freedom to Choose" class="mb-3" style="width: 60px; height: 60px;" />
+            <h5 class="fw-bold mb-2">Freedom to Choose</h5>
+            <p class="text-muted small">We partner with multiple trusted insurers so you get the freedom to compare, customize, and choose what fits your life, not the other way around.</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/typing.js') }}"></script>
-
-<div class="container-fluid services-section">
-  <h2><span class="typing-service">Our Services</span></h2>
-  <div class="service-item">
-    <img src="{{ url_for('static', filename='image/buynewpolicy.avif') }}" alt="Buy new policy" />
-    <h4><u>Buy new policy</u></h4>
-    <p>Buying insurance doesn’t have to be boring. Let’s simplify your policy purchase with expert tips and zero jargon.</p>
-  </div>
-  <div class="service-item">
-    <img src="{{ url_for('static', filename='image/renewpolicy.avif') }}" alt="Renew policy" />
-    <h4><u>Renew policy</u></h4>
-    <p>No queues. No chaos. Just quick renewals. Trust us to keep your policy active with zero hassle.</p>
-  </div>
-  <div class="service-item">
-    <img src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}" alt="Underwriting & claim" />
-    <h4><u>Underwriting & claim</u></h4>
-    <p>Underwriting and claims made simple. Get clear insights, quick support, and no complicated terms. Just the coverage you need, stress-free.</p>
+<div class="container py-5" id="services">
+  <h2 class="text-center display-4 fw-bold mb-5"><span class="typing-service">Our Services</span></h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center">
+          <img src="{{ url_for('static', filename='image/buynewpolicy.avif') }}" alt="Buy new policy" class="card-img-top rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;" />
+          <h4 class="card-title fw-bold"><u>Buy new policy</u></h4>
+          <p class="card-text text-muted">Buying insurance doesn't have to be boring. Let's simplify your policy purchase with expert tips and zero jargon.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center">
+          <img src="{{ url_for('static', filename='image/renewpolicy.avif') }}" alt="Renew policy" class="card-img-top rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;" />
+          <h4 class="card-title fw-bold"><u>Renew policy</u></h4>
+          <p class="card-text text-muted">No queues. No chaos. Just quick renewals. Trust us to keep your policy active with zero hassle.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center">
+          <img src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}" alt="Underwriting & claim" class="card-img-top rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;" />
+          <h4 class="card-title fw-bold"><u>Underwriting & claim</u></h4>
+          <p class="card-text text-muted">Underwriting and claims made simple. Get clear insights, quick support, and no complicated terms. Just the coverage you need, stress-free.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="container-fluid fast-claims-section text-center my-5">
-  <h3>Fast claims. Firm support. Always protected.</h3>
-  <div class="row justify-content-center mt-4">
-    <div class="col-md-2 col-6 fast-claim-box bg-warning text-dark p-4 m-2 rounded animate-fade-in">
-      <h5><u>Motor</u></h5>
-      <p>One crash can cost you lakhs,<br>Drive stress-free with coverage that saves your wallet!</p>
+<div class="container-fluid py-5 text-center">
+  <h3 class="display-6 fw-bold mb-4">Fast claims. Firm support. Always protected.</h3>
+  <div class="row justify-content-center g-3 mt-4">
+    <div class="col-md-3 col-6">
+      <div class="card h-100 border-0 shadow-sm bg-warning text-dark animate-fade-in">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold"><u>Motor</u></h5>
+          <p class="card-text">One crash can cost you lakhs,<br>Drive stress-free with coverage that saves your wallet!</p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-2 col-6 fast-claim-box bg-primary text-white p-4 m-2 rounded animate-fade-in delay-1">
-      <h5><u>Health</u></h5>
-      <p>Hospital bills can drain you,<br>Secure your health & wealth in one simple step!</p>
+    <div class="col-md-3 col-6">
+      <div class="card h-100 border-0 shadow-sm bg-primary text-white animate-fade-in delay-1">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold"><u>Health</u></h5>
+          <p class="card-text">Hospital bills can drain you,<br>Secure your health & wealth in one simple step!</p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-2 col-6 fast-claim-box bg-orange text-dark p-4 m-2 rounded animate-fade-in delay-2">
-      <h5><u>Fire & Burglary</u></h5>
-      <p>Protect your home & shop from fire and theft before it’s too late, Don’t risk it!</p>
+    <div class="col-md-3 col-6">
+      <div class="card h-100 border-0 shadow-sm bg-orange text-dark animate-fade-in delay-2">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold"><u>Fire & Burglary</u></h5>
+          <p class="card-text">Protect your home & shop from fire and theft before it's too late, Don't risk it!</p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-2 col-6 fast-claim-box bg-success text-dark p-4 m-2 rounded animate-fade-in delay-3">
-      <h5><u>Travel</u></h5>
-      <p>Flight delayed? Luggage lost?<br>Get paid instead of panicking, Insure your next trip now!</p>
+    <div class="col-md-3 col-6">
+      <div class="card h-100 border-0 shadow-sm bg-success text-dark animate-fade-in delay-3">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold"><u>Travel</u></h5>
+          <p class="card-text">Flight delayed? Luggage lost?<br>Get paid instead of panicking, Insure your next trip now!</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -116,7 +357,7 @@
 <!-- New Section: The faith that Fuels us -->
 <style>
   .faith-section {
-    background: linear-gradient(135deg, #f0ad00, #d49a00);
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
     color: #fff;
     text-align: center;
     padding: 3rem 1rem;
@@ -130,6 +371,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    white-space: pre-line;
   }
   .faith-highlight {
     color: #fff;
@@ -154,14 +396,7 @@
   }
 </style>
 <div class="faith-section">
-  <div class="faith-text">
-    The faith that <span class="faith-highlight">Fuels us</span>
-  </div>
-  <div class="faith-stats">
-    <div class="number">50,000+</div>
-    <div class="text-bold">Happy customers</div>
-    <div class="text-small">and still counting..</div>
-  </div>
+  <div class="faith-text">The faith that Fuels us<br>50,000+<br>Happy customers<br>and still counting..</div>
 </div>
 
 <div style="text-align: center; margin-top: 1rem;">
@@ -169,66 +404,60 @@
 </div>
 <br>
 
-</div>
-
-<div class="container-fluid partners-section my-5 fade-in">
-  <h2 class="text-center fw-bold mb-4" style="font-size:3em;">Our Service Partners</h2>
-  <div class="row justify-content-center partners-logos">
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/unitedindia.avif') }}" alt="United India" class="partner-logo" />
+<div class="container-fluid py-5 fade-in">
+  <h2 class="text-center display-4 fw-bold mb-4">Our Service Partners</h2>
+  <div class="row justify-content-center g-3 partners-logos">
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/unitedindia.avif') }}" alt="United India" class="img-fluid" style="max-width: 80px;" />
     </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/tataagi.avif') }}" alt="Tata AIG" class="partner-logo" />
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/tataagi.avif') }}" alt="Tata AIG" class="img-fluid" style="max-width: 80px;" />
     </div>
-
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/blueroundlogo.avif') }}" alt="Oriental Insurance" class="partner-logo" />
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/blueroundlogo.avif') }}" alt="Oriental Insurance" class="img-fluid" style="max-width: 80px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/bajajlogo.avif') }}" alt="Bajaj Allianz" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/bajajlogo.avif') }}" alt="Bajaj Allianz" class="img-fluid" style="max-width: 100px;" />
     </div>
-
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/hdfclogo.avif') }}" alt="HDFC ERGO" class="partner-logo" />
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/hdfclogo.avif') }}" alt="HDFC ERGO" class="img-fluid" style="max-width: 80px;" />
     </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/libartylogo.avif') }}" alt="Liberty Insurance" class="partner-logo" />
+    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/libartylogo.avif') }}" alt="Liberty Insurance" class="img-fluid" style="max-width: 80px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/magmalogo.avif') }}" alt="Magma HDI" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/magmalogo.avif') }}" alt="Magma HDI" class="img-fluid" style="max-width: 100px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/icicilogo.avif') }}" alt="ICICI Lombard" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/icicilogo.avif') }}" alt="ICICI Lombard" class="img-fluid" style="max-width: 100px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/iffcologo.avif') }}" alt="IFFCO Tokio" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/iffcologo.avif') }}" alt="IFFCO Tokio" class="img-fluid" style="max-width: 100px;" />
     </div>
-
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/relincelogo.avif') }}" alt="Reliance General Insurance" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/relincelogo.avif') }}" alt="Reliance General Insurance" class="img-fluid" style="max-width: 100px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}" alt="Royal Sundaram" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}" alt="Royal Sundaram" class="img-fluid" style="max-width: 100px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/univercellogo.avif') }}" alt="Universal Sompo" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/univercellogo.avif') }}" alt="Universal Sompo" class="img-fluid" style="max-width: 100px;" />
     </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center mb-4">
-      <img src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}" alt="SBI General Insurance" class="partner-logo" />
+    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}" alt="SBI General Insurance" class="img-fluid" style="max-width: 100px;" />
     </div>
   </div>
-  <p class="text-center fw-bold mt-3"> Different Brokers</p>
+  <p class="text-center fw-bold mt-3">Different Brokers</p>
 </div>
 
-<div class="container-fluid connect-section my-5">
+<div class="container-fluid py-5">
   <div class="row align-items-center">
-    <h2 class="fw-bold mb-4" style="text-align:center;font-size:3rem;">Connect With Us</h2>
+    <h2 class="fw-bold mb-4 text-center display-4">Connect With Us</h2>
     <div class="col-md-6 text-center mb-4 mb-md-0">
-      <img src="{{ url_for('static', filename='image/contactwithusimage.avif') }}" alt="Connect With Us" class="img-fluid" style="height: 700px; border-radius: 10px;" />
+      <img src="{{ url_for('static', filename='image/contactwithusimage.avif') }}" alt="Connect With Us" class="img-fluid rounded" style="height: 700px; object-fit: cover;" />
     </div>
     <div class="col-md-6">
-
-      <form id="contactForm" class="connect-form">
+      <form id="contactForm" class="p-4 bg-light rounded shadow-sm">
 <style>
   @media (max-width: 768px) {
     .connect-section .img-fluid {
@@ -266,37 +495,37 @@
   }
 </style>
         <div class="row mb-3">
-          <div class="col-6">
-            <label for="firstName" class="form-label">First Name*</label>
+          <div class="col-md-6">
+            <label for="firstName" class="form-label fw-bold">First Name*</label>
             <input type="text" class="form-control" id="firstName" name="firstName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
           </div>
-          <div class="col-6">
-            <label for="lastName" class="form-label">Last Name*</label>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label fw-bold">Last Name*</label>
             <input type="text" class="form-control" id="lastName" name="lastName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-6">
-            <label for="phone" class="form-label">Phone*</label>
+          <div class="col-md-6">
+            <label for="phone" class="form-label fw-bold">Phone*</label>
             <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]+" title="Only numbers allowed" required />
           </div>
-          <div class="col-6">
-            <label for="email" class="form-label">Email*</label>
+          <div class="col-md-6">
+            <label for="email" class="form-label fw-bold">Email*</label>
             <input type="email" class="form-control" id="email" name="email" required />
           </div>
         </div>
         <fieldset class="mb-3">
           <legend class="col-form-label pt-0">I Want To*</legend>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="wantTo" id="buyPolicy" value="Buy policy" required />
+            <input class="form-check-input" type="radio" name="wantTo" id="buyPolicy" value="Buy policy" required style="border: 1px solid #000; width: 20px; height: 20px;" />
             <label class="form-check-label" for="buyPolicy">Buy policy</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="wantTo" id="renewPolicy" value="Renew Policy" />
+            <input class="form-check-input" type="radio" name="wantTo" id="renewPolicy" value="Renew Policy" style="border: 1px solid #000; width: 20px; height: 20px;" />
             <label class="form-check-label" for="renewPolicy">Renew Policy</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="wantTo" id="underwriteClaim" value="Underwrite Claim" />
+            <input class="form-check-input" type="radio" name="wantTo" id="underwriteClaim" value="Underwrite Claim" style="border: 1px solid #000; width: 20px; height: 20px;" />
             <label class="form-check-label" for="underwriteClaim">Underwrite Claim</label>
           </div>
         </fieldset>
@@ -313,7 +542,7 @@
             <option value="Other">Other</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-submit w-100">Submit</button>
+        <button type="submit" class="btn btn-dark btn-lg w-100">Submit</button>
       </form>
       <div id="form-message" style="text-align:center; font-weight:bold; margin-top: 15px; color: green;"></div>
     </div>
@@ -321,19 +550,31 @@
 </div>
 
 <!-- Testimonial Section -->
-<div class="container-fluid testimonial-section" style="background-color: #f0ad00; color: #000; padding: 2rem 1rem; text-align: center; font-family: 'Arial', sans-serif; position: relative; height: 429px; border-radius:2rem;">
-  <h2 style="font-weight: 900; font-size: 3rem; margin-bottom: 1rem;">What our customers say</h2>
-  <div id="testimonial-name" style="font-weight: 700; color: #7a0000; font-size: 2rem; margin-bottom: 0.5rem; transition: opacity 0.5s ease;">Naveen Chandrakar</div>
-  <div id="testimonial-text" style="font-size: 1.8rem; max-width: 600px; margin: 0 auto 1.5rem auto; transition: opacity 0.5s ease;">
-    text 1
-  </div>
-  <div id="arrow-left" style="position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); font-size: 2rem; cursor: pointer; user-select: none; color: #000;">&#8592;</div>
-  <div id="arrow-right" style="position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); font-size: 2rem; cursor: pointer; user-select: none; color: #000;">&#8594;</div>
-  <div id="dots" style="display: flex; justify-content: center; gap: 0.5rem;">
-    <div class="dot active" data-index="0" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
-    <div class="dot" data-index="1" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
-    <div class="dot" data-index="2" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
-    <div class="dot" data-index="3" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%); color: #000; border-radius: 2rem;">
+  <div class="container">
+    <h2 class="text-center display-4 fw-bold mb-4" style="color: #000;">What our customers say</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center position-relative" style="min-height: 300px;">
+          <div id="testimonial-name" class="fw-bold text-danger display-6 mb-3" style="transition: opacity 0.5s ease;">Naveen Chandrakar</div>
+          <div id="testimonial-text" class="lead mb-4" style="font-size: 1.5rem; max-width: 600px; margin: 0 auto 1.5rem auto; transition: opacity 0.5s ease;">
+            text 1
+          </div>
+          <div class="position-absolute top-50 start-0 translate-middle-y d-none d-md-block" style="cursor: pointer;">
+            <span id="arrow-left" class="fs-2" style="color: #000;">&#8592;</span>
+          </div>
+          <div class="position-absolute top-50 end-0 translate-middle-y d-none d-md-block" style="cursor: pointer;">
+            <span id="arrow-right" class="fs-2" style="color: #000;">&#8594;</span>
+          </div>
+          <div id="dots" class="d-flex justify-content-center gap-2 mt-4">
+            <div class="dot active" data-index="0" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.7; cursor: pointer;"></div>
+            <div class="dot" data-index="1" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+            <div class="dot" data-index="2" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+            <div class="dot" data-index="3" style="width: 10px; height: 10px; background-color: #000; border-radius: 50%; opacity: 0.3; cursor: pointer;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <style>
@@ -342,55 +583,77 @@
       height: 700px !important;
     }
   }
+  
 </style>
 
 
 
-<div class="container-fluid faq-section my-5">
-  <h2 class="text-center mb-4" style="font-size: 3rem; font-weight: 700;">Frequently asked questions</h2>
-  <div class="faq-item">
-    <div class="faq-question" tabindex="0">
-      What is the policy period in general insurance?
-      <span class="faq-arrow">&#x25BC;</span>
-    </div>
-    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-      Usually 1 year, but multi-year options are available in motor and health insurance.
-    </div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-question" tabindex="0">
-      Does general insurance offer tax benefits?
-      <span class="faq-arrow">&#x25BC;</span>
-    </div>
-    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-      Yes, health insurance premiums are tax-deductible under Section 80D.
-    </div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-question" tabindex="0">
-      How is premium decided?
-      <span class="faq-arrow">&#x25BC;</span>
-    </div>
-    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-      Depends on age, sum insured, policy type, coverage, and risk factors.
-    </div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-question" tabindex="0">
-      Why is third-party motor insurance mandatory?
-      <span class="faq-arrow">&#x25BC;</span>
-    </div>
-    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-      It protects third parties from financial loss in case of an accident caused by the insured vehicle.
-    </div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-question" tabindex="0">
-      Do pre-existing diseases get covered?
-      <span class="faq-arrow">&#x25BC;</span>
-    </div>
-    <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
-      Yes, but usually after a waiting period of 1–4 years in health insurance.
+<div class="container-fluid py-5">
+  <h2 class="text-center display-4 fw-bold mb-5">Frequently asked questions</h2>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+              What is the policy period in general insurance?
+            </button>
+          </h2>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Usually 1 year, but multi-year options are available in motor and health insurance.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+              Does general insurance offer tax benefits?
+            </button>
+          </h2>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Yes, health insurance premiums are tax-deductible under Section 80D.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+              How is premium decided?
+            </button>
+          </h2>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Depends on age, sum insured, policy type, coverage, and risk factors.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+              Why is third-party motor insurance mandatory?
+            </button>
+          </h2>
+          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              It protects third parties from financial loss in case of an accident caused by the insured vehicle.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+              Do pre-existing diseases get covered?
+            </button>
+          </h2>
+          <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Yes, but usually after a waiting period of 1–4 years in health insurance.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -457,24 +720,26 @@
   @media (max-width: 768px) {
     .partners-logos {
       display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
       width: 100%;
-      animation: slidePartners 20s linear infinite;
+      padding: 1rem;
     }
     .partners-logos > div {
       flex: 0 0 auto;
-      width: 120px;
+      width: calc(33.333% - 0.5rem);
+      min-width: 90px;
+      max-width: 110px;
     }
     .partner-logo {
       width: 100%;
       height: auto;
+      transition: transform 0.3s ease;
     }
-  }
-  @keyframes slidePartners {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+    .partners-logos > div:hover .partner-logo {
+      transform: scale(1.05);
+    }
   }
 </style>
 <script>

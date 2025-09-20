@@ -1,3 +1,28 @@
+// Consolidated JavaScript file - All scripts from individual JS files
+
+// Typing animation script
+document.addEventListener('DOMContentLoaded', () => {
+  const typingTextElement = document.getElementById('faith-typing');
+  const text = "The faith that Fuels us\n50,000+\nHappy customers\nand still counting..";
+  let index = 0;
+
+  function type() {
+    if (index < text.length) {
+      typingTextElement.innerText += text.charAt(index);
+      index++;
+      setTimeout(type, 100); // typing speed in ms
+    } else {
+      // After typing, convert \n to <br> and add highlight
+      typingTextElement.innerHTML = typingTextElement.innerText.replace(/\n/g, '<br>').replace('Fuels us', '<span class="faith-highlight">Fuels us</span>');
+    }
+  }
+
+  // Clear the text initially
+  typingTextElement.innerText = '';
+  type();
+});
+
+// Testimonials and FAQ scripts
 document.addEventListener('DOMContentLoaded', () => {
   const testimonials = [
     {
