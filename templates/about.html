@@ -1,270 +1,675 @@
 {% extends "base.html" %}
+
 {% block content %}
+<style>
+  /* Modern About Page Styling */
+  .hero-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
 
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
 
-<section class="about-who-section">
-  <div class="about-who-container">
-    <h2 class="about-who-heading">Who are we ?</h2>
-    <div class="about-who-content">
-      <div class="about-who-image">
-        <img src="{{ url_for('static', filename='image/ab1.avif') }}" alt="Who are we" />
+  .vision-mission-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .vision-mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(240, 173, 0, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .vision-mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-color: #f0ad00;
+  }
+
+  .vision-mission-card:hover::before {
+    left: 100%;
+  }
+
+  .vision-mission-card h3 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .vision-mission-card p {
+    color: #555;
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+
+  .empower-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .empower-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .core-values-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .core-values-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .core-value-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .core-value-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .core-value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-color: #fff;
+  }
+
+  .core-value-card:hover::before {
+    left: 100%;
+  }
+
+  .core-value-card .core-value-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .core-value-card .core-value-definition {
+    color: #555;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .leaders-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+  }
+
+  .leader-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #f0ad00;
+    transition: all 0.3s ease;
+  }
+
+  .leader-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .leader-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1.5rem;
+    border: 4px solid #f0ad00;
+    transition: transform 0.3s ease;
+  }
+
+  .leader-photo:hover {
+    transform: scale(1.05);
+  }
+
+  .leader-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .leader-caption {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 1rem;
+  }
+
+  .leader-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .team-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .team-images-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .team-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .team-image:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    border-color: #fff;
+  }
+
+  .video-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .video-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .video-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(240, 173, 0, 0.2);
+  }
+
+  .video-container iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+  }
+
+  .video-text {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .video-text h2 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .video-text p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 3rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .vision-mission-card,
+    .core-value-card,
+    .leader-card {
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .leader-photo {
+      width: 150px;
+      height: 150px;
+    }
+
+    .team-images-container {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .team-image {
+      height: 150px;
+    }
+
+    .video-container iframe {
+      height: 300px;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .vision-mission-card,
+  .core-value-card,
+  .leader-card {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .vision-mission-card:nth-child(1) { animation-delay: 0.1s; }
+  .vision-mission-card:nth-child(2) { animation-delay: 0.2s; }
+  .core-value-card:nth-child(1) { animation-delay: 0.1s; }
+  .core-value-card:nth-child(2) { animation-delay: 0.2s; }
+  .core-value-card:nth-child(3) { animation-delay: 0.3s; }
+  .core-value-card:nth-child(4) { animation-delay: 0.4s; }
+  .core-value-card:nth-child(5) { animation-delay: 0.5s; }
+  .core-value-card:nth-child(6) { animation-delay: 0.6s; }
+  .core-value-card:nth-child(7) { animation-delay: 0.7s; }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="fw-bold display-4 mb-4">Who are we?</h1>
+        <p class="lead">Discover our story, our values, and the passionate team behind Bima with Bali's mission to make insurance accessible to everyone.</p>
       </div>
-      <div class="about-who-text">
-        <h3 class="about-subheading">Our Vision</h3>
-        <p>
-          To create a future where every business, regardless of size, is equipped with the right insurance tools to grow securely and confidently.
-        </p>
-        <h3 class="about-subheading">Our Mission</h3>
-        <p>
-          To empower businesses of all sizes by delivering accessible, tailored,economical and innovative insurance solutions that protect their present and fuel their growth, through trust, technology, and unwavering customer support.
-        </p>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/ab1.avif') }}" alt="Who are we" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
       </div>
     </div>
   </div>
 </section>
 
-<section class="about-empower-section">
-  <div class="about-empower-container">
-    <div class="about-empower-content">
-      <div class="about-empower-text">
-        <h2 class="about-empower-heading">Empowering your future and safeguarding your present</h2>
-        <p><strong>A group of passionate professionals united under one roof</strong>, dedicated to serving with unmatched expertise in the insurance industry, at Bima with Bali. We’re more than just insurance advisors. we’re your trusted partners in protection and progress.</p>
-        <p>We believe insurance shouldn’t be complicated or overwhelming. That’s why we’re here to simplify it for you through clear guidance, smart choices, and a personalized approach. Whether you’re securing your health, vehicle, home, industrial & liability insurance or business, we walk with you every step of the way.</p>
+<!-- Vision & Mission Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="vision-mission-card">
+          <h3>Our Vision</h3>
+          <p>To create a future where every business, regardless of size, is equipped with the right insurance tools to grow securely and confidently.</p>
+        </div>
       </div>
-      <div class="about-empower-image">
-        <img src="{{ url_for('static', filename='image/ab2.avif') }}" alt="Empowering your future" />
-        <p class="about-empower-caption">Let’s build a safer, more secure tomorrow together.</p>
+      <div class="col-md-6">
+        <div class="vision-mission-card">
+          <h3>Our Mission</h3>
+          <p>To empower businesses of all sizes by delivering accessible, tailored, economical and innovative insurance solutions that protect their present and fuel their growth, through trust, technology, and unwavering customer support.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Empower Section -->
+<section class="empower-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-4" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Empowering your future and safeguarding your present</h2>
+        <p class="lead mb-4"><strong>A group of passionate professionals united under one roof</strong>, dedicated to serving with unmatched expertise in the insurance industry, at Bima with Bali. We're more than just insurance advisors. we're your trusted partners in protection and progress.</p>
+        <p>We believe insurance shouldn't be complicated or overwhelming. That's why we're here to simplify it for you through clear guidance, smart choices, and a personalized approach. Whether you're securing your health, vehicle, home, industrial & liability insurance or business, we walk with you every step of the way.</p>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/ab2.avif') }}" alt="Empowering your future" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+        <p class="mt-3 fw-bold" style="color: #f0ad00;">Let's build a safer, more secure tomorrow together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Values Section -->
 <section class="core-values-section">
-  <div class="core-values-container">
-    <h2 class="core-values-heading">Our Core values</h2>
-    <div class="core-values-grid">
-      <div class="core-value-card color-1" tabindex="0">
-        <div class="core-value-title">Simplification</div>
-        <div class="core-value-definition">
-          We break it down so you don’t break your head. Insurance can sound like a maze of terms and conditions. At Bima with Bali, we believe in making it as simple as a chat with a friend—because you deserve to understand what you’re signing up for.
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5" style="font-size: 3rem;">Our Core Values</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="core-value-card">
+          <div class="core-value-title">Simplification</div>
+          <div class="core-value-definition">
+            We break it down so you don't break your head. Insurance can sound like a maze of terms and conditions. At Bima with Bali, we believe in making it as simple as a chat with a friend—because you deserve to understand what you're signing up for.
+          </div>
         </div>
       </div>
-      <div class="core-value-card color-2" tabindex="0">
-        <div class="core-value-title">Accessibility</div>
-        <div class="core-value-definition">
-          Insurance ‘gyaan’ in your language, at your level. No big words, No Bigcity, only talk. We speak the language of the common man whether you're a student, shopkeeper, homemaker, or working professional.
+      <div class="col-md-6 col-lg-4">
+        <div class="core-value-card">
+          <div class="core-value-title">Accessibility</div>
+          <div class="core-value-definition">
+            Insurance 'gyaan' in your language, at your level. No big words, No Bigcity, only talk. We speak the language of the common man whether you're a student, shopkeeper, homemaker, or working professional.
+          </div>
         </div>
       </div>
-      <div class="core-value-card color-3" tabindex="0">
-        <div class="core-value-title">Customer first approach</div>
-        <div class="core-value-definition">
-          Your story matters. We listen before we speak. Every topic we cover is inspired by real doubts, real struggles, and real people—just like you. You’re not just a learner here—you’re the reason this course exists.
+      <div class="col-md-6 col-lg-4">
+        <div class="core-value-card">
+          <div class="core-value-title">Customer First Approach</div>
+          <div class="core-value-definition">
+            Your story matters. We listen before we speak. Every topic we cover is inspired by real doubts, real struggles, and real people—just like you. You're not just a learner here—you're the reason this course exists.
+          </div>
         </div>
       </div>
-      <div class="core-value-card color-4" tabindex="0">
-        <div class="core-value-title">Consistency</div>
-        <div class="core-value-definition">
-          Every lesson, done right. Every time.We take pride in showing up with quality content, clear examples, and real life relevance because you deserve learning that sticks and supports you for the long run.
+      <div class="col-md-6 col-lg-4">
+        <div class="core-value-card">
+          <div class="core-value-title">Consistency</div>
+          <div class="core-value-definition">
+            Every lesson, done right. Every time. We take pride in showing up with quality content, clear examples, and real life relevance because you deserve learning that sticks and supports you for the long run.
+          </div>
         </div>
       </div>
-      <div class="core-value-card color-5" tabindex="0">
-        <div class="core-value-title">Social Impact</div>
-        <div class="core-value-definition">
-          It’s more than insurance, it’s a movement.
-          We’re here to spark a change. To make sure no family goes into debt because they didn’t know their rights. To ensure every Indian knows how to protect what matters. Let’s grow this knowledge, together.
+      <div class="col-md-6 col-lg-4">
+        <div class="core-value-card">
+          <div class="core-value-title">Social Impact</div>
+          <div class="core-value-definition">
+            It's more than insurance, it's a movement. We're here to spark a change. To make sure no family goes into debt because they didn't know their rights. To ensure every Indian knows how to protect what matters. Let's grow this knowledge, together.
+          </div>
         </div>
       </div>
-      <div class="core-value-card color-6" tabindex="0">
-        <div class="core-value-title">Empowerment Knowledge</div>
-        <div class="core-value-definition">
-          When you know more, you fear less. We’re not just teaching you about insurance we’re handing you the confidence to ask the right questions, choose the right plans, and stand up for what’s rightfully yours.
+      <div class="col-md-6 col-lg-4">
+        <div class="core-value-card">
+          <div class="core-value-title">Empowerment Knowledge</div>
+          <div class="core-value-definition">
+            When you know more, you fear less. We're not just teaching you about insurance we're handing you the confidence to ask the right questions, choose the right plans, and stand up for what's rightfully yours.
+          </div>
         </div>
       </div>
-      <div class="core-value-card color-7" tabindex="0">
-        <div class="core-value-title">Trust & Transparency</div>
-        <div class="core-value-definition">
-          What you see is what you get. We don’t believe in fine print games. We speak honestly, explain clearly, and share facts that help you trust the process and us. Your peace of mind matters more than selling a policy.
+      <div class="col-md-12">
+        <div class="core-value-card">
+          <div class="core-value-title">Trust & Transparency</div>
+          <div class="core-value-definition">
+            What you see is what you get. We don't believe in fine print games. We speak honestly, explain clearly, and share facts that help you trust the process and us. Your peace of mind matters more than selling a policy.
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- New Our Leaders Section -->
-<section class="leaders-section" style="padding: 3rem 1rem; background: #fff; display: flex; justify-content: center;">
-  <div class="leaders-container" style="max-width: 1200px; width: 100%; padding: 1rem;">
-    <h2 class="leaders-heading" style="font-weight: 900; font-size: 3rem; text-align: center; margin-bottom: 2rem;">
-      <span style="background-color: #FFD600; border-radius: 50% 0 0 50%; padding: 0 0.5rem;">&#40;</span>
-      <span style="padding: 0 clamp(0.5rem, 2vw, 1rem); font-size: clamp(1.5rem, 5vw, 3rem);">Our Leaders</span>
-      <span style="background-color: #FFD600; border-radius: 0 50% 50% 0; padding: 0 0.5rem;">&#41;</span>
+<!-- Leaders Section -->
+<section class="leaders-section">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 3rem;">
+      <span style="background-color: #f0ad00; border-radius: 50% 0 0 50%; padding: 0 0.5rem; color: white;">&#40;</span>
+      Our Leaders
+      <span style="background-color: #f0ad00; border-radius: 0 50% 50% 0; padding: 0 0.5rem; color: white;">&#41;</span>
     </h2>
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/balisirimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Mr. Prithipal Bali<br />- Founder
+
+    <!-- Leader 1 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/balisirimg.avif') }}" alt="Mr. Prithipal Bali" />
+          </div>
+          <div class="leader-caption">
+            Mr. Prithipal Bali<br />- Founder
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>At Bali Business Associates, we are led by visionary leader Prithipal B. S. Bali, fondly called Bali Bhaiya. Guided by his principle, “Do what you believe in and believe in what you do,” he reflects commitment to excellence and service.</p>
-        <p>A motivator, philosopher, social worker, and professional trainer, Mr. Bali inspires many. His leadership goes beyond business—mentorship, community service, and empowerment remain at the core of his life.</p>
-        <p>With academic qualifications in Commerce, Economics, and Law, he also received specialized training from the Faculty Development Institute of Lions Club International in Colombo, Sri Lanka. His career began as a Development Officer in a Public Sector Insurance Company, where he earned trust and respect.</p>
-        <p>A devoted social worker and blood donor, Mr. Bali has made over 110 donations, truly embodying selfless service. His influence is visible in many social and religious organizations, where he has held leadership roles at multi-district levels.</p>
-        <p>As a former District Governor of Lions Club International (323C) (2010–2011) and Multiple Council Secretary of District (3233) (2019–2020), he proved himself a dynamic leader, skilled communicator, and solution-driven professional. With nearly four decades in General Insurance—both Claims and Underwriting—he continues to bring unmatched knowledge and integrity to the industry.</p>
-        
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>At Bali Business Associates, we are led by visionary leader Prithipal B. S. Bali, fondly called Bali Bhaiya. Guided by his principle, "Do what you believe in and believe in what you do," he reflects commitment to excellence and service.</p>
+            <p>A motivator, philosopher, social worker, and professional trainer, Mr. Bali inspires many. His leadership goes beyond business—mentorship, community service, and empowerment remain at the core of his life.</p>
+            <p>With academic qualifications in Commerce, Economics, and Law, he also received specialized training from the Faculty Development Institute of Lions Club International in Colombo, Sri Lanka. His career began as a Development Officer in a Public Sector Insurance Company, where he earned trust and respect.</p>
+            <p>A devoted social worker and blood donor, Mr. Bali has made over 110 donations, truly embodying selfless service. His influence is visible in many social and religious organizations, where he has held leadership roles at multi-district levels.</p>
+            <p>As a former District Governor of Lions Club International (323C) (2010–2011) and Multiple Council Secretary of District (3233) (2019–2020), he proved himself a dynamic leader, skilled communicator, and solution-driven professional. With nearly four decades in General Insurance—both Claims and Underwriting—he continues to bring unmatched knowledge and integrity to the industry.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-
-
-    <hr style="margin: 3rem 0; border: 2px solid black; border-top: 2px solid #eee;" />
-
-
-
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/balisirsonimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Mr. Digvijay  Bali<br />- Finance & Marketing Professional | Insurance Consultant | Marketing Strategist | Relationship Builder
+    <!-- Leader 2 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/balisirsonimg.avif') }}" alt="Mr. Digvijay Bali" />
+          </div>
+          <div class="leader-caption">
+            Mr. Digvijay Bali<br />- Finance & Marketing Professional | Insurance Consultant | Marketing Strategist | Relationship Builder
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>A dynamic marketing professional known for his deep expertise in general insurance and an exceptional ability to maintain strong client relationships. As a skilled communicator and strategic thinker, Digvijay brings a perfect blend of knowledge, professionalism, inter-personal relations and innovation to the table.</p>
-        <p>Well-versed in all types of insurance policies and claim handling processes, he is known for offering quick, reliable, fast and creative solutions tailored to each client's needs. His strong command over customer engagement and relationship-building has consistently led to high client retention, satisfaction and trust.</p>
-        <p>
-          Whether it’s personal, commercial, or industrial insurance, Digvijay has a proven track record of guiding clients through the complexities of insurance plans with clarity, confidence, and integrity.</p>
-        <p>A skilled communicator and an engaging speaker,  he stands out for his ability to handle insurance claims swiftly and effectively has earned him the trust of countless customers who rely on his expertise to safeguard their interests</p>
-        <p>A skilled communicator and an engaging speaker,  he stands out for his ability to handle insurance claims swiftly and effectively has earned him the trust of countless customers who rely on his expertise to safeguard their interests</p>
-        <p>Whether you’re looking for expert advice on insurance solutions, a dependable professional to manage claims, or a marketer who understands the pulse of the hour. Digvijay Singh Bali is your go-to expert.
-        </p>
-        
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>A dynamic marketing professional known for his deep expertise in general insurance and an exceptional ability to maintain strong client relationships. As a skilled communicator and strategic thinker, Digvijay brings a perfect blend of knowledge, professionalism, inter-personal relations and innovation to the table.</p>
+            <p>Well-versed in all types of insurance policies and claim handling processes, he is known for offering quick, reliable, fast and creative solutions tailored to each client's needs. His strong command over customer engagement and relationship-building has consistently led to high client retention, satisfaction and trust.</p>
+            <p>Whether it's personal, commercial, or industrial insurance, Digvijay has a proven track record of guiding clients through the complexities of insurance plans with clarity, confidence, and integrity.</p>
+            <p>A skilled communicator and an engaging speaker, he stands out for his ability to handle insurance claims swiftly and effectively has earned him the trust of countless customers who rely on his expertise to safeguard their interests</p>
+            <p>Whether you're looking for expert advice on insurance solutions, a dependable professional to manage claims, or a marketer who understands the pulse of the hour. Digvijay Singh Bali is your go-to expert.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr style="margin: 3rem 0; border: 2px solid black; border-top: 2px solid #eee;" />
-
-
-
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/balisirdilimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Mrs. Himanshi  Bedi<br />- Talent acquisition & Digital growth
+    <!-- Leader 3 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/balisirdilimg.avif') }}" alt="Mrs. Himanshi Bedi" />
+          </div>
+          <div class="leader-caption">
+            Mrs. Himanshi Bedi<br />- Talent Acquisition & Digital Growth
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>The Strategic Force Behind People and Performance
-          With an MBA in Human Resources and Digital Marketing, Himanshi Bedi is a dynamic and visionary professional whose expertise bridges both traditional leadership and modern digital ecosystems. Her illustrious career is marked by a stellar track record in talent acquisition, leadership hiring, and human capital strategy across diverse sectors including IT and Non-IT industries..</p>
-        <p>From working at the grassroots level to heading customer support teams, Himanshi has demonstrated unmatched dedication and excellence in team management, employee retention, and performance upliftment—especially for underperformers. Her ability to build strong interpersonal relationships and foster motivated, result-driven teams has earned her a distinct reputation in the HR domain.</p>
-        <p>
-          A true leader in every sense, Himanshi brings a rare blend of strategic insight and empathetic leadership. She is not only well-versed in HR policies but also deeply entrenched in the fast-paced world of digital platforms and social media marketing. Her contribution to the Bima with Bali platform reflects her commitment to excellence, structure, and innovation.</p>
-        <p>Whether it’s building a team, shaping organizational culture, or crafting impactful digital campaigns—Himanshi leads with integrity, intellect, and an unwavering passion for people.</p>
-        
-        
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>The Strategic Force Behind People and Performance. With an MBA in Human Resources and Digital Marketing, Himanshi Bedi is a dynamic and visionary professional whose expertise bridges both traditional leadership and modern digital ecosystems. Her illustrious career is marked by a stellar track record in talent acquisition, leadership hiring, and human capital strategy across diverse sectors including IT and Non-IT industries.</p>
+            <p>From working at the grassroots level to heading customer support teams, Himanshi has demonstrated unmatched dedication and excellence in team management, employee retention, and performance upliftment—especially for underperformers. Her ability to build strong interpersonal relationships and foster motivated, result-driven teams has earned her a distinct reputation in the HR domain.</p>
+            <p>A true leader in every sense, Himanshi brings a rare blend of strategic insight and empathetic leadership. She is not only well-versed in HR policies but also deeply entrenched in the fast-paced world of digital platforms and social media marketing. Her contribution to the Bima with Bali platform reflects her commitment to excellence, structure, and innovation.</p>
+            <p>Whether it's building a team, shaping organizational culture, or crafting impactful digital campaigns—Himanshi leads with integrity, intellect, and an unwavering passion for people.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr style="margin: 3rem 0; border: 2px solid black; border-top: 2px solid #eee;" />
-
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/sunitaimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Mrs. Sunita<br />- Corporate Social Responsibility
+    <!-- Leader 4 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/sunitaimg.avif') }}" alt="Mrs. Sunita" />
+          </div>
+          <div class="leader-caption">
+            Mrs. Sunita<br />- Corporate Social Responsibility
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>Sunita Bali is a dynamic and compassionate Corporate Social Responsibility (CSR) professional at Bali Business Associates. A true people’s person, she is known for her fun-loving and jolly nature, making every interaction warm and engaging. With a deep passion for helping others, she goes the extra mile to make a positive impact, both professionally and personally. Smart, fast, and intellectually driven, Sunita is an excellent communicator who effortlessly connects with people from all walks of life. Her kindness and helpful attitude make her a valued member of the team, ensuring that Bali Business Associates’ CSR initiatives are not only impactful but also driven by genuine care and purpose. Always ready to lend a hand, Sunita embodies the spirit of service, making a lasting difference wherever she goes.</p>
-
-
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>Sunita Bali is a dynamic and compassionate Corporate Social Responsibility (CSR) professional at Bali Business Associates. A true people's person, she is known for her fun-loving and jolly nature, making every interaction warm and engaging. With a deep passion for helping others, she goes the extra mile to make a positive impact, both professionally and personally. Smart, fast, and intellectually driven, Sunita is an excellent communicator who effortlessly connects with people from all walks of life. Her kindness and helpful attitude make her a valued member of the team, ensuring that Bali Business Associates' CSR initiatives are not only impactful but also driven by genuine care and purpose. Always ready to lend a hand, Sunita embodies the spirit of service, making a lasting difference wherever she goes.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr style="margin: 3rem 0; border: 2px solid black; border-top: 2px solid #eee;" />
-
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/scgiriimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Mr. S.C. Giri<br />- Insurance Expert & Arbitrator
+    <!-- Leader 5 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/scgiriimg.avif') }}" alt="Mr. S.C. Giri" />
+          </div>
+          <div class="leader-caption">
+            Mr. S.C. Giri<br />- Insurance Expert & Arbitrator
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>Mr. S.C. Giri is a seasoned insurance professional and former Deputy General Manager at a leading Public Sector Undertaking in the insurance sector. With decades of hands-on experience in underwriting and claims management across India, he brings deep industry knowledge and unmatched expertise. As a government-licensed arbitrator, Mr. Giri has handled complex cases with integrity and precision. His specialization in large industrial risks, particularly in Delhi, highlights his strategic insight and technical proficiency. Committed to excellence and ethical practices, Mr. Giri continues to contribute to the insurance industry through guidance, arbitration, and thought leadership</p>
-
-
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>Mr. S.C. Giri is a seasoned insurance professional and former Deputy General Manager at a leading Public Sector Undertaking in the insurance sector. With decades of hands-on experience in underwriting and claims management across India, he brings deep industry knowledge and unmatched expertise. As a government-licensed arbitrator, Mr. Giri has handled complex cases with integrity and precision. His specialization in large industrial risks, particularly in Delhi, highlights his strategic insight and technical proficiency. Committed to excellence and ethical practices, Mr. Giri continues to contribute to the insurance industry through guidance, arbitration, and thought leadership</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr style="margin: 3rem 0; border: 2px solid black; border-top: 2px solid #eee;" />
-
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/kkimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Mr. K.K Panda<br />- NIA Faculty & Industry Expert
+    <!-- Leader 6 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/kkimg.avif') }}" alt="Mr. K.K Panda" />
+          </div>
+          <div class="leader-caption">
+            Mr. K.K Panda<br />- NIA Faculty & Industry Expert
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>With decades of rich experience in the insurance industry, Mr. K.K. Panda brings unparalleled expertise in underwriting and claims handling. A former Assistant General Manager at a reputed Public Sector Insurance Company, he has played a pivotal role in shaping technical processes and best practices within the organization.</p>
-        <p>Served as a respected faculty member at the National Insurance Academy (NIA), Pune, Mr. Panda is committed to nurturing the next generation of insurance professionals. His deep understanding of insurance operations, combined with a passion for teaching, makes him a valuable mentor and thought leader in the field.</p>
-        <p>Whether you're a student, professional, or organization looking to strengthen your insurance knowledge, Mr. Panda's insights offer a wealth of practical and strategic value.</p>
-
-
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>With decades of rich experience in the insurance industry, Mr. K.K. Panda brings unparalleled expertise in underwriting and claims handling. A former Assistant General Manager at a reputed Public Sector Insurance Company, he has played a pivotal role in shaping technical processes and best practices within the organization.</p>
+            <p>Served as a respected faculty member at the National Insurance Academy (NIA), Pune, Mr. Panda is committed to nurturing the next generation of insurance professionals. His deep understanding of insurance operations, combined with a passion for teaching, makes him a valuable mentor and thought leader in the field.</p>
+            <p>Whether you're a student, professional, or organization looking to strengthen your insurance knowledge, Mr. Panda's insights offer a wealth of practical and strategic value.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <hr style="margin: 3rem 0; border: 2px solid black; border-top: 2px solid #eee;" />
-
-    <div class="leaders-content" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
-      <div class="leader-photo" style="flex: 0 0 250px; background-color: #333; color: #fff; border-radius: 5px; overflow: hidden;">
-        <img src="{{ url_for('static', filename='image/neerajtiwariimg.avif') }}" alt="Mr. Prithipal Bali" style="width: 100%; height: auto; display: block;" />
-        <div class="leader-caption" style="padding: 1rem; font-weight: 700; font-size: 1.1rem; text-align: center;">
-          Dr. Neeraj Tiwari<br />- Ecologist & Environmental Consultant
+    <!-- Leader 7 -->
+    <div class="leader-card">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <div class="leader-photo">
+            <img src="{{ url_for('static', filename='image/neerajtiwariimg.avif') }}" alt="Dr. Neeraj Tiwari" />
+          </div>
+          <div class="leader-caption">
+            Dr. Neeraj Tiwari<br />- Ecologist & Environmental Consultant
+          </div>
         </div>
-      </div>
-      <div class="leader-text" style="flex: 1 1 500px; font-size: 1.2rem; line-height: 1.5; color: #000;">
-        <p>Dr. Neeraj Tiwari is a distinguished ecologist and seasoned environmental consultant whose deep understanding of ecological systems and sustainable practices brings invaluable insight to our team. A respected member of the University Grants Commission (UGC), Dr. Tiwari’s work bridges academic excellence with real-world environmental solutions. His commitment to ecological balance, biodiversity conservation, and environmental planning enhances the impact and integrity of every project he undertakes. With a career rooted in both research and consultancy, Dr. Tiwari adds a unique and essential perspective to our multidisciplinary team.</p>
-
-
+        <div class="col-md-8">
+          <div class="leader-text">
+            <p>Dr. Neeraj Tiwari is a distinguished ecologist and seasoned environmental consultant whose deep understanding of ecological systems and sustainable practices brings invaluable insight to our team. A respected member of the University Grants Commission (UGC), Dr. Tiwari's work bridges academic excellence with real-world environmental solutions. His commitment to ecological balance, biodiversity conservation, and environmental planning enhances the impact and integrity of every project he undertakes. With a career rooted in both research and consultancy, Dr. Tiwari adds a unique and essential perspective to our multidisciplinary team.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="meet-our-team-section">
-  <h2 class="meet-our-team-heading">
-    <span class="yellow-arc-left">&#40;</span>
-    Meet our team
-    <span class="yellow-arc-right">&#41;</span>
-  </h2>
-  <div class="team-images-container">
-    <img src="{{ url_for('static', filename='image/imgr1.png') }}" alt="Team member 1" class="team-image" />
-    <img src="{{ url_for('static', filename='image/imgr2.png') }}" alt="Team member 2" class="team-image" />
-    <img src="{{ url_for('static', filename='image/imgr3.png') }}" alt="Team member 3" class="team-image" />
-    <img src="{{ url_for('static', filename='image/img4r.png') }}" alt="Team member 4" class="team-image" />
-    <img src="{{ url_for('static', filename='image/imgr5.png') }}" alt="Team member 5" class="team-image" />
-    <img src="{{ url_for('static', filename='image/imgr6.png') }}" alt="Team member 6" class="team-image" />
-    <img src="{{ url_for('static', filename='image/imgr7.png') }}" alt="Team member 7" class="team-image" />
+<!-- Team Section -->
+<section class="team-section">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5" style="font-size: 3rem; color: white;">
+      <span style="background-color: rgba(255,255,255,0.2); border-radius: 50% 0 0 50%; padding: 0 0.5rem;">&#40;</span>
+      Meet Our Team
+      <span style="background-color: rgba(255,255,255,0.2); border-radius: 0 50% 50% 0; padding: 0 0.5rem;">&#41;</span>
+    </h2>
+    <div class="team-images-container">
+      <img src="{{ url_for('static', filename='image/imgr1.png') }}" alt="Team member 1" class="team-image" />
+      <img src="{{ url_for('static', filename='image/imgr2.png') }}" alt="Team member 2" class="team-image" />
+      <img src="{{ url_for('static', filename='image/imgr3.png') }}" alt="Team member 3" class="team-image" />
+      <img src="{{ url_for('static', filename='image/img4r.png') }}" alt="Team member 4" class="team-image" />
+      <img src="{{ url_for('static', filename='image/imgr5.png') }}" alt="Team member 5" class="team-image" />
+      <img src="{{ url_for('static', filename='image/imgr6.png') }}" alt="Team member 6" class="team-image" />
+      <img src="{{ url_for('static', filename='image/imgr7.png') }}" alt="Team member 7" class="team-image" />
+    </div>
   </div>
 </section>
 
-<section class="bima-video-section">
-  <div class="bima-video-container">
-    <div class="bima-video-wrapper">
+<!-- Video Section -->
+<section class="video-section">
+  <div class="container">
+    <div class="video-container">
       <iframe src="https://drive.google.com/file/d/1G0A4Vh3O9E_yR4E_Vu2zTzozsWhQp0J9/preview"
         allow="autoplay" allowfullscreen>
       </iframe>
-
-
     </div>
-    <div class="bima-video-text">
-      <h2>Free Advise &amp; Guidance Available</h2>
+    <div class="video-text">
+      <h2>Free Advice & Guidance Available</h2>
       <p>from our experienced surveyors and loss assessors</p>
     </div>
   </div>
 </section>
-
-
 
 {% endblock %}
