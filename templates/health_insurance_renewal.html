@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+          <h3 class="mb-0">Health Insurance Renewal Form</h3>
+          <small>Fill in the details below to renew your health insurance policy</small>
+        </div>
+        <div class="card-body">
+          <form id="healthInsuranceRenewalForm">
+            <div class="mb-3">
+              <label for="policyNumber" class="form-label">Policy Number</label>
+              <input type="text" class="form-control" id="policyNumber" name="policyNumber" required>
+            </div>
+            <div class="mb-3">
+              <label for="policyType" class="form-label">Policy Type</label>
+              <select class="form-select" id="policyType" name="policyType" required>
+                <option value="" selected disabled>Select</option>
+                <option value="individual">Individual</option>
+                <option value="family">Family Floater</option>
+                <option value="senior">Senior Citizen</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="insuredName" class="form-label">Insured Name</label>
+              <input type="text" class="form-control" id="insuredName" name="insuredName" required>
+            </div>
+            <div class="mb-3">
+              <label for="dob" class="form-label">Date of Birth</label>
+              <input type="date" class="form-control" id="dob" name="dob" required>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="height" class="form-label">Height (cm)</label>
+                  <input type="number" class="form-control" id="height" name="height" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="weight" class="form-label">Weight (kg)</label>
+                  <input type="number" class="form-control" id="weight" name="weight" required>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="preExistingDiseases" class="form-label">Pre-existing Diseases</label>
+              <textarea class="form-control" id="preExistingDiseases" name="preExistingDiseases" rows="3" placeholder="List any pre-existing diseases (if none, leave blank)"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="sumInsured" class="form-label">Sum Insured (₹)</label>
+              <input type="number" class="form-control" id="sumInsured" name="sumInsured" required>
+            </div>
+            <div class="mb-3">
+              <label for="previousPolicyDocument" class="form-label">Previous Policy Document (Upload)</label>
+              <input type="file" class="form-control" id="previousPolicyDocument" name="previousPolicyDocument" accept=".pdf,.jpg,.jpeg,.png" required>
+              <small class="text-muted">PDF, JPG, JPEG, PNG files accepted</small>
+            </div>
+            <div class="mb-3">
+              <label for="renewalDate" class="form-label">Renewal Date</label>
+              <input type="date" class="form-control" id="renewalDate" name="renewalDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Renewal</button>
+          </form>
+          <div id="form-message" class="mt-3 text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('healthInsuranceRenewalForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    formData.append('to', 'sparksolutionfreelancing@gmail.com');
+    formData.append('name', form.insuredName.value);
+    formData.append('email', 'healthinsurance@bima.com');
+    formData.append('subject', 'Health Insurance Renewal - ' + form.policyNumber.value);
+
+    let message = `Health Insurance Renewal Form\n\n`;
+    message += `Policy Number: ${form.policyNumber.value}\n`;
+    message += `Policy Type: ${form.policyType.value}\n`;
+    message += `Insured Name: ${form.insuredName.value}\n`;
+    message += `Date of Birth: ${form.dob.value}\n`;
+    message += `Height: ${form.height.value} cm\n`;
+    message += `Weight: ${form.weight.value} kg\n`;
+    message += `Pre-existing Diseases: ${form.preExistingDiseases.value || 'None'}\n`;
+    message += `Sum Insured: ₹${form.sumInsured.value}\n`;
+    message += `Renewal Date: ${form.renewalDate.value}\n`;
+
+    formData.append('message', message);
+
+    fetch('/send-email', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        document.getElementById('form-message').innerHTML = '<div class="alert alert-success">Renewal form submitted successfully! Our team will contact you shortly.</div>';
+        form.reset();
+      } else if (data.error) {
+        document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+      }
+    })
+    .catch(error => {
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error: ' + error + '</div>';
+    });
+  });
+</script>
+
+{% endblock %}

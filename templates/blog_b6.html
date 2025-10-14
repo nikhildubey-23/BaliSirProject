@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Understanding Critical Illness Insurance</h1>
+  <img src="{{ url_for('static', filename='image/b6c.avif') }}" alt="Insurance Claims Rejected" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+
+  <p>Critical illness insurance pays a <strong>lump sum</strong> upon diagnosis of life-threatening illnesses, unlike regular health insurance which reimburses bills.</p>
+
+  <p><strong>What’s Covered:</strong></p>
+  <ul>
+    <li>Cancer</li>
+    <li>Stroke</li>
+    <li>Heart attack</li>
+    <li>Kidney failure</li>
+    <li>Multiple sclerosis</li>
+    <li>Major organ transplant</li>
+  </ul>
+
+  <p><strong>Ideal For:</strong></p>
+  <ul>
+    <li>Those with family history of chronic illness</li>
+    <li>Professionals with loans/liabilities</li>
+    <li>Freelancers or business owners</li>
+  </ul>
+
+  <p><span style="color: orange;"><strong>Tip:</strong></span> Choose a plan with <strong>shorter survival periods</strong> and broader illness definitions.</p>
+</div>
+{% endblock %}

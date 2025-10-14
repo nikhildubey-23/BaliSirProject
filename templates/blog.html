@@ -1,0 +1,660 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="row g-4">
+    <!-- Card 1 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b1') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b1c.avif') }}" class="card-img-top" alt="Renewing Your General Insurance" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 8</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Renewing Your General Insurance: Tips and Checklist</h5>
+            <p class="card-text">Renewing your policy on time ensures uninterrupted protection. Renewal…</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 2 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b2') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b2c.avif') }}" class="card-img-top" alt="How to Read and Understand Your Insurance Policy" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 1</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">How to Read and Understand Your Insurance Policy…</h5>
+            <p class="card-text">Don’t skip the fine print! Here's how to break down your policy: What to Check: ✅…</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 3 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b3') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b3c.avif') }}" class="card-img-top" alt="Understanding Insurance Terminology" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 2</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Understanding Insurance Terminology: A…</h5>
+            <p class="card-text">Insurance jargon confusing you? Here are the basics simplified: Term Meaning…</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 4 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b4') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b4c.avif') }}" class="card-img-top" alt="Top Reasons Why Insurance Claims Get Rejected" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 2</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Top Reasons Why Insurance Claims Get Rejected</h5>
+            <p class="card-text">Claim rejections hurt. Here’s how to avoid them: Common Reasons: Non-disclosure of information, policy lapses, etc.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 5 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b5') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b5c.avif') }}" class="card-img-top" alt="How to File a General Insurance Claim" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 1</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">How to File a General Insurance Claim: Step-by-Step Guide</h5>
+            <p class="card-text">Filing a claim can be easy if you know the process. Claim Filing Steps: Inform the insurer, submit documents, follow up.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 6 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b6') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b6c.avif') }}" class="card-img-top" alt="Understanding Critical Illness Insurance" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 14 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 1</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Understanding Critical Illness Insurance under…</h5>
+            <p class="card-text">Critical illness insurance pays a lump sum upon diagnosis of life-threatening illnesses, providing financial support.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 7 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b7') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b7c.avif') }}" class="card-img-top" alt="Blog Post 7" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Importance of Personal Accident Insurance for Working Professionals  </h5>
+            <p class="card-text">Accidents don’t wait—and can derail your career and finances. Personal accident insurance gives lump sum compensation for such cases.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 8 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b8') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b8c.avif') }}" class="card-img-top" alt="Blog Post 8" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Does Your Insurance Cover Natural Disasters?</h5>
+            <p class="card-text">Yes—but only if you’ve chosen the right plan.
+
+</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 9 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b9') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b9c.avif') }}" class="card-img-top" alt="Blog Post 9" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Add-On Covers You Didn’t Know You Could Buy</h5>
+            <p class="card-text">Add-ons (or riders) enhance your basic policy. Here are lesser-known but useful ones:</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 10 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b10') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b10c.avif') }}" class="card-img-top" alt="Blog Post 10" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">What’s Covered Under Health Insurance vs General Insurance?</h5>
+            <p class="card-text">Though both offer financial protection, health insurance and general insurance serve different needs.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 11 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b11') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b11c.avif') }}" class="card-img-top" alt="Blog Post 11" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">International vs Domestic Travel Insurance – What’s the Difference?</h5>
+            <p class="card-text">Feature Domestic Travel Insurance International Travel Insurance Scope Within India</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 12 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b12') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b12c.avif') }}" class="card-img-top" alt="Blog Post 12" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Travel Insurance for Students: What You Need to Know</h5>
+            <p class="card-text">If you're going abroad for studies, student travel insurance is a must—often mandated by universities.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 13 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b13') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b13c.avif') }}" class="card-img-top" alt="Blog Post 13" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Travel Insurance Claims: How to File Them Hassle-Free</h5>
+            <p class="card-text">Filing a claim doesn’t have to be a nightmare. Just follow these simple steps.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 14 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b14') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b14c.avif') }}" class="card-img-top" alt="Blog Post 14" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Top Things Your Travel Insurance Should Cover</h5>
+            <p class="card-text">Not all travel policies are created equal. Make sure your policy includes the following</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 15 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b15') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b15c.avif') }}" class="card-img-top" alt="Blog Post 15" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Do You Really Need Travel Insurance? Here’s When It Matters Most</h5>
+            <p class="card-text">If you think travel insurance is just a “nice-to-have,” think again. Here's when it's absolutely essential</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 16 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b16') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b16c.avif') }}" class="card-img-top" alt="Blog Post 16" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Real Stories: How Home Insurance Saved Us During a Crisis</h5>
+            <p class="card-text">Case Study 1: Flood Damage in Chennai <br> Case Study 2: Theft in Mumbai Apartment</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 17 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b17') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b17c.avif') }}" class="card-img-top" alt="Blog Post 17" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Tips to Lower Your Home Insurance Premium</h5>
+            <p class="card-text">Want comprehensive coverage at a better price? Here are smart ways to reduce your premium</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 18 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b18') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b18c.avif') }}" class="card-img-top" alt="Blog Post 18" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Home Insurance vs Home Loan Insurance, Know the Difference</h5>
+            <p class="card-text">While they sound similar, home insurance and home loan insurance serve different purposes</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 19 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b19') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b19c.avif') }}" class="card-img-top" alt="Blog Post 19" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">What Does Home Insurance Typically Cover?</h5>
+            <p class="card-text">A standard home insurance policy covers both the structure of your house and its contents. Here's a breakdown.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 20 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b20') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b20c.avif') }}" class="card-img-top" alt="Blog Post 20" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Why Home Insurance Is a Must in Today’s World</h5>
+            <p class="card-text">In an unpredictable world where natural disasters, thefts, and accidents are common, home insurance offers a safety net against unexpected losses.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 21 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b21') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b21c.avif') }}" class="card-img-top" alt="Blog Post 21" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Top Myths About General Insurance Debunked</h5>
+            <p class="card-text">There are plenty of misconceptions floating around. Let’s bust a few:</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 22 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b22') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b22c.avif') }}" class="card-img-top" alt="Blog Post 22" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Types of General Insurance: A Beginner’s Guide</h5>
+            <p class="card-text">General insurance comes in many forms, each tailored to specific needs. Here's a quick overview</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 23 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b23') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b23c.avif') }}" class="card-img-top" alt="Blog Post 23" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Difference Between Life Insurance and General Insurance</h5>
+            <p class="card-text">Though both serve as safety nets, life insurance and general insurance are fundamentally different.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 24 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b24') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b24c.avif') }}" class="card-img-top" alt="Blog Post 24" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">How to Choose the Right General Insurance Policy for Your Needs</h5>
+            <p class="card-text">Content for blog post 24 goes here.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <!-- Card 25 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b25') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b25c.avif') }}" class="card-img-top" alt="Blog Post 25" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">What Is General Insurance and Why Do You Need It?</h5>
+            <p class="card-text">General insurance refers to non-life insurance policies that protect your valuable assets—like your car, home, health, travel, and even business—from financial losses due to damage, theft, accidents, or other unexpected events.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 26 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b26') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b26c.avif') }}" class="card-img-top" alt="Blog Post 26" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Everything You Need to Know About Car Insurance in India</h5>
+            <p class="card-text">Car insurance is not just a smart financial move in India—it’s a legal requirement. Whether you drive a new sedan or a second-hand hatchback, having the right coverage can save you from unexpected expenses.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 27 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b27') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b27c.avif') }}" class="card-img-top" alt="Blog Post 27" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Third-Party vs Comprehensive Car Insurance. What’s the Best for You?</h5>
+            <p class="card-text">Choosing between third-party and comprehensive car insurance depends on your needs, vehicle age, and budget.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 28 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b28') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b28c.avif') }}" class="card-img-top" alt="Blog Post 28" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">How Your Car’s Age Affects Your Insurance Premium.</h5>
+            <p class="card-text">Car insurance premiums are directly influenced by the age of your vehicle. Here's how</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 29 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b29') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b29c.avif') }}" class="card-img-top" alt="Blog Post 29" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">Top Mistakes to Avoid When Buying Bike/Car InsuranceMay 17</h5>
+            <p class="card-text">Avoiding common mistakes can save you money and ensure better protection. Here are the top ones to watch out for</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Card 30 -->
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_b30') }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename='image/b30c.avif') }}" class="card-img-top" alt="Blog Post 30" />
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">bimawithbali · Jul 15 · 1 min read</small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> 0</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">What to Do After a Car Accident Step-by-Step Insurance Guide.</h5>
+            <p class="card-text">Car insurance premiums are directly influenced by the age of your vehicle. Here's how</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

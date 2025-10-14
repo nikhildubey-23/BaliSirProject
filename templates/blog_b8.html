@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Does Your Insurance Cover Natural Disasters?</h1>
+  <img src="{{ url_for('static', filename='image/b8c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Yes—but only if you’ve chosen the right plan.</p>
+
+  <section class="disaster-coverage mt-4">
+    <h3 style="color: green;">Covered Under:</h3>
+    <ul>
+      <li><strong>Home Insurance</strong> – Floods, earthquakes, storms</li>
+      <li><strong>Car Insurance (Comprehensive only)</strong> – Damage from cyclones, floods, falling trees</li>
+      <li><strong>Travel Insurance</strong> – Trip delays due to natural calamities</li>
+    </ul>
+
+    <h3 style="color: red;">Not Covered If:</h3>
+    <ul>
+      <li>You only have third-party car insurance</li>
+      <li>Policy excludes “Acts of God”</li>
+      <li>Lapse in premium payments</li>
+    </ul>
+
+    <p>Always confirm <strong>“Act of God”</strong> clauses and opt for disaster-specific add-ons in risk-prone areas.</p>
+  </section>
+</div>
+{% endblock %}

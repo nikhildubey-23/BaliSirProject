@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Difference Between Life Insurance and General Insurance</h1>
+    <img src="{{ url_for('static', filename='image/b23c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Though both serve as safety nets, life insurance and general insurance are fundamentally different.</p>
+
+  <section>
+    <h3>Comparison Table:</h3>
+    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1.5rem;">
+      <thead style="background-color: #f9f1d1;">
+        <tr>
+          <th>Feature</th>
+          <th>Life Insurance</th>
+          <th>General Insurance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Purpose</td>
+          <td>Covers life risk (death, survival, etc.)</td>
+          <td>Covers risks related to health, vehicle etc</td>
+        </tr>
+        <tr>
+          <td>Term</td>
+          <td>Long-term (10-30+ years)</td>
+          <td>Short-term (usually 1 year, renewable)</td>
+        </tr>
+        <tr>
+          <td>Benefit</td>
+          <td>Sum assured paid to nominee or insured</td>
+          <td>Reimbursement or coverage of actual loss</td>
+        </tr>
+        <tr>
+          <td>Claims</td>
+          <td>Paid only once (usually on death or maturity)</td>
+          <td>Can be claimed multiple times (as per policy)</td>
+        </tr>
+        <tr>
+          <td>Examples</td>
+          <td>Term plan, endowment, ULIP</td>
+          <td>Car insurance, health and travel insurance</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 1rem;">In short, <strong>life insurance</strong> is for long-term life protection, while <strong>general insurance</strong> helps manage day-to-day risks.</p>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>What’s Covered Under Health Insurance vs General Insurance?</h1>
+    <img src="{{ url_for('static', filename='image/b10c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Though both offer financial protection, health insurance and general insurance serve different needs.</p>
+
+  <section class="insurance-covers mt-4">
+    <h3 style="color: blue;">Health Insurance Covers:</h3>
+    <ul>
+      <li>Hospitalization expenses</li>
+      <li>Surgeries & day-care procedures</li>
+      <li>Pre & post-hospitalization costs</li>
+      <li>Critical illness (with riders)</li>
+      <li>Maternity (if included)</li>
+    </ul>
+
+    <h3 style="color: green;">General Insurance Covers:</h3>
+    <ul>
+      <li>Motor insurance (cars, bikes)</li>
+      <li>Home insurance</li>
+      <li>Travel insurance</li>
+      <li>Commercial property</li>
+      <li>Liability insurance</li>
+    </ul>
+  </section>
+</div>
+{% endblock %}

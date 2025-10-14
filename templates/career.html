@@ -1,0 +1,614 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  /* Modern Career Page Styling */
+  .hero-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .hero-section .highlight-text {
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(240, 173, 0, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-color: #f0ad00;
+  }
+
+  .feature-card:hover::before {
+    left: 100%;
+  }
+
+  .feature-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover img {
+    transform: scale(1.1);
+  }
+
+  .feature-card h5 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .feature-card p {
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .opportunities-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .opportunities-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .opportunity-item {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #f0ad00;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .opportunity-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .opportunity-item img {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .opportunity-item span {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .application-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 5rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .application-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .application-form {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(240, 173, 0, 0.2);
+  }
+
+  .application-form .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .application-form .form-control,
+  .application-form .form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .application-form .form-control:focus,
+  .application-form .form-select:focus {
+    border-color: #f0ad00;
+    box-shadow: 0 0 0 0.2rem rgba(240, 173, 0, 0.25);
+    background: white;
+  }
+
+  .application-form .btn-primary {
+    background: linear-gradient(135deg, #333, #555);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .application-form .btn-primary:hover {
+    background: linear-gradient(135deg, #222, #444);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .application-form .btn-primary:disabled {
+    background: #ccc;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .file-upload-btn {
+    background: linear-gradient(135deg, #333, #555);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .file-upload-btn:hover {
+    background: linear-gradient(135deg, #222, #444);
+    transform: translateY(-2px);
+  }
+
+  .positions-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+  }
+
+  .position-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #f0ad00;
+    transition: all 0.3s ease;
+  }
+
+  .position-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .position-card h4 {
+    background: linear-gradient(135deg, #f0ad00, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .download-link {
+    color: #f0ad00;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .download-link:hover {
+    color: #d49a00;
+    text-decoration: underline;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    padding: 4rem 0;
+    text-align: center;
+    color: white;
+    border-radius: 50px 50px 0 0;
+  }
+
+  .cta-section h2 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .cta-section .btn {
+    background: white;
+    color: #f0ad00;
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .cta-section .btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Alert Messages */
+  .alert {
+    border-radius: 15px;
+    border: none;
+    font-weight: 500;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+  }
+
+  .alert-danger {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 3rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .application-form {
+      padding: 2rem;
+    }
+
+    .position-card {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .feature-card {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .feature-card:nth-child(1) { animation-delay: 0.1s; }
+  .feature-card:nth-child(2) { animation-delay: 0.2s; }
+  .feature-card:nth-child(3) { animation-delay: 0.3s; }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="fw-bold display-4 mb-4">
+          Join us in building a future care, <span class="highlight-text">Not confusion.</span>
+        </h1>
+        <p class="lead mb-4">
+          At <strong>Bima with Bali</strong>, we're not just changing the way people look at insurance, we're changing how they feel about it.
+        </p>
+        <h3 class="fw-bold highlight-text">Learn, Build and Grow</h3>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/cr1.avif') }}" alt="Join Us" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">What We're All About</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <img src="{{ url_for('static', filename='image/cr2.avif') }}" alt="Purpose with Heart" />
+          <h5>Purpose with Heart</h5>
+          <p>We're here to educate, empower and protect. If you're someone who cares about impact, you'll find meaning here.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <img src="{{ url_for('static', filename='image/cr3.avif') }}" alt="People First" />
+          <h5>People First</h5>
+          <p>We treat our team like family. Respect, trust, and support are our non-negotiable values.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <img src="{{ url_for('static', filename='image/cr4.avif') }}" alt="Growth That Matters" />
+          <h5>Growth That Matters</h5>
+          <p>Whether you're just starting out or have years of experience, we're committed to helping you grow professionally and personally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Opportunities Section -->
+<section class="opportunities-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-4">
+          We're always looking for passionate folks who love to
+          <span class="text-black">Opportunities at <span style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Bima with Bali</span></span>
+        </h2>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr5.avif') }}" alt="Simplify Icon" />
+          <span>Simplify the complex problems</span>
+        </div>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr6.avif') }}" alt="Educate Icon" />
+          <span>Educate and empower others</span>
+        </div>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr7.avif') }}" alt="Solve Icon" />
+          <span>Solve problems creatively</span>
+        </div>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr8.avif') }}" alt="Build Trust Icon" />
+          <span>Build trust with people from all walks of life</span>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="{{ url_for('static', filename='image/cr9.avif') }}" alt="Opportunities" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ready to Take the Leap Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="fw-bold display-5 mb-4">
+          <span style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Ready</span> to Take the Leap?
+        </h2>
+        <div class="d-none d-md-block">
+          <img src="{{ url_for('static', filename='image/cr10.avif') }}" alt="Megaphone" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-bold mb-4" style="border-bottom: 3px solid #f0ad00; display: inline-block;">How To Apply</h3>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr11.avif') }}" alt="Resume Icon" />
+          <span>Send your resume to us on our email <strong>bimawithbali@gmail.com</strong> (or) whatsapp on <strong>8642001409</strong></span>
+        </div>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr12.avif') }}" alt="Info Icon" />
+          <span>A short note about why you'd like to be part of <strong>Bima with Bali</strong>.</span>
+        </div>
+        <div class="opportunity-item">
+          <img src="{{ url_for('static', filename='image/cr13.avif') }}" alt="Video Icon" />
+          <span>Anything else you'd like us to see video intro, blog post, Insta reel, anything!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Application Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="fw-bold display-5 mb-4">
+          We are currently <span style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">hiring for!</span>
+        </h2>
+        <div class="d-none d-md-block">
+          <img src="{{ url_for('static', filename='image/hiring.png') }}" alt="Hiring" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="application-form">
+          <form id="contactForm" method="post" enctype="multipart/form-data" action="/send-email">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name*</label>
+              <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name*" required />
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name*</label>
+              <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name*" required />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone*</label>
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone*" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email*</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Email*" required />
+            </div>
+            <div class="mb-3">
+              <label for="position" class="form-label">Position*</label>
+              <select id="position" name="position" class="form-control" required>
+                <option value="" disabled selected>Select Position</option>
+                <option value="Field Sales Executive">Field Sales Executive</option>
+                <option value="Insurance Educator">Insurance Educator</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="resumeUpload" class="form-label">Upload Resume*</label>
+              <input type="file" id="resumeUpload" name="resume" class="form-control" accept=".pdf,.doc,.docx" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+          </form>
+          <div id="form-message"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Open Positions Section -->
+<section class="positions-section">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Open Positions</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="position-card">
+          <h4>Field Sales Executive</h4>
+          <p><strong>Job Description:</strong> <a href="{{ url_for('static', filename='image/Fieldsalesexecutive.docx') }}" class="download-link" download>Download Here</a></p>
+          <p><strong>Experience:</strong> Freshers to 1-3 years</p>
+          <p><strong>Location:</strong> Bilaspur, Chattishgarh</p>
+        </div>
+        <div class="position-card">
+          <h4>Insurance Educator</h4>
+          <p><strong>Job Description:</strong> <a href="{{ url_for('static', filename='image/InsuranceEducators.docx') }}" class="download-link" download>Download Here</a></p>
+          <p><strong>Experience:</strong> 2-5 years</p>
+          <p><strong>Location:</strong> Bilaspur, Chattishgarh</p>
+        </div>
+      </div>
+      <div class="col-md-6 text-center text-md-start">
+        <h3 class="fw-bold display-6 mb-4">
+          <span style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Bima with Bali</span>
+        </h3>
+        <p class="lead mb-4">Insurance with a Heart, Career with a Purpose!</p>
+        <a href="{{ url_for('get_now') }}" class="btn btn-warning rounded-pill px-4 py-2">Reach Us</a>
+        <p class="mt-3 fw-bold">Connect with us to get insured</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="display-5 fw-bold mb-4">Ready to Make a Difference?</h2>
+    <p class="lead mb-4">Join our team and help us transform the insurance industry with care and compassion.</p>
+    <a href="#contactForm" class="btn btn-light btn-lg">Apply Now</a>
+  </div>
+</section>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const submitButton = document.querySelector('#contactForm .btn-primary');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
+
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const position = document.getElementById('position').value;
+
+    const formData = new FormData();
+    formData.append('to', 'sparksolutionfreelancing@gmail.com');
+    formData.append('name', firstName + " " + lastName);
+    formData.append('email', email);
+    formData.append('subject', "Job Application - " + position);
+    formData.append('message', `Phone: ${phone}\nPosition: ${position}`);
+
+    // Append resume
+    const resume = document.getElementById('resumeUpload').files[0];
+    if (resume) formData.append('resume', resume);
+
+    fetch('/send-email', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      const messageDiv = document.getElementById('form-message');
+      if (data.message) {
+        messageDiv.innerHTML = '<div class="alert alert-success">Application submitted successfully! We\'ll get back to you soon.</div>';
+        document.getElementById('contactForm').reset();
+      } else if (data.error) {
+        messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+      }
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit Application';
+    })
+    .catch(error => {
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error submitting application. Please try again.</div>';
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit Application';
+    });
+  });
+</script>
+
+{% endblock %}

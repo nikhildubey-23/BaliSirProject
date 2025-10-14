@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style>
+    @media (max-width: 768px) {
+    .workmen-hero-section {
+      padding: 3rem 0;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .workmen-hero-container,
+    .workmen-info-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .workmen-hero-text h2 {
+      font-size: 2rem;
+    }
+
+    .workmen-info-text h2 {
+      text-align: center;
+    }
+
+    .workmen-info-text p {
+      text-align: center;
+    }
+
+    .workmen-why-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .workmen-why-item {
+      padding: 1.5rem;
+    }
+
+  .workmen-cta {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .workmen-cta-text {
+    font-size: 1.8rem;
+    max-width: 100%;
+  }
+}
+
+/* Additional responsive adjustments for very small screens (480px and below) */
+@media (max-width: 480px) {
+  .workmen-hero-section {
+    padding: 2rem 0;
+    overflow-x: hidden;
+  }
+
+  .workmen-hero-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .workmen-hero-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .workmen-trust-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .workmen-info-section {
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+  }
+
+  .workmen-info-container {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .workmen-info-text h2 {
+    font-size: 2rem;
+  }
+
+  .workmen-info-text p {
+    font-size: 1rem;
+  }
+
+  .workmen-info-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .workmen-why-section {
+    margin: 2rem auto;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .workmen-why-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .workmen-why-grid {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .workmen-why-item {
+    padding: 1rem;
+  }
+
+  .workmen-why-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .workmen-why-text {
+    font-size: 1rem;
+  }
+
+  .workmen-cta {
+    padding-top: 1.5rem;
+    overflow-x: hidden;
+  }
+
+  .workmen-cta-text {
+    font-size: 1.2rem;
+    max-width: 100%;
+  }
+
+  .workmen-cta-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  .workmen-cta-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="workmen-hero-section">
+  <div class="workmen-hero-container">
+    <div class="workmen-hero-text">
+      <h2>
+        Because behind every worker is a<br />
+        <span class="workmen-trust-highlight">Family depending on them</span>
+      </h2>
+    </div>
+    <div class="workmen-trust-image-container">
+      
+      <img src="{{ url_for('static', filename='image/wc1.avif') }}" alt="Workmen Compensation Trust" class="workmen-trust-image" />
+    </div>
+  </div>
+</section>
+
+<!-- Info Section -->
+<section class="workmen-info-section">
+  <div class="workmen-info-container">
+    <div class="workmen-info-image-container">
+      <img src="{{ url_for('static', filename='image/wc2.avif') }}" alt="What is Workmen Compensation Insurance" class="workmen-info-image" />
+    </div>
+    <div class="workmen-info-text">
+      <h2>What is Workmen Compensation Insurance?</h2>
+      <p>
+        Workmen Compensation Insurance also known as Employee Compensation Insurance is designed to protect employers and support employees in case of work-related injuries, disabilities, or unfortunate loss of life during the course of employment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Why It Matters Section -->
+<section class="workmen-why-section">
+  <h2 class="workmen-why-title">Why it Matters?</h2>
+  <div class="workmen-why-grid">
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc3.avif') }}" alt="Medical Expenses" class="workmen-why-icon" />
+      <p class="workmen-why-text">Covers medical expenses for treatment of workplace injuries</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc4.avif') }}" alt="Financial Support" class="workmen-why-icon" />
+      <p class="workmen-why-text">Financial support for family in case of unfortunate death</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc5.avif') }}" alt="Compensation" class="workmen-why-icon" />
+      <p class="workmen-why-text">Compensation for partial/total disability</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wc6.avif') }}" alt="Peace of Mind" class="workmen-why-icon" />
+      <p class="workmen-why-text">Peace of mind for both employee and employer</p>
+    </div>
+    <div class="workmen-why-item">
+      <img src="{{ url_for('static', filename='image/wv7.avif') }}" alt="Legal Compliance" class="workmen-why-icon" />
+      <p class="workmen-why-text">Legal compliance for employers under the Workmen Compensation Act</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="workmen-cta">
+  <div class="workmen-cta-text">
+    work smart, work safe.<br />
+    Stay covered with <span class="workmen-cta-highlight">Bima with Bali</span>
+  </div>
+
+  <a href="{{ url_for('get_now') }}" class="workmen-cta-button">REACH US</a>
+  <div class="workmen-cta-subtitle">Connect with us to get insured</div>
+</section>
+
+{% endblock %}

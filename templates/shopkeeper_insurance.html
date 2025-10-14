@@ -1,0 +1,436 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style>
+  /* Custom styles for gradients and animations not covered by Bootstrap */
+  .si-hero-section {
+    background: #fff;
+  }
+
+  .si-info-section {
+    background-color: #f0ad00;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .si-info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .si-why-section {
+  
+    color: black;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .si-why-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .si-why-heading .si-why-highlight {
+    color: #f4b41a;
+  }
+
+  .si-why-item {
+    background: linear-gradient(135deg, #f4b41a 0%, #f39c12 100%);
+    border-radius: 20px;
+    color: #000;
+    border: 3px solid #fff;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .si-why-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .si-why-item:hover::before {
+    left: 100%;
+  }
+
+  .si-why-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(244, 164, 26, 0.4);
+  }
+
+  .si-why-icon {
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid #fff;
+    transition: transform 0.3s ease;
+  }
+
+  .si-why-icon:hover {
+    transform: scale(1.1);
+  }
+
+  .si-why-highlight-box {
+    background: linear-gradient(135deg, #fff 0%, #f4b41a 20%);
+    color: #000;
+    font-style: italic;
+    font-weight: 600;
+    border-left: 4px solid #f4b41a;
+    border: 3px solid #fff;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .si-why-highlight-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .si-why-highlight-box:hover::before {
+    left: 100%;
+  }
+
+  .si-why-highlight-box:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(244, 164, 26, 0.4);
+  }
+
+  .si-why-icon-inline {
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #fff;
+    transition: transform 0.3s ease;
+  }
+
+  .si-why-icon-inline:hover {
+    transform: scale(1.1);
+  }
+
+  .si-reach-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+    border-top: 1px dotted #333;
+  }
+
+  .si-reach-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .si-reach-button {
+    background: #333;
+    color: #f0ad00;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .si-reach-button:hover {
+    background: #f0ad00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .si-trust-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .si-info-image:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .si-hero-section,
+  .si-info-section,
+  .si-why-section,
+  .si-reach-section {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .si-hero-section { animation-delay: 0.1s; }
+  .si-info-section { animation-delay: 0.2s; }
+  .si-why-section { animation-delay: 0.3s; }
+  .si-reach-section { animation-delay: 0.4s; }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .si-hero-section {
+      padding: 3rem 0;
+    }
+
+    .si-hero-text h2 {
+      font-size: 2rem;
+    }
+
+    .si-why-grid {
+      gap: 1.5rem;
+    }
+
+    .si-why-item {
+      padding: 1.5rem;
+    }
+
+    .si-why-highlight-box {
+      padding: 1.5rem;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .si-why-icon-inline {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+
+    .si-reach-heading {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Mobile Phone Responsive Design (≤480px) */
+  @media (max-width: 480px) {
+    .si-hero-section {
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    .si-hero-text h2 {
+      font-size: 1.8rem;
+      line-height: 1.3;
+    }
+
+    .si-info-section {
+      padding: 2rem 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem;
+    }
+
+    .si-info-text h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .si-info-text p {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .si-info-image {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .si-why-section {
+      padding: 3rem 0;
+    }
+
+    .si-why-heading {
+      font-size: 2rem !important;
+      margin-bottom: 2rem;
+    }
+
+    .si-why-grid {
+      gap: 1rem;
+      padding: 0 1rem;
+    }
+
+    .si-why-item {
+      padding: 1.5rem;
+      border-radius: 15px;
+    }
+
+    .si-why-item p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .si-why-icon {
+      width: 60px;
+      height: 60px;
+      padding: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .si-why-highlight-box {
+      padding: 2rem 1.5rem;
+      min-height: 120px;
+      border-radius: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .si-why-highlight-box div {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .si-why-highlight-box span {
+      min-width: auto;
+      text-align: center;
+    }
+
+    .si-reach-section {
+      padding: 3rem 1rem;
+    }
+
+    .si-reach-heading {
+      font-size: 1.8rem !important;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .si-reach-button {
+      padding: 0.75rem 2rem;
+      font-size: 0.9rem;
+    }
+
+    .si-reach-subtext {
+      font-size: 1rem;
+    }
+
+    /* Prevent horizontal scrolling */
+    body, html {
+      overflow-x: hidden;
+    }
+
+    .si-hero-section,
+    .si-info-section,
+    .si-why-section,
+    .si-reach-section {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+</style>
+{% endblock %}
+{% block content %}
+
+
+<!-- Hero Section -->
+<section class="si-hero-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 si-hero-text">
+        <h2 class="display-4 fw-bold">
+          Your shop is your livelihood, <br />
+          <span class="si-trust-highlight">protect it before life gives you a shock!</span>
+        </h2>
+      </div>
+      <div class="col-lg-6 text-center si-trust-image-container">
+        <img src="{{ url_for('static', filename='image/si1.avif') }}" alt="Shopkeeper Insurance Trust" class="si-trust-image img-fluid" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Info Section -->
+
+  <section class="si-info-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-center">
+        <img src="{{ url_for('static', filename='image/si2.avif') }}" alt="What is Shopkeeper Insurance" class="si-info-image img-fluid rounded-4 shadow d-block mx-auto" />
+      </div>
+      <div class="col-lg-6 si-info-text text-center text-lg-start">
+        <h2 class="fw-bold display-6 mb-3">What is Shopkeeper Insurance?</h2>
+        <p class="fs-5 lh-base">
+          Shopkeeper Insurance is a comprehensive policy specially designed for small and medium-sized shop owners. It protects your shop from unexpected events like fire, theft, damage by natural calamities etc
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- Why Every Shop Needs It Section -->
+<section class="si-why-section py-5">
+  <div class="container si-why-container">
+    <h2 class="si-why-heading text-center fw-bold mb-5 display-5">
+      Why Every <span class="si-why-highlight">Shop</span> Needs It?
+    </h2>
+    <div class="si-why-grid row g-2 ">
+      <div class="col-lg-4 col-md-6 si-why-item p-4 text-center">
+        <img src="{{ url_for('static', filename='image/si3.avif') }}" alt="Legal Shield" class="si-why-icon mb-3" style="width: 80px; height: 80px; padding: 15px;" />
+        <p class="fs-6 lh-base mb-0">Shields you from legal liabilities in case of customer or employee accidents inside the shop.</p>
+      </div>
+      <div class="col-lg-4 col-md-6 si-why-item p-4 text-center">
+        <img src="{{ url_for('static', filename='image/si4.avif') }}" alt="Fire Protection" class="si-why-icon mb-3" style="width: 80px; height: 80px; padding: 15px;" />
+        <p class="fs-6 lh-base mb-0">Protects against fire, theft, and natural disasters, safeguarding your shop from unexpected losses.</p>
+      </div>
+      <div class="col-lg-4 col-md-6 si-why-item p-4 text-center">
+        <img src="{{ url_for('static', filename='image/si5.avif') }}" alt="Business Support" class="si-why-icon mb-3" style="width: 80px; height: 80px; padding: 15px;" />
+        <p class="fs-6 lh-base mb-0">Supports you during business interruptions with compensation for lost income due to closures.</p>
+      </div>
+      <div class="col-lg-4 col-md-6 si-why-item p-4 text-center">
+        <img src="{{ url_for('static', filename='image/si6.avif') }}" alt="Goods Coverage" class="si-why-icon mb-3" style="width: 80px; height: 80px; padding: 15px;" />
+        <p class="fs-6 lh-base mb-0">Coverage for goods, furniture and even cash in safe.</p>
+      </div>
+      <div class="col-lg-4 col-md-6 si-why-item p-4 text-center">
+        <img src="{{ url_for('static', filename='image/si7.avif') }}" alt="Peace of Mind" class="si-why-icon mb-3" style="width: 80px; height: 80px; padding: 15px;" />
+        <p class="fs-6 lh-base mb-0">Peace of mind during uncertain times with low premium, high protection tailored for retail businesses</p>
+      </div>
+      <div class="col-12 si-why-item si-why-highlight-box p-4 d-flex align-items-center justify-content-center text-center" style="min-height: 120px;">
+        <div class="d-flex align-items-center justify-content-center flex-column flex-md-row gap-3">
+          <span class="flex-1">Whether you run a kirana store, a boutique, a stationery shop, or a general store, this insurance acts like a protective shield for your livelihood.</span>
+          <img src="{{ url_for('static', filename='image/si8.avif') }}" alt="Protective Shield" class="si-why-icon-inline" style="width: 50px; height: 50px; padding: 8px;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="si-reach-section py-5">
+  <div class="container text-center si-reach-container">
+    <h2 class="si-reach-heading fw-bold display-6 mb-4">
+      Let <span class="si-reach-highlight">Bima with Bali</span> help you choose the right plan, Because your <span class="si-reach-highlight">Dukaan</span> deserves <span class="si-reach-highlight">Suraksha</span>.
+    </h2>
+    <a href="{{ url_for('get_now') }}" class="si-reach-button btn fw-bold px-4 py-3 mb-3">REACH US</a>
+    <p class="si-reach-subtext fw-semibold text-muted fs-6 mb-0">Connect with us to get insured</p>
+  </div>
+</section>
+
+{% endblock %}

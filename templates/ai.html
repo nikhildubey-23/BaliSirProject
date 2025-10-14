@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}AI Chatbot - Bima With Bali Insurance{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #f7f7f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+    margin: 2rem auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    height: 80vh;
+  }
+  .chat-header {
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #fafafa;
+  }
+  .chat-messages {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    overflow-y: auto;
+    background-color: #ffffff;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+  .chat-messages::-webkit-scrollbar {
+    width: 8px;
+  }
+  .chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .chat-messages::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+  }
+  .chat-message {
+    max-width: 70%;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    line-height: 1.4;
+    animation: fadeIn 0.3s ease-in;
+    word-wrap: break-word;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chat-message.bot {
+    background-color: #f3f4f6;
+    color: #111827;
+    align-self: flex-start;
+    border-top-left-radius: 0;
+  }
+  .chat-message.user {
+    background-color: #2563eb;
+    color: white;
+    align-self: flex-end;
+    border-top-right-radius: 0;
+  }
+  .chat-input-container {
+    display: flex;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #fafafa;
+  }
+  #chat-input {
+    flex: 1;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 9999px;
+    outline: none;
+    background-color: #e5e7eb;
+    color: #111827;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  #chat-input::placeholder {
+    color: #6b7280;
+  }
+  #chat-send-btn {
+    background-color: #2563eb;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 0 1rem;
+    margin-left: 0.75rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  #chat-send-btn:hover {
+    background-color: #1d4ed8;
+  }
+</style>
+
+<div class="chat-container" role="main" aria-label="Chat interface">
+  <div class="chat-header" aria-live="polite" aria-atomic="true">AI Chatbot</div>
+  <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
+    <div class="chat-message bot" role="article" aria-label="Welcome message from AI chatbot">Welcome to our AI chatbot! Ask me anything about insurance.</div>
+  </div>
+  <form class="chat-input-container" onsubmit="event.preventDefault(); chatSendBtn.click();">
+    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
+    <button id="chat-send-btn" type="submit" aria-label="Send message">&#9658;</button>
+  </form>
+</div>
+
+<script>
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSendBtn = document.getElementById('chat-send-btn');
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('chat-message', sender);
+    // Process markdown-like headings
+    text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<h3>$1</h3>');
+    text = text.replace(/\*\*(.*?)\*\*/g, '<h2>$1</h2>');
+    // Sanitize and convert special characters to HTML entities to prevent raw symbols
+    msgDiv.innerHTML = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "<")
+      .replace(/>/g, ">")
+      .replace(/\*/g, "-")  // Replace remaining * with dash for bullets
+      .replace(/-/g, "&#8211;")   // Replace - with en dash
+      .replace(/\n/g, "<br>");    // Preserve line breaks
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  chatSendBtn.addEventListener('click', () => {
+    const userText = chatInput.value.trim();
+    if (!userText) return;
+    appendMessage(userText, 'user');
+    chatInput.value = '';
+
+    // Send message to backend API with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: userText }),
+      signal: controller.signal
+    })
+    .then(response => {
+      clearTimeout(timeoutId);
+      return response.json();
+    })
+    .then(data => {
+      appendMessage(data.response, 'bot');
+    })
+    .catch(error => {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        appendMessage('Error: Request timed out. Please try again.', 'bot');
+      } else {
+        appendMessage('Error: ' + error.message, 'bot');
+      }
+    });
+  });
+
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      chatSendBtn.click();
+    }
+  });
+</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

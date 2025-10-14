@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Top Myths About General Insurance Debunked</h1>
+    <img src="{{ url_for('static', filename='image/b21c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>There are plenty of misconceptions floating around. Let’s bust a few.</p>
+
+  <section>
+    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1.5rem;">
+      <thead>
+        <tr>
+          <th>Sr.No</th>
+          <th>Myth</th>
+          <th>Fact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2</td>
+          <td>I don’t need insurance because I’m careful.</td>
+          <td>Insurance is for the unexpected, not your routine behavior.</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Claiming insurance is a nightmare.</td>
+          <td>With digitization, claims are now faster and more transparent.</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>All policies are the same.</td>
+          <td>Each policy varies in coverage, premium, and exclusions. Always read the fine print.</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Buying insurance online isn’t safe.</td>
+          <td>Buying from IRDAI-approved insurers or aggregators online is absolutely secure.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

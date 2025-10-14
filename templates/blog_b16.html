@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>Real Stories: How Home Insurance Saved Us During a Crisis</h1>
+    <img src="{{ url_for('static', filename='image/b16c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  
+  <section style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem;">
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <img src="{{ url_for('static', filename='image/b16-1.avif') }}" alt="Flood Damage in Chennai" style="width: 100%; height: auto; border-radius: 4px;" />
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h3>Case Study 1: Flood Damage in Chennai</h3>
+      <blockquote style="font-style: italic; margin-top: 0.5rem;">
+        “During the 2023 floods, our home was partially submerged. Thanks to our home insurance, we received ₹3.2 lakh in claims for furniture and appliances.”
+      </blockquote>
+    </div>
+  </section>
+
+  <section style="margin-top: 3rem;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem;">
+      <div style="flex: 1 1 300px; min-width: 280px;">
+        <img src="{{ url_for('static', filename='image/b16-2.avif') }}" alt="Theft in Mumbai Apartment" style="width: 100%; height: auto; border-radius: 4px;" />
+      </div>
+      <div style="flex: 1 1 300px; min-width: 280px;">
+        <h3>Case Study 2: Theft in Mumbai Apartment</h3>
+        <blockquote style="font-style: italic; margin-top: 0.5rem;">
+          “We went on vacation and returned to find our house broken into. Our policy covered stolen electronics and jewelry worth ₹1.8 lakh.”
+        </blockquote>
+      </div>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <h4>Key Lessons :</h4>
+      <ul>
+        <li>Disasters can strike without warning</li>
+        <li><strong>Insurance offers financial relief and emotional comfort</strong></li>
+        <li>Always keep <strong>documents handy</strong> for smooth claim settlement</li>
+      </ul>
+      <p><strong>Note:</strong> These stories underline the importance of being insured—even if you think "it won't happen to me.</p>
+    </div>
+  </section>
+ </div>
+{% endblock %}

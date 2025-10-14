@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="peace-of-mind-section" style="margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <div style="flex: 1 1 300px; min-width: 280px;">
+    <h2 style="font-weight: bold; font-size: 2.5rem; color: black; margin-bottom: 1rem;">
+      Because You Deserve <span style="color: #f4b41a;">Peace of Mind</span>
+    </h2>
+    <p style="font-weight: 500; color: black; max-width: 400px;">
+      At <em style="font-weight: 700; font-style: normal;">Bima with Bali</em>, we’re not just here to sell a policy. we’re here to help you make informed, caring decisions about your health and your future.
+    </p>
+  </div>
+  <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+<img src="{{ url_for('static', filename='image/healthinsuranceimg.avif') }}" alt="Health Insurance Illustration" style="width: 100%; height: auto; max-width: 500px;" />
+  </div>
+</section>
+
+<section class="what-is-health-insurance" style="margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto; background-color: #f4b41a; padding: 1.5rem; border-radius: 10px;">
+  <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <img src="{{ url_for('static', filename='image/certimg.avif') }}" alt="Health Insurance Illustration" style="width: 100%; height: auto; max-width: 350px;" />
+  </div>
+  <div style="flex: 1 1 300px; min-width: 280px; color: black; padding-left: 1rem;">
+    <h2 style="font-weight: bold; font-size: 2rem; margin-bottom: 1rem;">
+      What is Health Insurance?
+    </h2>
+    <p style="font-weight: 500; font-size: 1rem; max-width: 400px;">
+      Health insurance is like a safety net for life’s medical surprises. Whether it’s a sudden hospitalization, surgery, or long-term treatment, a good health plan ensures you get the best care without burning through your savings.
+    </p>
+  </div>
+</section>
+
+<section class="why-health-insurance" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 style="font-weight: bold; font-size: 2rem; margin-bottom: 2rem; color: black; text-align: center;">
+    Why to have a <span style="color: #f4b41a;">Health Insurance ?</span>
+  </h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;">
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 250px;">
+      <img src="{{ url_for('static', filename='image/medicalmg.avif') }}" alt="Medical costs are rising" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Medical costs are rising</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          A single hospital visit can cost a fortune today.
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 250px;">
+      <img src="{{ url_for('static', filename='image/criticalimg.avif') }}" alt="Critical illness support" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Critical illness support</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Be financially ready for serious health conditions.
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 250px;">
+      <img src="{{ url_for('static', filename='image/familyimg.avif') }}" alt="Family protection" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Family protection</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          One policy can secure your entire family’s health.
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 250px;">
+      <img src="{{ url_for('static', filename='image/cashlessimg.avif') }}" alt="Cashless treatment" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Cashless treatment</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Get admitted in partner hospitals without paying upfront.
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; flex: 1 1 40%; min-width: 250px;">
+      <img src="{{ url_for('static', filename='image/taximg.avif') }}" alt="Tax benefits" style="width: 40px; height: 40px; margin-right: 1rem;" />
+      <div style="text-align: left;">
+        <h3 style="color: #f4b41a; font-weight: 700; margin: 0 0 0.3rem 0;">Tax benefits</h3>
+        <p style="margin: 0; color: black; font-weight: 500;">
+          Save under Section 80D while securing your health
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="health-cover-we-offer" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; text-align: center;">
+  <h2 style="font-weight: bold; font-size: 2rem; margin-bottom: 1.5rem; color: black;">
+    Health cover we offer
+  </h2>
+  <div style="background-color: #f4b41a; color: black; padding: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; border-radius: 5px;">
+    <ul style="flex: 1 1 40%; min-width: 250px; list-style-type: disc; padding-left: 1.5rem; text-align: left;">
+      <li>Hospital stays (room rent, surgery, etc.)</li>
+      <li>Pre & post hospitalization expenses</li>
+      <li>Daycare procedures (no need to be admitted overnight)</li>
+      <li>Ambulance charges</li>
+    </ul>
+    <div style="border-left: 2px solid black; height: auto; margin: 0 1rem;"></div>
+    <ul style="flex: 1 1 40%; min-width: 250px; list-style-type: disc; padding-left: 1.5rem; text-align: left;">
+      <li>Critical illness treatments</li>
+      <li>Maternity & newborn care (on selected plans)</li>
+      <li>AYUSH treatments (like Ayurveda and Homeopathy)</li>
+    </ul>
+  </div>
+</section>
+
+<section class="insurance-types" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; overflow-x: auto;">
+  <h2 style="font-weight: bold; font-size: 2rem; margin-bottom: 1.5rem; color: black; text-align: center;">
+    Insurance Types
+  </h2>
+  <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+    <thead>
+      <tr style="background-color: #f4b41a; color: black; font-weight: bold; text-align: left;">
+        <th style="padding: 10px; width: 60px;"></th>
+        <th style="padding: 10px; width: 200px;">Type</th>
+        <th style="padding: 10px;">Description</th>
+        <th style="padding: 10px; width: 150px;">Ideal for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/indiimg.avif') }}" alt="Individual Health Insurance" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Individual Health Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          This is your personal health shield perfect if you’re looking for dedicated coverage just for yourself. Whether you’re young and healthy or managing a few health issues, an individual plan gives you the care you need, when you need it.
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          You or one person
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/famimg.avif') }}" alt="Family Floater Health Insurance" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Family Floater Health Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          One policy, one premium, one big safety net for your entire family—spouse, kids, even parents (in some cases). The sum insured is shared, so anyone can use it based on their need
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          Your whole family
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/senimg.avif') }}" alt="Senior Citizen Health Insurance" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Senior Citizen Health Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          As we grow older, health needs become more frequent and specialized. This plan is designed with that in mind—offering broader coverage for age-related illnesses, regular health checkups, and often, no-claim bonuses.
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          Parents or anyone above 60+
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/criimg.avif') }}" alt="Critical Illness Insurance" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Critical Illness Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          Diseases like cancer, stroke, kidney failure, or heart attacks don’t just affect health—they can hit hard financially too. Critical illness insurance offers a lump sum payout upon diagnosis, so you can focus on recovery.
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          Life-threatening illnesses
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/matimg.avif') }}" alt="Maternity Health Insurance" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Maternity Health Insurance
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          These plans cover delivery costs, newborn care, and even pre/post-natal expenses, so you can welcome your baby with joy, not financial stress.
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          Expecting mothers
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/perimg.avif') }}" alt="Personal Accident Cover" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Personal Accident Cover
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          This is your go-to plan for life’s most unpredictable moments. Whether it’s a minor injury or something more serious, personal accident insurance gives you financial support when you need it most.
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          Accidental injuries / permanent disability
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; vertical-align: top;">
+          <img src="{{ url_for('static', filename='image/topimg.avif') }}" alt="Top-Up & Super Top-Up Plans" style="width: 40px; height: 40px;" />
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700; color: #8b0000;">
+          Top-Up & Super Top-Up Plans
+        </td>
+        <td style="padding: 10px; vertical-align: top;">
+          Already have a health plan, but want extra protection without spending too much? These are budget-friendly backups that kick in when your base policy limit is crossed. Ideal for unexpected, high medical bills.
+        </td>
+        <td style="padding: 10px; vertical-align: top; font-weight: 700;">
+          Boost your existing plan
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="drive-smart-section" style="margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto; border-top: 1px dotted #222222; padding-top: 1.5rem;">
+  <div style="flex: 1 1 400px; min-width: 280px; font-size: 1.5rem; font-weight: 600; color: black;">
+    Drive <span style="color: #f4b41a; font-weight: 700;">smart</span>, Stay <span style="color: #f4b41a; font-weight: 700;">safe</span>, Get <span style="color: #f4b41a; font-weight: 700;">insured</span> with <em style="font-weight: 700; font-style: normal; color: #f4b41a;">Bima with Bali</em> – Because protection on the road starts with the right policy.
+  </div>
+  <div style="flex: 1 1 200px; min-width: 200px; text-align: center;">
+    <a href="{{ url_for('get_now') }}" style="display: inline-block; background-color: black; color: #f4b41a; font-weight: 700; padding: 0.75rem 2rem; border-radius: 25px; text-decoration: none; cursor: pointer;">
+      REACH US
+    </a>
+    <div style="margin-top: 0.5rem; font-weight: 600; color: black;">
+      Connect with us to get insured
+    </div>
+  </div>
+</section>
+
+{% endblock %}

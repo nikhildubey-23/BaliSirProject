@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>How Your Car’s Age Affects Your Insurance Premium.</h1>
+    <img src="{{ url_for('static', filename='image/b28c.avif') }}" alt="Renew General Insurance" class="img-fluid mb-3" style="width: 100%; height: auto; object-fit: contain; display: block; margin-left: auto; margin-right: auto;" />
+  <p>Car insurance premiums are directly influenced by the age of your vehicle. Here's how:</p>
+
+  <section>
+    <h3>Impact of Age on Premiums :</h3>
+    <p><strong>New Cars:</strong> Higher IDV (Insured Declared Value) = Higher premium, but more comprehensive protection.<br/>
+    <strong>Old Cars:</strong> Lower IDV due to depreciation = Lower premium, but may not justify full coverage.</p>
+
+    <h3>Factors at Play :</h3>
+    <ul>
+      <li>Depreciation of parts</li>
+      <li>Wear and tear over time</li>
+      <li>Lesser market value with age</li>
+      <li>Insurer's risk perception</li>
+    </ul>
+
+    <p><strong>Pro Tip:</strong> For older cars, consider switching from comprehensive to third-party insurance if the vehicle’s value is low.</p>
+  </section>
+</div>
+{% endblock %}

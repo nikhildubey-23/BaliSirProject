@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+          <h3 class="mb-0">Workmen Compensation Insurance Proposal Form</h3>
+          <small>Fill in the details below to get a workmen compensation insurance proposal</small>
+        </div>
+        <div class="card-body">
+          <form id="workmenCompensationProposalForm">
+            <div class="mb-3">
+              <label for="proposerName" class="form-label">Proposer Name</label>
+              <input type="text" class="form-control" id="proposerName" name="proposerName" required>
+            </div>
+            <div class="mb-3">
+              <label for="companyName" class="form-label">Company Name</label>
+              <input type="text" class="form-control" id="companyName" name="companyName" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="numberOfMembers" class="form-label">Number of Members</label>
+              <input type="number" class="form-control" id="numberOfMembers" name="numberOfMembers" min="1" required>
+            </div>
+            <div class="mb-3">
+              <label for="salary" class="form-label">Salary (₹)</label>
+              <input type="number" class="form-control" id="salary" name="salary" min="0" step="0.01" required>
+            </div>
+            <div class="mb-3">
+              <label for="natureOfWork" class="form-label">Nature of Work</label>
+              <input type="text" class="form-control" id="natureOfWork" name="natureOfWork" required>
+            </div>
+            <div class="mb-3">
+              <label for="contactNumber" class="form-label">Contact Number</label>
+              <input type="tel" class="form-control" id="contactNumber" name="contactNumber" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="proposalDate" class="form-label">Proposal Date</label>
+              <input type="date" class="form-control" id="proposalDate" name="proposalDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Proposal</button>
+          </form>
+          <div id="form-message" class="mt-3 text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('workmenCompensationProposalForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    formData.append('to', 'sparksolutionfreelancing@gmail.com');
+    formData.append('name', form.proposerName.value);
+    formData.append('email', form.email.value);
+    formData.append('subject', 'Workmen Compensation Insurance Proposal - ' + form.companyName.value);
+
+    let message = `Workmen Compensation Insurance Proposal Form\n\n`;
+    message += `Proposer Name: ${form.proposerName.value}\n`;
+    message += `Company Name: ${form.companyName.value}\n`;
+    message += `Address: ${form.address.value}\n`;
+    message += `Number of Members: ${form.numberOfMembers.value}\n`;
+    message += `Salary: ₹${form.salary.value}\n`;
+    message += `Nature of Work: ${form.natureOfWork.value}\n`;
+    message += `Contact Number: ${form.contactNumber.value}\n`;
+    message += `Email: ${form.email.value}\n`;
+    message += `Proposal Date: ${form.proposalDate.value}\n`;
+
+    formData.append('message', message);
+
+    fetch('/send-email', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        document.getElementById('form-message').innerHTML = '<div class="alert alert-success">Proposal form submitted successfully! Our team will contact you shortly.</div>';
+        form.reset();
+      } else if (data.error) {
+        document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+      }
+    })
+    .catch(error => {
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error: ' + error + '</div>';
+    });
+  });
+</script>
+
+{% endblock %}

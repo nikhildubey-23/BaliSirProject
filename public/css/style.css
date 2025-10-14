@@ -1,0 +1,1852 @@
+/* Consolidated CSS file - All styles from individual CSS files */
+
+/* ===== MOBILE-FIRST RESPONSIVE DESIGN SYSTEM ===== */
+
+/* CSS Custom Properties for consistent theming */
+:root {
+  /* Colors */
+  --primary-blue: #007bff;
+  --secondary-blue: #0056b3;
+  --accent-cyan: #00e5ff;
+  --warning-yellow: #f0ad00;
+  --success-green: #28a745;
+  --danger-red: #dc3545;
+  --accent-yellow: #ffc107;
+
+  /* Gradients */
+  --primary-gradient: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+  --secondary-gradient: linear-gradient(135deg, #00e5ff 0%, #0099cc 50%, #007bff 100%);
+  --hero-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #007bff 100%);
+  --marine-hero-gradient: linear-gradient(135deg, #f0ad00 0%, #ffc107 50%, #e0a800 100%);
+  --marine-highlight-gradient: linear-gradient(45deg, #ffffff, #fff3cd);
+
+  /* Shadows */
+  --soft-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --medium-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  --strong-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  --glow-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 4rem;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 15px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+  --radius-full: 50px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ===== MOBILE-FIRST BASE STYLES (320px+) ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.scale-in {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s ease-out;
+}
+
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== MARINE CARGO INSURANCE ENHANCED STYLES ===== */
+
+/* ===== HERO SECTION - MOBILE FIRST ===== */
+.marine-trust-section {
+  
+ 
+  position: relative;
+  overflow: hidden;
+  color: #333;
+ 
+  display: flex;
+  align-items: center;
+}
+
+.marine-trust-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width=60 height=60 viewBox=0 0 60 60 xmlns=http://www.w3.org/2000/svg%3E%3Cg fill=none fill-rule=evenodd%3E%3Cg fill=%23ffffff fill-opacity=0.05%3E%3Cpath d=M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  opacity: 0.3;
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.marine-trust-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+@media (min-width: 769px) {
+  .marine-trust-container {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: var(--spacing-xl);
+  }
+
+  .marine-trust-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  .marine-trust-image-container {
+    flex: 1;
+    position: relative;
+  }
+}
+
+.marine-trust-text {
+  animation: slideInUp 1s ease-out;
+}
+
+.marine-trust-text-large {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0;
+  color: #333;
+  text-shadow: none;
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+.marine-trust-highlight {
+  color: #f0ad00;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(240, 173, 0, 0.5);
+  animation: none;
+  display: block;
+  margin-top: 0;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(0, 229, 255, 0.5); }
+  to { text-shadow: 0 0 30px rgba(0, 229, 255, 0.8), 0 0 40px rgba(0, 229, 255, 0.6); }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.marine-trust-image-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideInRight 1s ease-out 0.3s both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.yellow-blob {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(240, 173, 0, 0.4) 0%, rgba(255, 193, 7, 0.2) 70%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+.marine-trust-image {
+  position: relative;
+  max-width: 100%;
+  height: auto;
+  z-index: 1;
+ 
+  
+  transition: transform 0.3s ease;
+}
+
+.marine-trust-image:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+@media (max-width: 768px) {
+  .marine-trust-section {
+    padding: 4rem 1rem;
+  }
+
+  .marine-trust-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .marine-trust-text-large {
+    font-size: 2.5rem;
+  }
+
+  .yellow-blob {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* ===== MARINE INSURANCE INFO SECTION ===== */
+.marine-insurance-info-section {
+  padding: 6rem 2rem;
+
+  position: relative;
+}
+
+.marine-insurance-info-yellow-box {
+  background-color: #f0ad00;
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(240, 173, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  color: #000;
+}
+
+.marine-insurance-info-yellow-box::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.marine-insurance-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.marine-insurance-info-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.marine-insurance-info-image {
+  max-width: 100%;
+  height: auto;
+
+  transition: transform 0.3s ease;
+}
+
+.marine-insurance-info-image:hover {
+  transform: translateY(-10px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.marine-insurance-info-text {
+  flex: 1;
+  animation: fadeInUp 1s ease-out 0.7s both;
+}
+
+.marine-insurance-info-text h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: #000;
+  text-shadow: none;
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+.marine-insurance-info-text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #000;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .marine-insurance-info-section {
+    padding: 4rem 1rem;
+  }
+
+  .marine-insurance-info-yellow-box {
+    padding: 2rem;
+    border-radius: 20px;
+  }
+
+  .marine-insurance-info-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+}
+
+/* ===== WHY NEED SECTION ===== */
+.why-need-section {
+  padding: var(--spacing-xxl) var(--spacing-md);
+  background-color: #E3F2FD;
+  color: #000;
+}
+
+.why-need-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.why-need-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  color: #000;
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+.why-need-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.why-need-item {
+  flex: 1 1 22%;
+  background: #f0ad00;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--soft-shadow);
+  text-align: center;
+  transition: var(--transition-normal);
+}
+
+.why-need-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--medium-shadow);
+}
+
+.why-need-icon {
+  width: 60px;
+  height: 60px;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-sm);
+  font-size: 2rem;
+  
+}
+
+.why-need-item h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: var(--spacing-sm);
+  color: #000;
+}
+
+.why-need-item p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #000;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .why-need-grid {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .why-need-item {
+    flex: 1 1 100%;
+  }
+}
+
+
+/* ===== UPDATED WHO IS IT FOR SECTION (YELLOW BG, BLACK TEXT) ===== */
+.coverage-offer-section {
+  padding: var(--spacing-xxl) var(--spacing-md);
+  background-color:#f0ad00;
+  color: #000;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.coverage-offer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+  align-items: flex-start;
+  position: relative;
+}
+
+.coverage-offer-container::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #000;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.coverage-offer-left,
+.coverage-offer-right {
+  flex: 1;
+  text-align: left;
+}
+
+.coverage-offer-right h2 {
+  font-size: clamp(3rem, 4vw, 2.5rem);
+  font-weight: 900;
+  margin-bottom: var(--spacing-md);
+  color: #000;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.coverage-list {
+  list-style: disc;
+  padding-left: var(--spacing-lg);
+  margin: 0;
+}
+
+.coverage-list li {
+  font-size: 1.1rem;
+  color: #000;
+  padding: var(--spacing-sm) 0;
+  line-height: 1.5;
+  font-weight: 500;
+  position: relative;
+  z-index: 2; /* Ensure bullets above center line */
+}
+
+.black-bullets {
+  /* No special background; inherits section yellow */
+}
+
+@media (max-width: 768px) {
+  .coverage-offer-section {
+    padding: var(--spacing-xl) var(--spacing-sm);
+  }
+
+  .coverage-offer-container {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .coverage-offer-container::after {
+    display: none;
+  }
+
+  .coverage-offer-right h2 {
+    text-align: center;
+  }
+}
+
+/* ===== MARINE COVERAGE SECTION (CTA) ===== */
+.marine-coverage-section {
+  padding: var(--spacing-xxl) var(--spacing-md);
+  background-color: #E3F2FD;
+}
+
+.marine-coverage-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.marine-coverage-text h2 {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 900;
+  text-align: center;
+  color: #000;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.marine-coverage-text .highlight {
+  background-color: #f0ad00;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: bold;
+}
+
+.marine-coverage-action {
+  text-align: center;
+}
+
+.btn-reachout {
+  background-color: #f0ad00;
+  color: #000;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color var(--transition-normal);
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.1rem;
+  box-shadow: var(--soft-shadow);
+}
+
+.btn-reachout:hover {
+  background-color: #e0a800;
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: var(--medium-shadow);
+}
+
+.reachout-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-top: var(--spacing-sm);
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .marine-coverage-container {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .marine-coverage-text h2 {
+    font-size: 2rem;
+  }
+
+  .btn-reachout {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* ===== RESPONSIVE ENHANCEMENTS ===== */
+@media (max-width: 480px) {
+  .marine-trust-section,
+  .marine-insurance-info-section,
+  .why-need-section,
+  .coverage-offer-section,
+  .marine-coverage-section {
+    padding: 3rem 1rem;
+  }
+
+  .marine-trust-text-large {
+    font-size: 2rem;
+  }
+
+  .marine-insurance-info-text h2 {
+    font-size: 1.8rem;
+  }
+
+  .why-need-title {
+    font-size: 2rem;
+  }
+
+  .coverage-offer-right h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== ADDITIONAL ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.marine-trust-section,
+.marine-insurance-info-section,
+.why-need-section,
+.coverage-offer-section,
+.marine-coverage-section {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+@media (prefers-reduced-motion: reduce) {
+  .marine-trust-section::before,
+  .yellow-blob,
+  .marine-trust-highlight,
+  .highlight,
+  .btn-reachout::before {
+    animation: none;
+  }
+
+  .why-need-item,
+  .marine-trust-image,
+  .marine-insurance-info-image,
+  .btn-reachout {
+    transition: none;
+  }
+}
+
+/* Focus styles for better accessibility */
+.btn-reachout:focus,
+.why-need-item:focus {
+  outline: 3px solid #00e5ff;
+  outline-offset: 2px;
+}
+
+/* ===== SERVICE SECTION STYLES ===== */
+
+/* Styling for the first service section (lines 94-125 in index.html) */
+#services {
+  /* Add your CSS rules here */
+  /* Example: */
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Styling for the second service section (lines 215-232 in index.html) */
+.services-section {
+  /* Add your CSS rules here */
+  /* Example: */
+  margin-top: 30px;
+  border: 1px solid #eee;
+}
+/* Hero section image styles */
+.hero-family-img {
+  max-width: 1200px;
+  width: 90vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+@media (min-width: 769px) {
+  .hero-family-img {
+    max-width: 1200px;
+    width: 100%;
+  }
+}
+
+.container-fluid.hero-section {
+  padding: 20px 0;
+}
+
+/* Add 1px solid black border to parent container of images in service cards */
+#services .card-body {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 15px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+#services .card-body:hover {
+  transform: scale(1.05);
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Hover effect for Fast claims. Firm support. Always protected. cards */
+.container-fluid.py-5 > .row > .col-md-3 > .card:hover {
+  transform: scale(1.05);
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== INDEX.HTML INLINE STYLES ===== */
+
+html, body {
+  overflow-x: hidden;
+}
+
+.hero-family-img {
+  max-width: 1200px;
+  width: 90vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+@media (min-width: 769px) {
+  .hero-family-img {
+    max-width: 1200px;
+    width: 100%;
+  }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: .15em solid #f0ad00;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  text-align: center;
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #f0ad00; }
+}
+
+.faith-section {
+  color: black;
+  text-align: center;
+  padding: 3rem 1rem;
+  border-radius: 15px;
+  font-family: 'Arial Black', Arial, sans-serif;
+  max-width: 1000px;
+  margin: 2rem auto;
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  position: relative;
+}
+
+.cube {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateCube 10s infinite linear;
+}
+
+.face {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: #f0ad00;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.front { transform: translateZ(150px); }
+.back { transform: rotateY(180deg) translateZ(150px); }
+.right { transform: rotateY(90deg) translateZ(150px); }
+.left { transform: rotateY(-90deg) translateZ(150px); }
+.top { transform: rotateX(90deg) translateZ(150px); }
+.bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+@keyframes rotateCube {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@media (max-width: 768px) {
+  .faith-section {
+    height: 250px;
+    padding: 2rem 1rem;
+  }
+  .cube {
+    width: 200px;
+    height: 200px;
+  }
+  .face {
+    width: 200px;
+    height: 200px;
+    font-size: 0.9rem;
+  }
+  .front { transform: translateZ(100px); }
+  .back { transform: rotateY(180deg) translateZ(100px); }
+  .right { transform: rotateY(90deg) translateZ(100px); }
+  .left { transform: rotateY(-90deg) translateZ(100px); }
+  .top { transform: rotateX(90deg) translateZ(100px); }
+  .bottom { transform: rotateX(-90deg) translateZ(100px); }
+}
+
+@media (max-width: 768px) {
+  .partners-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+  }
+  .partners-logos > div {
+    flex: 0 0 auto;
+    min-width: 60px;
+    max-width: 80px;
+  }
+  .partners-logos img {
+    max-width: 60px;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .partners-logos > div:hover img {
+    transform: scale(1.05);
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+}
+
+@media (max-width: 768px) {
+  .connect-section .img-fluid {
+    height: auto;
+    max-height: 300px;
+    width: 100%;
+    object-fit: cover;
+  }
+  .connect-form .row .col-6 {
+    margin-bottom: 1rem;
+    width: 100% !important;
+  }
+  .connect-form .mb-3 {
+    margin-bottom: 1.5rem;
+  }
+  .connect-form fieldset {
+    text-align: left;
+  }
+  .connect-form .form-check-inline {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .connect-form .form-check-input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.3rem;
+    cursor: pointer;
+  }
+  .connect-form .form-check-label {
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonial-section {
+    height: 700px !important;
+  }
+}
+
+/* ===== INLINE STYLES MOVED ===== */
+
+.icon-image {
+  width: 60px;
+  height: 60px;
+}
+
+.service-card-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.contact-image {
+  height: 700px;
+  object-fit: cover;
+}
+
+#form-message {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 15px;
+  color: green;
+}
+
+#typewriter-h2 {
+  text-align: center;
+}
+
+#testimonial-name {
+  transition: opacity 0.5s ease;
+}
+
+#testimonial-text {
+  font-size: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto 1.5rem auto;
+  transition: opacity 0.5s ease;
+}
+
+.arrow {
+  color: #000;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.dot.active {
+  opacity: 0.7;
+}
+.fire-burglary-page {
+  background-color: lightgreen;
+}
+
+
+
+/* Modern Workmen Compensation Insurance Page Styling */
+  .workmen-hero-section {
+    padding: 5rem 0;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+
+  .workmen-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  .workmen-hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .workmen-hero-text h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: black;
+  }
+
+  .workmen-hero-text .workmen-trust-highlight {
+    color:#f0ad00;
+    display: block;
+  }
+
+  .workmen-trust-image-container {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .workmen-trust-image {
+    position: relative;
+    z-index: 2;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .workmen-trust-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .workmen-info-section {
+    margin-bottom: 3rem;
+    background-color: #f0ad00;
+    padding: 3rem 1rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .workmen-info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+  }
+
+  .workmen-info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .workmen-info-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .workmen-info-text h2 {
+    font-weight: 900;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: black;
+  }
+
+  .workmen-info-text p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: black;
+  }
+
+  .workmen-info-image {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .workmen-info-image:hover {
+    transform: translateY(-5px);
+  }
+
+  .workmen-why-section {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    position: relative;
+  }
+
+  .workmen-why-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  .workmen-why-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .workmen-why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .workmen-why-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    color: #333;
+  }
+
+  .workmen-why-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  .workmen-why-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    padding: 15px;
+    
+  }
+
+  .workmen-why-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .workmen-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: 1px dotted #ccc;
+    padding-top: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+ 
+  .workmen-cta-text {
+    font-weight: 900;
+  font-size: 3rem;
+  max-width: 60%;
+  }
+
+  .workmen-cta-highlight {
+    color: #f0ad00;
+    font-weight: 700;
+  }
+
+  .workmen-cta-button {
+    display: inline-block;
+    background: #333;
+    color: #f0ad00;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+  }
+
+  .workmen-cta-button:hover {
+    background: #f0ad00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .workmen-cta-subtitle {
+    width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+
+  
+
+  /* Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .workmen-hero-section,
+  .workmen-info-section,
+  .workmen-why-section,
+  .workmen-cta {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .workmen-hero-section { animation-delay: 0.1s; }
+  .workmen-info-section { animation-delay: 0.2s; }
+  .workmen-why-section { animation-delay: 0.3s; }
+  .workmen-cta { animation-delay: 0.4s; }
+  }
+
+/* ===== TRAVEL INSURANCE RESPONSIVE STYLES ===== */
+
+/* Responsive Design for Travel Insurance */
+@media (max-width: 768px) {
+  .secure-journey-section {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .secure-journey-section .text-section {
+    max-width: 100% !important;
+    font-size: 2.5rem !important;
+    order: 1;
+  }
+
+  .secure-journey-section .image-section {
+    max-width: 100% !important;
+    order: 2;
+  }
+
+  .what-is-travel-insurance {
+    flex-direction: column !important;
+    text-align: center;
+    padding: 1rem !important;
+    gap: 2rem;
+  }
+
+  .what-is-travel-insurance .image-section,
+  .what-is-travel-insurance .text-section {
+    max-width: 100% !important;
+    min-width: auto !important;
+  }
+
+  .what-is-travel-insurance .text-section {
+    padding-left: 0 !important;
+  }
+
+  .what-is-travel-insurance h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .what-is-travel-insurance p {
+    font-size: 1rem !important;
+  }
+
+  .why-travel-insurance-important h2 {
+    font-size: 2rem !important;
+    text-align: center !important;
+  }
+
+  .why-travel-insurance-important div {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  .why-travel-insurance-important div > div {
+    min-width: auto !important;
+    flex: 1 1 100% !important;
+    text-align: center !important;
+  }
+
+  .coverage-we-offer h2 {
+    font-size: 2rem !important;
+  }
+
+  .coverage-we-offer div {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+  }
+
+  .coverage-we-offer ul {
+    min-width: auto !important;
+    flex: 1 1 100% !important;
+  }
+
+  .who-should-have-this h2 {
+    font-size: 2rem !important;
+    text-align: center !important;
+  }
+
+  .who-should-have-this div {
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  .who-should-have-this div > div {
+    min-width: auto !important;
+    flex: 1 1 100% !important;
+    text-align: center !important;
+  }
+
+  .travel-smart-safe {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .travel-smart-safe .text-section {
+    max-width: 100% !important;
+    font-size: 1.5rem !important;
+  }
+
+  .travel-smart-safe .button-section {
+    max-width: 100% !important;
+  }
+}
+
+/* Additional responsive adjustments for very small screens (480px and below) */
+@media (max-width: 480px) {
+  .secure-journey-section {
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+
+  .secure-journey-section .text-section {
+    font-size: 2rem !important;
+  }
+
+  .what-is-travel-insurance {
+    margin-top: 2rem;
+    padding: 1rem !important;
+    overflow-x: hidden;
+  }
+
+  .what-is-travel-insurance h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .what-is-travel-insurance p {
+    font-size: 0.9rem !important;
+  }
+
+  .why-travel-insurance-important {
+    margin-top: 2rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .why-travel-insurance-important h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .why-travel-insurance-important div > div p {
+    font-size: 1rem !important;
+  }
+
+  .coverage-we-offer {
+    margin-top: 2rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .coverage-we-offer h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .coverage-we-offer div {
+    padding: 1rem !important;
+  }
+
+  .who-should-have-this {
+    margin-top: 2rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .who-should-have-this h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .who-should-have-this div > div {
+    font-size: 1rem !important;
+  }
+
+  .travel-smart-safe {
+    margin-top: 2rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+
+  .travel-smart-safe .text-section {
+    font-size: 1.2rem !important;
+  }
+
+  .travel-smart-safe .button-section a {
+    padding: 0.6rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .travel-smart-safe .button-section p {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* ===== TRAVEL INSURANCE CARDS STYLES ===== */
+.travel-why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.travel-why-item {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  color: #333;
+  border: 2px solid #f4b41a;
+}
+
+.travel-why-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.travel-why-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  padding: 15px;
+  
+}
+
+.travel-why-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Responsive adjustments for travel cards */
+@media (max-width: 768px) {
+  .travel-why-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .travel-why-item {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .travel-why-grid {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .travel-why-item {
+    padding: 1rem;
+  }
+
+  .travel-why-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .travel-why-text {
+    font-size: 1rem;
+  }
+}
+
+/* ===== TRAVEL INSURANCE COVERAGE CARDS STYLES ===== */
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.coverage-item {
+  background: linear-gradient(135deg, #f4b41a 0%, #f39c12 100%);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(244, 164, 26, 0.3);
+  transition: all 0.3s ease;
+  color: #000;
+  border: 3px solid #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.coverage-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.coverage-item:hover::before {
+  left: 100%;
+}
+
+.coverage-item:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(244, 164, 26, 0.4);
+}
+
+.coverage-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  border: 3px solid #fff;
+}
+
+.coverage-icon:hover {
+  transform: scale(1.1);
+}
+
+.coverage-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.coverage-item h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.coverage-item p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.coverage-details {
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.coverage-details span {
+  display: block;
+  font-size: 0.9rem;
+  color: #000;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  border-left: 4px solid #000;
+}
+
+/* Responsive adjustments for coverage cards */
+@media (max-width: 768px) {
+  .coverage-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .coverage-item {
+    padding: 1.5rem;
+  }
+
+  .coverage-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .coverage-item h3 {
+    font-size: 1.2rem;
+  }
+
+  .coverage-item p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .coverage-grid {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .coverage-item {
+    padding: 1rem;
+  }
+
+  .coverage-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .coverage-item h3 {
+    font-size: 1.1rem;
+  }
+
+  .coverage-item p {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== TRAVEL INSURANCE WHO SHOULD HAVE THIS CARDS STYLES ===== */
+.who-should-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.who-should-item {
+background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  color: #333;
+  border: 2px solid #f4b41a;
+}
+
+.who-should-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.who-should-item:hover::before {
+  left: 100%;
+}
+
+.who-should-item:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(244, 164, 26, 0.4);
+}
+
+.who-should-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  border: 3px solid #fff;
+}
+
+.who-should-icon:hover {
+  transform: scale(1.1);
+}
+
+.who-should-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 700;
+  color: #000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments for who-should cards */
+@media (max-width: 768px) {
+  .who-should-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .who-should-item {
+    padding: 1.5rem;
+  }
+
+  .who-should-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .who-should-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .who-should-grid {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .who-should-item {
+    padding: 1rem;
+  }
+
+  .who-should-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .who-should-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== TRAVEL INSURANCE ANIMATIONS ===== */
+.secure-journey-section,
+.what-is-travel-insurance,
+.why-travel-insurance-important,
+.coverage-we-offer,
+.who-should-have-this,
+.travel-smart-safe {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.secure-journey-section { animation-delay: 0.1s; }
+.what-is-travel-insurance { animation-delay: 0.2s; }
+.why-travel-insurance-important { animation-delay: 0.3s; }
+.coverage-we-offer { animation-delay: 0.4s; }
+.who-should-have-this { animation-delay: 0.5s; }
+.travel-smart-safe { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+

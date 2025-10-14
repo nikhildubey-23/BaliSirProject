@@ -1,0 +1,535 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style>
+  /* Modern Fire & Burglary Insurance Page Styling */
+  .fb-hero {
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+    color: #000;
+  }
+
+  .fb-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .fb-hero__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fb-hero__text {
+    text-align: left;
+  }
+
+  .fb-hero__text h2 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .fb-hero__text .highlight {
+    color: #f0ad00;
+    display: block;
+  }
+
+  .fb-hero__image-container {
+    position: relative;
+    text-align: center;
+  }
+
+  .fb-hero__image {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .fb-hero__image:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Info Section */
+  .fb-info {
+    background-color: #f0ad00;
+    padding: 5rem 0;
+    position: relative;
+    color: white;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+  }
+
+  .fb-info__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-bottom: 1rem;
+    
+  }
+
+  .fb-info__image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .fb-info__image {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .fb-info__image:hover {
+    transform: translateY(-5px);
+  }
+
+  .fb-info__text h3 {
+    color:black;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .fb-info__text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: black;
+    text-align: left;
+    margin: 0;
+  }
+
+  /* Why Need Section */
+  .fb-why-need {
+    
+    padding: 5rem 0;
+    color: black;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fb-why-need::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .fb-why-need__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fb-why-need__container h3 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .fb-why-need__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+
+  .fb-why-need__item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    color: #333;
+  }
+
+  .fb-why-need__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  .fb-why-need__item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    padding: 15px;
+    
+  }
+
+  .fb-why-need__item p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Coverage Section */
+  .fb-coverage {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 5rem 0;
+  }
+
+  .fb-coverage__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fb-coverage__container h3 {
+    color: black;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .fb-coverage__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  .fb-coverage__item {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid #f0ad00;
+  }
+
+  .fb-coverage__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .fb-coverage__item h4 {
+   background-color: #f0ad00;
+  color: #000;
+  font-weight: 900;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  }
+
+  .fb-coverage__item ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .fb-coverage__item li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .fb-coverage__item li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #f0ad00;
+    font-weight: bold;
+  }
+
+  /* CTA Section */
+  .fb-cta {
+   
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fb-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .fb-cta__container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .fb-cta__text h2 {
+    font-size:3rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: black;
+    text-align: left
+  }
+
+  .fb-cta__text .highlight {
+    color: #f0ad00;
+
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  .fb-cta__action {
+    text-align: center;
+  }
+
+  .fb-cta__button {
+    display: inline-block;
+    background: black;
+    color: #f0ad00;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .fb-cta__button:hover {
+    background: #f0ad00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .fb-cta__action p {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: black;
+  }
+
+  /* Comprehensive Section */
+  .fb-comprehensive {
+    display: flex;
+    align-items: center;
+    background: #f4b203;
+    border-radius: 18px;
+    padding: 48px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .fb-comprehensive__image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 320px;
+  }
+
+  .fb-comprehensive__image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .fb-comprehensive__content {
+    flex: 2;
+    padding-left: 48px;
+  }
+
+  .fb-comprehensive__content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #181818;
+  }
+
+  .fb-comprehensive__content p {
+    font-size: 1.25rem;
+    color: #181818;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .fb-comprehensive {
+      flex-direction: column;
+      padding: 32px 16px;
+    }
+    .fb-comprehensive__content {
+      padding-left: 0;
+      margin-top: 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .fb-hero {
+      padding: 3rem 0;
+    }
+
+    .fb-hero__container,
+    .fb-info__container,
+    .fb-cta__container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .fb-hero__text,
+    .fb-info__text {
+      text-align: center;
+    }
+
+    .fb-info__text h3,
+    .fb-info__text p {
+      text-align: center;
+    }
+
+    .fb-hero__text h2 {
+      font-size: 2rem;
+    }
+
+    .fb-why-need__grid,
+    .fb-coverage__grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .fb-coverage__item,
+    .fb-why-need__item {
+      padding: 1.5rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="fb-hero">
+  <div class="fb-hero__container">
+    <div class="fb-hero__text">
+      <h2>
+        Protecting more<br />
+        than just walls<br />
+        <span class="highlight">we're protecting your peace of mind</span>
+      </h2>
+    </div>
+    <div class="fb-hero__image-container">
+      <img src="{{ url_for('static', filename='image/fbi1img.avif') }}" alt="Fire Burglary Protection" class="fb-hero__image" />
+    </div>
+  </div>
+</section>
+
+<!-- Info Section -->
+<section class="fb-info">
+  <div class="fb-info__container">
+    <div class="fb-info__image-container">
+      <img src="{{ url_for('static', filename='image/fbiimg2.avif') }}" alt="Fire & Burglary Insurance" class="fb-info__image" />
+    </div>
+    <div class="fb-info__text">
+      <h3>What is Fire & Burglary Insurance?</h3>
+      <p>
+        Life is full of surprises, Not all of them pleasant. Imagine waking up one day to find your shop, office, or home damaged by fire, or worse, looted. The emotional and financial blow can be overwhelming. That's where Fire & Burglary Insurance steps in — like a friend who's got your back when things go wrong.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Need Section -->
+<section class="fb-why-need">
+  <div class="fb-why-need__container">
+    <h3>Why Do You Need It?</h3>
+    <div class="fb-why-need__grid">
+      <div class="fb-why-need__item">
+        <img src="{{ url_for('static', filename='image/fbiimg3.avif') }}" alt="Recover Losses" />
+        <p><strong>Recover losses from damage caused by fire, lightning, explosions, etc.</strong></p>
+      </div>
+      <div class="fb-why-need__item">
+        <img src="{{ url_for('static', filename='image/fbiimg4.avif') }}" alt="Compensate for Stolen Goods" />
+        <p><strong>Compensate for stolen goods in the event of a break-in or theft.</strong></p>
+      </div>
+      <div class="fb-why-need__item">
+        <img src="{{ url_for('static', filename='image/fbiimg5.avif') }}" alt="Cover Repair Costs" />
+        <p><strong>Cover repair or reconstruction costs for damaged property</strong></p>
+      </div>
+      <div class="fb-why-need__item">
+        <img src="{{ url_for('static', filename='image/fbiimg6.avif') }}" alt="Minimize Business Interruption" />
+        <p><strong>Minimize business interruption and personal stress.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Coverage Section -->
+<section class="fb-coverage">
+  <div class="fb-coverage__container">
+    <h3>Coverage we offer</h3>
+    <div class="fb-coverage__grid">
+      <div class="fb-coverage__item">
+        <h4>Fire Insurance</h4>
+        <ul>
+          <li>Riot, Strike, Malicious Damage</li>
+          <li>Natural calamities (like storms, floods, etc.)</li>
+          <li>Accidental damage due to fire or heat.</li>
+          <li>Fire accident</li>
+          <li>Lightning strike</li>
+          <li>Explosion/Implosion</li>
+        </ul>
+      </div>
+      <div class="fb-coverage__item">
+        <h4>Burglary Insurance</h4>
+        <ul>
+          <li>Theft by forceful entry</li>
+          <li>Loss or damage to contents due to break-in</li>
+          <li>Coverage for business stock, equipment, furniture, etc.</li>
+          <li>Optional: Coverage during transit or for cash stored securely</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="fb-cta">
+  <div class="fb-cta__container">
+    <div class="fb-cta__text">
+      <h2>
+        At <em class="highlight">Bima with Bali</em> we don't just talk insurance, we live the stories with you.
+      </h2>
+    </div>
+    <div class="fb-cta__action">
+      <a href="{{ url_for('get_now') }}" class="fb-cta__button">REACH US</a>
+      <p>Connect with us to get insured</p>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}
