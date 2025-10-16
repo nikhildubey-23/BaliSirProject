@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+  y{% extends "base.html" %}
 
 {% block content %}
 <style>
@@ -227,9 +227,93 @@
     color: #555;
   }
 
+  @media (max-width: 1200px) {
+    .leaders-section h2 {
+      font-size: 2.8rem;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .leaders-section h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .leaders-section h2 {
+      font-size: 2.2rem;
+    }
+
+    .leader-card {
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .leader-photo {
+      width: 150px;
+      height: 150px;
+    }
+
+    .leader-caption {
+      font-size: 1rem;
+    }
+
+    .leader-text {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .leaders-section h2 {
+      font-size: 1.9rem;
+    }
+
+    .leader-card {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .leader-photo {
+      width: 120px;
+      height: 120px;
+    }
+
+    .leader-caption {
+      font-size: 0.95rem;
+    }
+
+    .leader-text {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .leaders-section h2 {
+      font-size: 1.6rem;
+    }
+
+    .leader-card {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .leader-photo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .leader-caption {
+      font-size: 0.9rem;
+    }
+
+    .leader-text {
+      font-size: 0.9rem;
+    }
+  }
+
   /* Enhanced Team Section with Mobile Animation */
   .team-section {
-    background: linear-gradient(135deg, #f0ad00 0%, #ff6b35 50%, #f7931e 100%);
+    
     padding: 5rem 0;
     color: white;
     position: relative;
@@ -247,13 +331,39 @@
     opacity: 0.3;
   }
 
-  /* Desktop: Grid Layout */
+  /* Desktop: Continuous Scrolling Animation */
   .team-images-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
     gap: 2rem;
-    max-width: 1200px;
+    width: calc(200px * 14 + 2rem * 13);
     margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .team-images-container::before,
+  .team-images-container::after {
+    content: '';
+    flex-shrink: 0;
+  }
+
+  .team-images-container .team-image {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+  }
+
+  .team-images-container {
+    animation: scrollLeft 30s linear infinite;
+  }
+
+  @keyframes scrollLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
   }
 
   .team-image {
@@ -272,116 +382,51 @@
     border-color: #fff;
   }
 
-  /* Mobile: Animated Single Image Display */
+  /* Mobile: Continuous Scrolling Animation */
   @media (max-width: 768px) {
     .team-images-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      height: 350px;
-      overflow: hidden;
-      margin: 2rem 0;
+      width: calc(300px * 14 + 2rem * 13);
+      animation: scrollLeft 120s linear infinite;
     }
 
     .team-image {
-      position: absolute;
       width: 300px;
       height: 300px;
-      object-fit: cover;
-      border-radius: 25px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-      border: 5px solid rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      transform: scale(0.7) rotate(5deg);
-      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      cursor: pointer;
-    }
-
-    .team-image.active {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-      z-index: 10;
-      border-color: rgba(255, 255, 255, 0.8);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .team-image.fade-in {
-      animation: mobileImageEntrance 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-    }
-
-    .team-image.fade-out {
-      animation: mobileImageExit 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-    }
-
-    @keyframes mobileImageEntrance {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(-10deg);
-      }
-      50% {
-        opacity: 0.7;
-        transform: scale(1.1) rotate(2deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-    }
-
-    @keyframes mobileImageExit {
-      0% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-      50% {
-        opacity: 0.7;
-        transform: scale(1.1) rotate(-2deg);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(0.5) rotate(10deg);
-      }
-    }
-
-    /* Mobile Navigation Dots */
-    .team-navigation {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .nav-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-
-    .nav-dot.active {
-      background: rgba(255, 255, 255, 0.9);
-      transform: scale(1.2);
-      border-color: #f0ad00;
-    }
-
-    .nav-dot:hover {
-      background: rgba(255, 255, 255, 0.7);
-      transform: scale(1.1);
     }
   }
 
   @media (max-width: 480px) {
     .team-images-container {
-      height: 280px;
+      width: calc(260px * 14 + 2rem * 13);
     }
 
     .team-image {
       width: 260px;
       height: 260px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .team-section h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .team-section h2 {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .team-section h2 {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .team-section h2 {
+      font-size: 1.5rem;
     }
   }
 
@@ -433,6 +478,52 @@
   .video-text p {
     font-size: 1.2rem;
     color: #555;
+  }
+
+  @media (max-width: 768px) {
+    .video-section {
+      padding: 3rem 0;
+    }
+
+    .video-container iframe {
+      height: 350px;
+    }
+
+    .video-text h2 {
+      font-size: 2rem;
+    }
+
+    .video-text p {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .video-container iframe {
+      height: 300px;
+    }
+
+    .video-text h2 {
+      font-size: 1.8rem;
+    }
+
+    .video-text p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .video-container iframe {
+      height: 250px;
+    }
+
+    .video-text h2 {
+      font-size: 1.6rem;
+    }
+
+    .video-text p {
+      font-size: 0.95rem;
+    }
   }
 
   /* Responsive Design */
@@ -518,6 +609,13 @@
     font-size: 5rem;
     font-weight: 900;
     color: #222;
+    overflow: hidden;
+    border-right: .15em solid #f0ad00;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    text-align: center;
+    animation: typing 3.5s steps(12, end), blink-caret .75s step-end infinite;
   }
 
   .about-hero-image {
@@ -549,6 +647,59 @@
     .about-hero-section {
       flex-direction: column;
       padding: 2rem 1rem;
+    }
+
+    .about-hero-left h1 {
+      font-size: 3rem;
+      letter-spacing: 0.1em;
+    }
+
+    .about-hero-subheading {
+      font-size: 1.5rem;
+    }
+
+    .about-hero-paragraph {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .about-hero-left h1 {
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .about-hero-subheading {
+      font-size: 1.3rem;
+    }
+
+    .about-hero-paragraph {
+      font-size: 0.95rem;
+    }
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #f0ad00; }
+  }
+
+  @media (max-width: 480px) {
+    .about-hero-left h1 {
+      font-size: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .about-hero-subheading {
+      font-size: 1.2rem;
+    }
+
+    .about-hero-paragraph {
+      font-size: 0.9rem;
     }
   }
 </style>
@@ -605,6 +756,40 @@
     color: #007bff;
     font-weight: 700;
     margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .empower-section {
+      padding: 3rem 1rem;
+    }
+
+    .empower-section h2 {
+      font-size: 2rem;
+    }
+
+    .empower-section p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .empower-section h2 {
+      font-size: 1.8rem;
+    }
+
+    .empower-section p {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .empower-section h2 {
+      font-size: 1.6rem;
+    }
+
+    .empower-section p {
+      font-size: 0.9rem;
+    }
   }
 </style>
 
@@ -711,6 +896,78 @@
   .core-value-card.active .core-value-definition {
     display: block;
   }
+
+  @media (max-width: 768px) {
+    .core-values-section h2 {
+      font-size: 2rem;
+    }
+
+    .core-values-grid {
+      gap: 1rem;
+    }
+
+    .core-value-card {
+      flex: 1 1 250px;
+      max-width: 250px;
+      padding: 1.25rem;
+    }
+
+    .core-value-title {
+      font-size: 1.1rem;
+    }
+
+    .core-value-definition {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .core-values-section h2 {
+      font-size: 1.8rem;
+    }
+
+    .core-values-grid {
+      gap: 0.75rem;
+    }
+
+    .core-value-card {
+      flex: 1 1 200px;
+      max-width: 200px;
+      padding: 1rem;
+    }
+
+    .core-value-title {
+      font-size: 1rem;
+    }
+
+    .core-value-definition {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .core-values-section h2 {
+      font-size: 1.6rem;
+    }
+
+    .core-values-grid {
+      gap: 0.5rem;
+    }
+
+    .core-value-card {
+      flex: 1 1 150px;
+      max-width: 150px;
+      padding: 0.75rem;
+    }
+
+    .core-value-title {
+      font-size: 0.95rem;
+    }
+
+    .core-value-definition {
+      font-size: 0.85rem;
+    }
+  }
 </style>
 
 <section class="core-values-section">
@@ -778,7 +1035,7 @@
 <!-- Leaders Section -->
 <section class="leaders-section">
   <div class="container">
-    <h2 class="fw-bold text-center mb-5" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 3rem;">
+    <h2 class="fw-bold text-center mb-5" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
       <span style="background-color: #f0ad00; border-radius: 50% 0 0 50%; padding: 0 0.5rem; color: white;">&#40;</span>
       Our Leaders
       <span style="background-color: #f0ad00; border-radius: 0 50% 50% 0; padding: 0 0.5rem; color: white;">&#41;</span>
@@ -935,33 +1192,31 @@
 <!-- Enhanced Team Section with Mobile Animation -->
 <section class="team-section">
   <div class="container">
-    <h2 class="fw-bold text-center mb-5" style="font-size: 3rem; color: white;">
+    <h2 class="fw-bold text-center mb-5" style="color: black;">
       <span style="background-color: rgba(255,255,255,0.2); border-radius: 50% 0 0 50%; padding: 0 0.5rem;">&#40;</span>
       Meet Our Team
       <span style="background-color: rgba(255,255,255,0.2); border-radius: 0 50% 50% 0; padding: 0 0.5rem;">&#41;</span>
     </h2>
 
     <div class="team-images-container">
-      
       <img src="/static/image/imgr1.png" alt="Team member 1" class="team-image" data-index="0" />
       <img src="/static/image/imgr2.png" alt="Team member 2" class="team-image" data-index="1" />
       <img src="/static/image/imgr3.png" alt="Team member 3" class="team-image" data-index="2" />
       <img src="/static/image/img4r.png" alt="Team member 4" class="team-image" data-index="3" />
       <img src="/static/image/imgr5.png" alt="Team member 5" class="team-image" data-index="4" />
       <img src="/static/image/imgr6.png" alt="Team member 6" class="team-image" data-index="5" />
-      <img src="/static/image/balisirdilimg.avif" alt="Team member 7" class="team-image" data-index="6" />
+      <img src="/static/image/imgr7.png" alt="Team member 7" class="team-image" data-index="6" />
+      <!-- Duplicate for continuous scroll -->
+      <img src="/static/image/imgr1.png" alt="Team member 1" class="team-image" />
+      <img src="/static/image/imgr2.png" alt="Team member 2" class="team-image" />
+      <img src="/static/image/imgr3.png" alt="Team member 3" class="team-image" />
+      <img src="/static/image/img4r.png" alt="Team member 4" class="team-image" />
+      <img src="/static/image/imgr5.png" alt="Team member 5" class="team-image" />
+      <img src="/static/image/imgr6.png" alt="Team member 6" class="team-image" />
+      <img src="/static/image/imgr7.png" alt="Team member 7" class="team-image" />
     </div>
 
-    <!-- Mobile Navigation Dots -->
-    <div class="team-navigation" id="teamNavigation">
-      <span class="nav-dot active" data-index="0"></span>
-      <span class="nav-dot" data-index="1"></span>
-      <span class="nav-dot" data-index="2"></span>
-      <span class="nav-dot" data-index="3"></span>
-      <span class="nav-dot" data-index="4"></span>
-      <span class="nav-dot" data-index="5"></span>
-      <span class="nav-dot" data-index="6"></span>
-    </div>
+
   </div>
 </section>
 
@@ -980,101 +1235,6 @@
   </div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Mobile team image animation
-  const teamImages = document.querySelectorAll('.team-image');
-  const navDots = document.querySelectorAll('.nav-dot');
-  let currentIndex = 0;
-  let autoPlayInterval;
 
-  // Only run on mobile devices
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  function showImage(index) {
-    if (!isMobile()) return;
-
-    // Remove active class from current image
-    teamImages[currentIndex].classList.remove('active', 'fade-in');
-    teamImages[currentIndex].classList.add('fade-out');
-    navDots[currentIndex].classList.remove('active');
-
-    // Set new current index
-    currentIndex = index;
-
-    // Add active class to new image after fade out
-    setTimeout(() => {
-      teamImages[currentIndex].classList.remove('fade-out');
-      teamImages[currentIndex].classList.add('active', 'fade-in');
-      navDots[currentIndex].classList.add('active');
-    }, 250);
-  }
-
-  function nextImage() {
-    const nextIndex = (currentIndex + 1) % teamImages.length;
-    showImage(nextIndex);
-  }
-
-  function startAutoPlay() {
-    if (!isMobile()) return;
-    autoPlayInterval = setInterval(nextImage, 2000); // Change image every 2 seconds
-  }
-
-  function stopAutoPlay() {
-    if (autoPlayInterval) {
-      clearInterval(autoPlayInterval);
-    }
-  }
-
-  // Initialize mobile animation
-  if (isMobile()) {
-    // Start with first image visible
-    teamImages[0].classList.add('active');
-
-    // Add click handlers to navigation dots
-    navDots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        stopAutoPlay();
-        showImage(index);
-        setTimeout(startAutoPlay, 3000); // Restart autoplay after 3 seconds
-      });
-    });
-
-    // Start autoplay
-    startAutoPlay();
-
-    // Pause autoplay on hover
-    const teamContainer = document.querySelector('.team-images-container');
-    teamContainer.addEventListener('mouseenter', stopAutoPlay);
-    teamContainer.addEventListener('mouseleave', startAutoPlay);
-  }
-
-  // Handle window resize
-  window.addEventListener('resize', function() {
-    if (isMobile()) {
-      // Reinitialize mobile animation
-      teamImages.forEach(img => {
-        img.classList.remove('active', 'fade-in', 'fade-out');
-      });
-      navDots.forEach(dot => dot.classList.remove('active'));
-
-      currentIndex = 0;
-      teamImages[0].classList.add('active');
-      navDots[0].classList.add('active');
-      startAutoPlay();
-    } else {
-      // Desktop view - stop mobile animation
-      stopAutoPlay();
-      teamImages.forEach(img => {
-        img.classList.remove('active', 'fade-in', 'fade-out');
-        img.style.opacity = '1';
-        img.style.transform = 'scale(1) rotate(0deg)';
-      });
-    }
-  });
-});
-</script>
 
 {% endblock %}
