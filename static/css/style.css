@@ -59,6 +59,7 @@ body {
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
+  background-color: #f9f9f9;
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -782,6 +783,41 @@ html, body {
   letter-spacing: .15em;
   text-align: center;
   animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+  font-size: 3.5rem; /* Default for large screens */
+}
+
+/* Responsive font sizes for "Why Choose Us" heading */
+@media (max-width: 1200px) {
+  .typewriter {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .typewriter {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .typewriter {
+    font-size: 2rem;
+    letter-spacing: 0.1em; /* Reduce letter spacing on smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .typewriter {
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+@media (max-width: 480px) {
+  .typewriter {
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+  }
 }
 
 @keyframes typing {
@@ -869,6 +905,54 @@ html, body {
   .bottom { transform: rotateX(-90deg) translateZ(100px); }
 }
 
+@media (max-width: 576px) {
+  .faith-section {
+    height: 200px;
+    padding: 1.5rem 1rem;
+  }
+  .cube {
+    width: 150px;
+    height: 150px;
+  }
+  .face {
+    width: 150px;
+    height: 150px;
+    font-size: 0.6rem;
+    padding: 5px;
+    line-height: 1.2;
+  }
+  .front { transform: translateZ(75px); }
+  .back { transform: rotateY(180deg) translateZ(75px); }
+  .right { transform: rotateY(90deg) translateZ(75px); }
+  .left { transform: rotateY(-90deg) translateZ(75px); }
+  .top { transform: rotateX(90deg) translateZ(75px); }
+  .bottom { transform: rotateX(-90deg) translateZ(75px); }
+}
+
+@media (max-width: 480px) {
+  .faith-section {
+    height: 180px;
+    padding: 1rem 0.5rem;
+  }
+  .cube {
+    width: 120px;
+    height: 120px;
+  }
+  .face {
+    width: 120px;
+    height: 120px;
+    font-size: 0.5rem;
+    padding: 3px;
+    line-height: 1.1;
+  }
+  .front { transform: translateZ(60px); }
+  .back { transform: rotateY(180deg) translateZ(60px); }
+  .right { transform: rotateY(90deg) translateZ(60px); }
+  .left { transform: rotateY(-90deg) translateZ(60px); }
+  .top { transform: rotateX(90deg) translateZ(60px); }
+  .bottom { transform: rotateX(-90deg) translateZ(60px); }
+}
+
 @media (max-width: 768px) {
   .partners-logos {
     display: flex;
@@ -945,6 +1029,89 @@ html, body {
 .icon-image {
   width: 60px;
   height: 60px;
+}
+
+/* Responsive styles for "Why Choose Us" image */
+@media (max-width: 768px) {
+  .container-fluid.py-2.fade-in .col-md-5 img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-fluid.py-2.fade-in .col-md-5 img {
+    max-width: 90%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-fluid.py-2.fade-in .col-md-5 img {
+    max-width: 80%;
+    height: auto;
+  }
+}
+
+/* Responsive styles for "Why Choose Us" features section */
+@media (max-width: 768px) {
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 {
+    padding: 1rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 h5 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 {
+    padding: 0.75rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 h5 {
+    font-size: 1rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 p {
+    font-size: 0.85rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 img {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 {
+    padding: 0.5rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 h5 {
+    font-size: 0.95rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 p {
+    font-size: 0.8rem;
+  }
+
+  .container-fluid.py-2.fade-in .row.g-4 .col-6.col-md-4 img {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .service-card-img {
