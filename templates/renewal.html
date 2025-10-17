@@ -34,9 +34,11 @@
         </div>
 
         <div class="col-md-6">
-          <label for="policyNumber" class="form-label">Policy number*</label>
-          <input type="text" class="form-control" id="policyNumber" required>
+          <label for="age" class="form-label">Age*</label>
+          <input type="number" class="form-control" id="age" required>
         </div>
+
+
         <div class="col-md-6">
           <label for="insuranceType" class="form-label">Insurance Type*</label>
           <select class="form-select" id="insuranceType" required>
@@ -47,25 +49,157 @@
             <option value="marine">Marine</option>
             <option value="shopkeeper">Shopkeeper</option>
             <option value="workmen">Workmen Compensation</option>
+            <option value="fire">Fire & Burglary</option>
+            <option value="others">Others</option>
           </select>
         </div>
 
-        <div class="col-md-6">
-          <label for="vehicleRC" class="form-label">Vehicle RC (only for motor renewal)</label>
-          <input class="form-control" type="file" id="vehicleRC" accept="image/*,application/pdf">
-        </div>
-        <div class="col-md-6">
-          <label for="previousInsurance" class="form-label">Previous Insurance copy *</label>
-          <input class="form-control" type="file" id="previousInsurance" accept="image/*,application/pdf" required>
-        </div>
+        <!-- Dynamic Fields -->
+        <div id="dynamicFields" class="col-12">
+          <!-- Motor Fields -->
+          <div id="motorFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="vehicleRC" class="form-label">Vehicle RC*</label>
+                <input class="form-control" type="file" id="vehicleRC" accept="image/*,application/pdf" required>
+              </div>
+              <div class="col-md-6">
+                <label for="previousPolicyMotor" class="form-label">Previous Policy Copy*</label>
+                <input class="form-control" type="file" id="previousPolicyMotor" accept="image/*,application/pdf" required>
+              </div>
+            </div>
+          </div>
 
-        <div class="col-md-6">
-          <label for="aadharCard" class="form-label">Aadhar card *</label>
-          <input class="form-control" type="file" id="aadharCard" accept="image/*,application/pdf" required>
-        </div>
-        <div class="col-md-6">
-          <label for="pan" class="form-label">PAN *</label>
-          <input class="form-control" type="file" id="pan" accept="image/*,application/pdf" required>
+          <!-- Health Fields -->
+          <div id="healthFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="previousPolicyHealth" class="form-label">Previous Policy Copy*</label>
+                <input class="form-control" type="file" id="previousPolicyHealth" accept="image/*,application/pdf" required>
+              </div>
+              <div class="col-md-6">
+                <label for="preExistingDisease" class="form-label">Pre-existing Disease</label>
+                <input type="text" class="form-control" id="preExistingDisease">
+              </div>
+            </div>
+          </div>
+
+          <!-- Travel Fields -->
+          <div id="travelFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="travelCountry" class="form-label">Country*</label>
+                <input type="text" class="form-control" id="travelCountry" required>
+              </div>
+              <div class="col-md-4">
+                <label for="travelDuration" class="form-label">Duration (days)*</label>
+                <input type="number" class="form-control" id="travelDuration" required>
+              </div>
+              <div class="col-md-4">
+                <label for="travelAge" class="form-label">Age*</label>
+                <input type="number" class="form-control" id="travelAge" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marine Fields -->
+          <div id="marineFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="commodityType" class="form-label">Type of Commodity*</label>
+                <input type="text" class="form-control" id="commodityType" required>
+              </div>
+              <div class="col-md-4">
+                <label for="transportMode" class="form-label">Mode of Transport*</label>
+                <select class="form-select" id="transportMode" required>
+                  <option value="" selected disabled>Select Mode</option>
+                  <option value="sea">Sea</option>
+                  <option value="air">Air</option>
+                  <option value="land">Land</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="preCarryingUnit" class="form-label">Pre-carrying Unit*</label>
+                <input type="text" class="form-control" id="preCarryingUnit" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shopkeeper Fields -->
+          <div id="shopkeeperFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="businessNature" class="form-label">Nature of Business*</label>
+                <input type="text" class="form-control" id="businessNature" required>
+              </div>
+              <div class="col-md-4">
+                <label for="previousPolicyShopkeeper" class="form-label">Previous Policy Document*</label>
+                <input class="form-control" type="file" id="previousPolicyShopkeeper" accept="image/*,application/pdf" required>
+              </div>
+              <div class="col-md-4">
+                <label for="claimOccurred" class="form-label">Claim Occurred*</label>
+                <select class="form-select" id="claimOccurred" required>
+                  <option value="" selected disabled>Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Workmen Fields -->
+          <div id="workmenFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="numberOfMembers" class="form-label">Number of Members*</label>
+                <input type="number" class="form-control" id="numberOfMembers" required>
+              </div>
+              <div class="col-md-4">
+                <label for="salary" class="form-label">Salary*</label>
+                <input type="number" class="form-control" id="salary" required>
+              </div>
+              <div class="col-md-4">
+                <label for="workNature" class="form-label">Nature of Work*</label>
+                <input type="text" class="form-control" id="workNature" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fire Fields -->
+          <div id="fireFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label for="sumInsured" class="form-label">Sum Insured*</label>
+                <input type="number" class="form-control" id="sumInsured" required>
+              </div>
+              <div class="col-md-3">
+                <label for="locality" class="form-label">Locality*</label>
+                <input type="text" class="form-control" id="locality" required>
+              </div>
+              <div class="col-md-3">
+                <label for="pincode" class="form-label">Pincode*</label>
+                <input type="number" class="form-control" id="pincode" required>
+              </div>
+              <div class="col-md-3">
+                <label for="occupancy" class="form-label">Occupancy*</label>
+                <input type="text" class="form-control" id="occupancy" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Others Fields -->
+          <div id="othersFields" class="dynamic-group" style="display: none;">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="typeOfInsurance" class="form-label">Type of Insurance*</label>
+                <input type="text" class="form-control" id="typeOfInsurance" required>
+              </div>
+              <div class="col-md-6">
+                <label for="previousPolicyOthers" class="form-label">Previous Policy Copy*</label>
+                <input class="form-control" type="file" id="previousPolicyOthers" accept="image/*,application/pdf" required>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="col-12">
@@ -75,4 +209,14 @@
     </form>
   </div>
 </section>
+<script>
+  document.getElementById('insuranceType').addEventListener('change', function() {
+    const selectedType = this.value;
+    const groups = document.querySelectorAll('.dynamic-group');
+    groups.forEach(group => group.style.display = 'none');
+    if (selectedType) {
+      document.getElementById(selectedType + 'Fields').style.display = 'block';
+    }
+  });
+</script>
 {% endblock %}
