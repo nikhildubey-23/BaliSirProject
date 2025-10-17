@@ -89,6 +89,7 @@
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 5rem 0;
     position: relative;
+    overflow: hidden;
   }
 
   .opportunities-section::before {
@@ -97,11 +98,62 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #f0ad00, transparent);
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0ad00' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
   }
 
+  .opportunities-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .apply-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 5rem 0;
+  }
+
+  .apply-heading {
+    color: #f0ad00;
+    font-size: 1.5rem;
+  }
+
+  .apply-step {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #f0ad00;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(240, 173, 0, 0.1);
+  }
+
+  .apply-step:hover {
+    transform: translateX(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  }
+
+  .apply-step img {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .apply-step span {
+    font-weight: 600;
+    color: #333;
+  }
+
+
+
   .opportunity-item {
+    display: flex;
+    align-items: center;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border-radius: 15px;
     padding: 1.5rem;
@@ -328,6 +380,67 @@
     .position-card {
       padding: 1.5rem;
     }
+
+    .opportunity-item {
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .opportunity-item img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .opportunity-item span {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .opportunities-section h2 {
+      font-size: 1.8rem;
+    }
+
+    .opportunity-item {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .opportunity-item img {
+      width: 25px;
+      height: 25px;
+    }
+
+    .opportunity-item span {
+      font-size: 0.9rem;
+    }
+  }
+
+  .opportunities-image {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    .opportunities-image {
+      max-width: 90%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .opportunities-image {
+      max-width: 80%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .opportunities-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .opportunities-image {
+      max-width: 70%;
+    }
   }
 
   /* Animation Classes */
@@ -424,31 +537,31 @@
           <span class="text-black">Opportunities at <span style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Bima with Bali</span></span>
         </h2>
         <div class="opportunity-item py-2">
-          <img src="/static/image/cr5.avif" alt="Simplify Icon" style="border-radius:20px;box-shadow:1px 1px 1px 1px black"/>
-          <span style="font-size:20px">Simplify the complex problems</span>
+          <img src="/static/image/cr5.avif" alt="Simplify Icon" style="border-radius:20px;"/>
+          <span >Simplify the complex problems</span>
         </div>
         <div class="opportunity-item py-2">
-          <img src="/static/image/cr6.avif" alt="Educate Icon" style="border-radius:20px;box-shadow:1px 1px 1px 1px black"/>
-          <span style="font-size:20px">Educate and empower others</span>
+          <img src="/static/image/cr6.avif" alt="Educate Icon" style="border-radius:20px;"/>
+          <span >Educate and empower others</span>
         </div>
         <div class="opportunity-item py-2">
-          <img src="/static/image/cr7.avif" alt="Solve Icon" style="border-radius:20px;box-shadow:1px 1px 1px 1px black" />
-          <span style="font-size:20px">Solve problems creatively</span>
+          <img src="/static/image/cr7.avif" alt="Solve Icon" style="border-radius:20px;" />
+          <span >Solve problems creatively</span>
         </div>
         <div class="opportunity-item py-2">
-          <img src="/static/image/cr8.avif" alt="Build Trust Icon" style="border-radius:20px;box-shadow:1px 1px 1px 1px black" />
-          <span style="font-size:20px">Build trust with people from all walks of life</span>
+          <img src="/static/image/cr8.avif" alt="Build Trust Icon" style="border-radius:20px;" />
+          <span >Build trust with people from all walks of life</span>
         </div>
       </div>
       <div class="col-md-6 text-center">
-        <img src="/static/image/cr9.avif" alt="Opportunities" class="img-fluid" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+        <img src="/static/image/cr9.avif" alt="Opportunities" class="opportunities-image" style="border-radius: 20px; " />
       </div>
     </div>
   </div>
 </section>
 
 <!-- Ready to Take the Leap Section -->
-<section class="py-5">
+<section class="py-5 apply-section">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-6 text-center text-md-start">
@@ -460,17 +573,17 @@
         </div>
       </div>
       <div class="col-md-6">
-        <h3 class="fw-bold mb-4" style="border-bottom: 3px solid #f0ad00; display: inline-block;">How To Apply</h3>
-        <div class="opportunity-item">
-          <img src="/static/image/cr11.avif" alt="Resume Icon" />
+        <h3 class="fw-bold mb-4 apply-heading" style="border-bottom: 3px solid #f0ad00; display: inline-block;">How To Apply</h3>
+        <div class="apply-step">
+          <img src="/static/image/cr11.avif" alt="Resume Icon" style="border-radius:20px;"/>
           <span>Send your resume to us on our email <strong>bimawithbali@gmail.com</strong> (or) whatsapp on <strong>8642001409</strong></span>
         </div>
-        <div class="opportunity-item">
-          <img src="/static/image/cr12.avif" alt="Info Icon" />
+        <div class="apply-step">
+          <img src="/static/image/cr12.avif" alt="Info Icon" style="border-radius:20px;"/>
           <span>A short note about why you'd like to be part of <strong>Bima with Bali</strong>.</span>
         </div>
-        <div class="opportunity-item">
-          <img src="/static/image/cr13.avif" alt="Video Icon" />
+        <div class="apply-step">
+          <img src="/static/image/cr13.avif" alt="Video Icon" style="border-radius:20px;"/>
           <span>Anything else you'd like us to see video intro, blog post, Insta reel, anything!</span>
         </div>
       </div>
@@ -499,9 +612,9 @@
           <p><strong>Location:</strong> Bilaspur, Chattishgarh</p>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 my-5">
         <div class="application-form">
-          <form id="contactForm" method="post" enctype="multipart/form-data" action="/send-email">
+          <form id="contactForm" method="post" enctype="multipart/form-data" action="/send-email" class="bg-light p-4 rounded shadow">
             <div class="mb-3">
               <label for="firstName" class="form-label">First Name*</label>
               <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name*" required />
@@ -530,7 +643,7 @@
               <label for="resumeUpload" class="form-label">Upload Resume*</label>
               <input type="file" id="resumeUpload" name="resume" class="form-control" accept=".pdf,.doc,.docx" required />
             </div>
-            <button type="submit" class="btn btn-primary">Submit Application</button>
+            <button type="submit" class="btn btn-warning">Submit Application</button>
           </form>
           <div id="form-message"></div>
         </div>
