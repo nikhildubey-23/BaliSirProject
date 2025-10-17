@@ -303,19 +303,24 @@ def send_email():
 def chat():
     data = request.json
     user_message = data.get('message', '')
+    history = data.get('history', [])
 
-    # Prepend instructions to restrict chatbot responses to insurance/bima topics, short and precise
-    prompt = (
-        "Only answer insurance or bima questions. Keep answers short, precise, detailed. "
-        "If unrelated, say 'I only answer insurance questions.' "
-        "Question: " + user_message
-    )
+    # Build conversation context
+    messages = [{"role": "system", "content": "You are BimaBot, the AI assistant for Bima with Bali Insurance. Answer any questions, but prioritize insurance-related topics. Keep answers short, precise, and detailed. Format responses in clean, readable plain text. Use simple bullet points with dashes (-) for lists, avoid special characters like • or –. For tabular data, use simple table format with headers and data rows separated by |, no separator lines with dashes. Example:\n| Header1 | Header2 |\n| Data1   | Data2   |\n"}]
+
+    # Add conversation history
+    for msg in history[-10:]:  # Keep last 10 messages to avoid token limit
+        role = "assistant" if msg['role'] == 'bot' else "user"
+        messages.append({"role": role, "content": msg['content']})
+
+    # Add current user message
+    messages.append({"role": "user", "content": user_message})
 
     # Use Groq API to generate response
     try:
         response = client.chat.completions.create(
             model="llama3-8b-8192",
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,
             max_tokens=500,
             temperature=0.0
         )
@@ -325,7 +330,7 @@ def chat():
         try:
             response = client.chat.completions.create(
                 model="openai/gpt-oss-20b",
-                messages=[{"role": "user", "content": prompt}],
+                messages=messages,
                 max_tokens=500,
                 temperature=0.0
             )

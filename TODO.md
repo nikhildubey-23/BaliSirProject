@@ -1,30 +1,30 @@
-# TODO: Make "Why Choose Us" Section Responsive
+# TODO: Update UI and UX of ai.html Chatbot Interface
 
-- [x] Add responsive font-size media queries to .typewriter class in static/css/style.css
-- [x] Test responsiveness on different screen sizes (App running on localhost:5000)
-- [x] Add responsive styles to the "Why Choose Us" image
-- [ ] Test image responsiveness
-- [x] Add responsive styles to the features section (Quick Claims, etc.)
-- [ ] Test features section responsiveness
+## Plan Steps:
+1. **Modernize Visual Design**:
+   - Update color scheme to align with site's yellow/orange theme (#f0ad00).
+   - Add Font Awesome icons for bot (robot) and user (user-circle).
+   - Improve typography, add gradients, shadows, and hover effects to message bubbles.
 
-# TODO: Make About Page Responsive
+2. **Improve Responsiveness and Layout**:
+   - Make chat container fully responsive (adjust max-width, padding for mobile).
+   - Optimize input form for touch devices (larger send button, better spacing).
 
-- [x] Add responsive styles to about.html sections (hero, empower, core values, leaders, team, video)
-- [x] Adjust "Our Leaders" heading font size for better responsiveness
-- [x] Test about.html responsiveness (Flask app running on localhost:5000)
+3. **Enhance User Experience**:
+   - Add typing indicator animation when bot is responding.
+   - Include quick reply buttons for common insurance queries.
+   - Improve animations: Smooth message entry, button interactions.
+   - Enhance error handling with retry button on timeout.
 
-# TODO: Change Meet Our Team Animation
+4. **Accessibility and Polish**:
+   - Enhance ARIA labels and roles.
+   - Ensure high contrast and keyboard navigation.
+   - Add subtle animations for better feedback.
 
-- [x] Replace fade/scale animation with slide from right to left on mobile
-- [x] Update JavaScript for slide animation on mobile
-- [x] Add continuous scrolling animation from right to left on desktop
-- [x] Duplicate images for seamless continuous scroll
-- [x] Add missing imgr7.png image
-- [x] Fix mobile animation to cycle through first 7 images
+## Dependent Files:
+- templates/ai.html: Revise inline styles, add HTML elements (avatars, quick replies), enhance JavaScript.
 
-# TODO: Add Typing Animation to "Who are we ?"
-
-- [x] Add typing animation to the h1 in about.html hero section
-- [x] Adjust letter-spacing for responsive design
-- [x] Add keyframes for typing and blink-caret
-- [x] Set steps to 12 for the text length
+## Followup Steps:
+- Test the page by running Flask app and navigating to AI chatbot route.
+- Verify responsiveness on different devices/browsers.
+- Check for console errors or performance issues.
