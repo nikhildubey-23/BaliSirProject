@@ -1,465 +1,1754 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="container hero-section" style="background-color:#f9f9f9">
-  <div class="row align-items-center mx-0">
-    <div class="col-12 position-relative d-flex justify-content-center px-0">
-      <div class="yellow-circle"></div>
-      <a href="{{ url_for('get_now') }}">
-        <img src="{{ url_for('static', filename='image/herosectionimage.avif') }}" alt="Family" class="hero-family-img" />
-
-      </a>
+{% extends "base.html" %} {% block content %}
+<!-- Modern 3D Hero Section -->
+<div
+    class="hero-3d-section"
+    style="
+        background:
+            linear-gradient(
+                135deg,
+                rgba(240, 173, 0, 0.9) 0%,
+                rgba(255, 193, 7, 0.9) 50%,
+                rgba(224, 168, 0, 0.9) 100%
+            ),
+            url('{{ url_for('static', filename='image/logo.avif') }}') center center / cover no-repeat;
+        min-height: 74vh;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+    "
+>
+    <!-- Animated Background Elements -->
+    <div class="geometric-bg">
+        <div class="floating-cube cube-1"></div>
+        <div class="floating-cube cube-2"></div>
+        <div class="floating-cube cube-3"></div>
+        <div class="floating-polygon polygon-1"></div>
+        <div class="floating-polygon polygon-2"></div>
+        <div class="floating-circle circle-1"></div>
+        <div class="floating-circle circle-2"></div>
     </div>
-  </div>
+
+    <!-- Interactive Particles -->
+    <div class="particles-field">
+        <div class="particle-dot dot-1"></div>
+        <div class="particle-dot dot-2"></div>
+        <div class="particle-dot dot-3"></div>
+        <div class="particle-dot dot-4"></div>
+        <div class="particle-dot dot-5"></div>
+        <div class="particle-dot dot-6"></div>
+        <div class="particle-dot dot-7"></div>
+        <div class="particle-dot dot-8"></div>
+    </div>
+
+    <div class="container h-100 position-relative z-index-10">
+        <div
+            class="row align-items-center justify-content-center h-100 text-center py-5" 
+        >
+            <div class="col-lg-10 col-md-12">
+                <!-- 3D Logo Animation -->
+                <div class="hero-logo-container mb-5">
+                    <div class="logo-3d-wrapper">
+                        <div class="shield-container">
+                            <i class="fas fa-shield-alt shield-icon"></i>
+                            <div class="shield-ring ring-1"></div>
+                            <div class="shield-ring ring-2"></div>
+                            <div class="shield-ring ring-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Tagline with Advanced 3D Effect -->
+                <div class="hero-text-container mb-5">
+                    <h1 class="hero-main-title">
+                        <span class="title-word word-1 dark-red">Yes,</span>
+                        <span class="title-word word-2">What</span>
+                        <span class="title-word word-3">You</span>
+                        <span class="title-word word-4">Think</span>
+                        <br />
+                        <span class="title-word word-5 emphasis">We</span>
+                        <span class="title-word word-6 emphasis">Insure</span>
+                    </h1>
+                </div>
+
+                <!-- Subtitle with Typewriter Effect -->
+                <div class="hero-subtitle-container mb-5">
+                    <p class="hero-subtitle-text">
+                        From everyday protection to extraordinary coverage –
+                        <br class="d-none d-md-block" />
+                        we make insurance as unique as your imagination
+                    </p>
+                </div>
+
+                <!-- Interactive Insurance Icons -->
+                <div class="insurance-icons-grid mb-5">
+                    <div class="insurance-icon icon-1">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <span>Auto</span>
+                    </div>
+                    <div class="insurance-icon icon-2">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span>Home</span>
+                    </div>
+                    <div class="insurance-icon icon-3">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <span>Health</span>
+                    </div>
+                    <div class="insurance-icon icon-4">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <span>Travel</span>
+                    </div>
+                    <div class="insurance-icon icon-5">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <span>Fire</span>
+                    </div>
+                    <div class="insurance-icon icon-6">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        <span>Marine</span>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="hero-cta-section">
+                    <a
+                        href="{{ url_for('get_now') }}"
+                        class="btn-3d-modern btn-primary-modern mb-3"
+                    >
+                        <span class="btn-text">Get Quote Now</span>
+                        <div class="btn-bg"></div>
+                    </a>
+                    <a
+                        href="#services"
+                        class="btn-3d-modern btn-secondary-modern mb-3"
+                    >
+                        <span class="btn-text">Learn More</span>
+                        <div class="btn-bg"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 </div>
+
+<!-- Modern 3D Hero Section Styles -->
+<style>
+    .z-index-10 {
+        z-index: 10;
+    }
+
+    /* Geometric Background Elements */
+    .geometric-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .floating-cube {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.1);
+        transform-style: preserve-3d;
+        animation: cube-float 8s ease-in-out infinite;
+    }
+
+    .floating-cube::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: 0;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.05);
+        transform: rotateX(90deg);
+    }
+
+    .floating-cube::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -30px;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.08);
+        transform: rotateY(90deg);
+    }
+
+    .cube-1 {
+        top: 15%;
+        left: 5%;
+        animation-delay: 0s;
+    }
+
+    .cube-2 {
+        top: 70%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .cube-3 {
+        bottom: 15%;
+        left: 15%;
+        animation-delay: 4s;
+    }
+
+    .floating-polygon {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.1);
+        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        animation: polygon-rotate 6s linear infinite;
+    }
+
+    .polygon-1 {
+        top: 40%;
+        left: 8%;
+        animation-delay: 1s;
+    }
+
+    .polygon-2 {
+        top: 25%;
+        right: 15%;
+        animation-delay: 3s;
+    }
+
+    .floating-circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        animation: circle-pulse 4s ease-in-out infinite;
+    }
+
+    .circle-1 {
+        width: 120px;
+        height: 120px;
+        top: 60%;
+        right: 5%;
+        animation-delay: 0.5s;
+    }
+
+    .circle-2 {
+        width: 90px;
+        height: 90px;
+        bottom: 20%;
+        right: 25%;
+        animation-delay: 2.5s;
+    }
+
+    /* Interactive Particles */
+    .particles-field {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+    }
+
+    .particle-dot {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        animation: particle-rise 10s linear infinite;
+    }
+
+    .dot-1 {
+        left: 10%;
+        animation-delay: 0s;
+    }
+    .dot-2 {
+        left: 20%;
+        animation-delay: 1.5s;
+    }
+    .dot-3 {
+        left: 35%;
+        animation-delay: 3s;
+    }
+    .dot-4 {
+        left: 50%;
+        animation-delay: 4.5s;
+    }
+    .dot-5 {
+        left: 65%;
+        animation-delay: 6s;
+    }
+    .dot-6 {
+        left: 75%;
+        animation-delay: 7.5s;
+    }
+    .dot-7 {
+        left: 85%;
+        animation-delay: 9s;
+    }
+    .dot-8 {
+        left: 95%;
+        animation-delay: 1s;
+    }
+
+    /* 3D Logo Container */
+    .hero-logo-container {
+        perspective: 1000px;
+    }
+
+    .logo-3d-wrapper {
+        transform-style: preserve-3d;
+    }
+
+    .shield-container {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.7)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: shield-float 4s ease-in-out infinite;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .shield-icon {
+        font-size: 3.5rem;
+        color: #f0ad00;
+        animation: icon-glow 2s ease-in-out infinite alternate;
+        text-shadow: 0 0 20px rgba(240, 173, 0, 0.5);
+    }
+
+    .shield-ring {
+        position: absolute;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        animation: ring-rotate 8s linear infinite;
+       
+    }
+
+    .ring-1 {
+        width: 140px;
+        height: 140px;
+        animation-delay: 0s;
+        
+    }
+
+    .ring-2 {
+        width: 160px;
+        height: 160px;
+        animation-delay: -2s;
+        animation-direction: reverse;
+    }
+
+    .ring-3 {
+        width: 180px;
+        height: 180px;
+        animation-delay: -4s;
+    }
+
+    /* Main Title Styling */
+    .hero-main-title {
+        font-size: 4.5rem;
+        font-weight: 900;
+        line-height: 1;
+        margin: 0;
+        perspective: 1000px;
+    }
+
+    .title-word {
+        display: inline-block;
+        margin-right: 20px;
+        color: #fff;
+        
+        animation: word-float 3s ease-in-out infinite;
+    }
+
+    .word-1 {
+        animation-delay: 0.1s;
+    }
+    .word-2 {
+        animation-delay: 0.2s;
+    }
+    .word-3 {
+        animation-delay: 0.3s;
+    }
+    .word-4 {
+        animation-delay: 0.4s;
+    }
+    .word-5 {
+        animation-delay: 0.6s;
+    }
+    .word-6 {
+        animation-delay: 0.7s;
+    }
+
+    .title-word.emphasis {
+        font-size: 5rem;
+        background: linear-gradient(45deg, #fff, #f9f9f9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .title-word.dark-red {
+        color: red !important;
+        text-shadow:
+            4px 4px 0 #000000,
+            8px 8px 0 #333333,
+            12px 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Subtitle Styling */
+    .hero-subtitle-text {
+        font-size: 1.4rem;
+        color:black;
+        font-weight: 300;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+        animation: subtitle-fade 4s ease-in-out infinite;
+    }
+
+    /* Insurance Icons Grid */
+    .insurance-icons-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 30px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .insurance-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: icon-bounce 4s ease-in-out infinite;
+    }
+
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+    }
+
+    .icon-wrapper:hover {
+        transform: translateY(-5px) scale(1.1);
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon-wrapper i {
+        font-size: 1.8rem;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .insurance-icon span {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .icon-1 {
+        animation-delay: 0.1s;
+    }
+    .icon-2 {
+        animation-delay: 0.2s;
+    }
+    .icon-3 {
+        animation-delay: 0.3s;
+    }
+    .icon-4 {
+        animation-delay: 0.4s;
+    }
+    .icon-5 {
+        animation-delay: 0.5s;
+    }
+    .icon-6 {
+        animation-delay: 0.6s;
+    }
+
+    /* Modern Buttons */
+    .btn-3d-modern {
+        position: relative;
+        display: inline-block;
+        padding: 18px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        transform-style: preserve-3d;
+        border: none;
+    }
+
+    .btn-text {
+        position: relative;
+        z-index: 2;
+        transition: all 0.4s ease;
+    }
+
+    .btn-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: all 0.4s ease;
+        z-index: 1;
+    }
+
+    .btn-primary-modern {
+        color: #f0ad00;
+    }
+
+    .btn-primary-modern .btn-bg {
+        background: linear-gradient(135deg, #fff, #f8f9fa);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary-modern:hover {
+        transform: translateY(-3px);
+        color: #e0a800;
+    }
+
+    .btn-primary-modern:hover .btn-bg {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+
+    .btn-secondary-modern {
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-secondary-modern .btn-bg {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary-modern:hover {
+        transform: translateY(-3px);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-secondary-modern:hover .btn-bg {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator-modern {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 10;
+        animation: scroll-pulse 2s ease-in-out infinite;
+    }
+
+    .scroll-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .scroll-line {
+        width: 2px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.6);
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .scroll-line::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent, #fff, transparent);
+        animation: scroll-line-move 2s ease-in-out infinite;
+    }
+
+    /* Animations */
+    @keyframes cube-float {
+        0%,
+        100% {
+            transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+        }
+        33% {
+            transform: translateY(-20px) rotateX(15deg) rotateY(120deg);
+        }
+        66% {
+            transform: translateY(-10px) rotateX(-15deg) rotateY(240deg);
+        }
+    }
+
+    @keyframes polygon-rotate {
+        0% {
+            transform: rotate(0deg) scale(1);
+        }
+        50% {
+            transform: rotate(180deg) scale(1.1);
+        }
+        100% {
+            transform: rotate(360deg) scale(1);
+        }
+    }
+
+    @keyframes circle-pulse {
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.4;
+        }
+    }
+
+    @keyframes particle-rise {
+        0% {
+            transform: translateY(100vh) translateX(0px);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100px) translateX(50px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes shield-float {
+        0%,
+        100% {
+            transform: translateY(0px) rotateZ(0deg);
+        }
+        50% {
+            transform: translateY(-15px) rotateZ(5deg);
+        }
+    }
+
+    @keyframes icon-glow {
+        0% {
+            text-shadow: 0 0 20px rgba(240, 173, 0, 0.5);
+        }
+        100% {
+            text-shadow:
+                0 0 30px rgba(240, 173, 0, 0.8),
+                0 0 40px rgba(240, 173, 0, 0.3);
+        }
+    }
+
+    @keyframes ring-rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes word-float {
+        0%,
+        100% {
+            transform: perspective(600px) rotateX(15deg) translateY(0px);
+        }
+        50% {
+            transform: perspective(600px) rotateX(15deg) translateY(-8px);
+        }
+    }
+
+    @keyframes subtitle-fade {
+        0%,
+        100% {
+            opacity: 0.95;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes icon-bounce {
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @keyframes scroll-pulse {
+        0%,
+        100% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0px);
+        }
+        50% {
+            opacity: 0.7;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    }
+
+    @keyframes scroll-line-move {
+        0% {
+            transform: translateY(-100%);
+        }
+        100% {
+            transform: translateY(100%);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .insurance-icons-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .hero-main-title {
+            font-size: 3.5rem;
+        }
+
+        .title-word.emphasis {
+            font-size: 4rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-main-title {
+            font-size: 2.8rem;
+        }
+
+        .title-word.emphasis {
+            font-size: 3.2rem;
+        }
+
+        .title-word {
+            margin-right: 15px;
+        }
+
+        .hero-subtitle-text {
+            font-size: 1.2rem;
+        }
+
+        .insurance-icons-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .btn-3d-modern {
+            padding: 15px 30px;
+            font-size: 1rem;
+        }
+
+        .floating-cube,
+        .floating-polygon {
+            display: none;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-main-title {
+            font-size: 2.2rem;
+        }
+
+        .title-word.emphasis {
+            font-size: 2.6rem;
+        }
+
+        .insurance-icons-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .icon-wrapper {
+            width: 50px;
+            height: 50px;
+        }
+
+        .icon-wrapper i {
+            font-size: 1.3rem;
+        }
+
+        .insurance-icon span {
+            font-size: 0.8rem;
+        }
+
+        .hero-cta-section .btn-3d-modern {
+            display: block;
+            margin: 0 auto 15px;
+            text-align: center;
+        }
+    }
+</style>
 <!-- Why Choose Us Section -->
-<div class="container-fluid py-2 fade-in"style="background-color:#f9f9f9">
-  <div class="row align-items-center">
-    <h2 id="typing-text" class="display-4 fw-bold mb-4 typewriter">Why Choose Us.</h2>
-    <div class="col-md-5 text-center">
-      <img src="{{ url_for('static', filename='image/boy-image.avif') }}" alt="Why Choose Us" class="img-fluid rounded" />
+<div class="container-fluid py-2 fade-in my-3" style="background-color: #f9f9f9">
+    <div class="row align-items-center">
+        <h2 id="typing-text" class="display-4 fw-bold mb-4 typewriter">
+            Why Choose Us.
+        </h2>
+        <div class="col-md-5 text-center">
+            <img
+                src="{{ url_for('static', filename='image/boy-image.avif') }}"
+                alt="Why Choose Us"
+                class="img-fluid rounded"
+            />
+        </div>
+        <div class="col-md-7">
+            <div class="row g-4">
+                <div class="col-6 col-md-4">
+                    <div class="text-center p-3">
+                        <img
+                            src="{{ url_for('static', filename='image/clock-image.avif') }}"
+                            alt="Quick Claims"
+                            class="mb-3 icon-image"
+                        />
+                        <h5 class="fw-bold mb-2">Quick Claims, No Confusion</h5>
+                        <p class="text-muted small">
+                            We don't just settle claims– we solve problem. Fast
+                            fair and fuss-free
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="text-center p-3">
+                        <img
+                            src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}"
+                            alt="Transparent Pricing"
+                            class="mb-3 icon-image"
+                        />
+                        <h5 class="fw-bold mb-2">Transparent Pricing</h5>
+                        <p class="text-muted small">
+                            No hidden fees. No fine print tricks. Just honest
+                            protection at fair prices.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="text-center p-3">
+                        <img
+                            src="{{ url_for('static', filename='image/honestadvice.avif') }}"
+                            alt="Honest Advice"
+                            class="mb-3 icon-image"
+                        />
+                        <h5 class="fw-bold mb-2">Honest Advice</h5>
+                        <p class="text-muted small">
+                            No more confusing . No pushing unnecessary policies.
+                            Just clear, honest guidance with your best interest
+                            at heart.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="text-center p-3">
+                        <img
+                            src="{{ url_for('static', filename='image/realpeoplerealimage.avif') }}"
+                            alt="Real Support"
+                            class="mb-3 icon-image"
+                        />
+                        <h5 class="fw-bold mb-2">Real People, Real Support</h5>
+                        <p class="text-muted small">
+                            When you call us, You won't talk to bots–you'll
+                            speak to trained professionals who understand both
+                            insurance and empathy.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="text-center p-3">
+                        <img
+                            src="{{ url_for('static', filename='image/digitalconvinence.avif') }}"
+                            alt="Digital Convience"
+                            class="mb-3 icon-image"
+                        />
+                        <h5 class="fw-bold mb-2">Digital convinence</h5>
+                        <p class="text-muted small">
+                            Get insured online in minutes, with help just a
+                            phone call away.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="text-center p-3">
+                        <img
+                            src="{{ url_for('static', filename='image/freedomtochoose.avif') }}"
+                            alt="Freedom to Choose"
+                            class="mb-3 icon-image"
+                        />
+                        <h5 class="fw-bold mb-2">Freedom to Choose</h5>
+                        <p class="text-muted small">
+                            We partner with multiple trusted insurers so you get
+                            the freedom to compare, customize, and choose what
+                            fits your life, not the other way around.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-7">
-     
-      <div class="row g-4">
-        <div class="col-6 col-md-4">
-          <div class="text-center p-3">
-            <img src="{{ url_for('static', filename='image/clock-image.avif') }}" alt="Quick Claims" class="mb-3 icon-image" />
-            <h5 class="fw-bold mb-2">Quick Claims, No Confusion</h5>
-            <p class="text-muted small">We don't just settle claims– we solve problem. Fast fair and fuss-free</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="text-center p-3">
-            <img src="{{ url_for('static', filename='image/transparentpricingimage.avif') }}" alt="Transparent Pricing" class="mb-3 icon-image" />
-            <h5 class="fw-bold mb-2">Transparent Pricing</h5>
-            <p class="text-muted small">No hidden fees. No fine print tricks. Just honest protection at fair prices.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="text-center p-3">
-            <img src="{{ url_for('static', filename='image/honestadvice.avif') }}" alt="Honest Advice" class="mb-3 icon-image" />
-            <h5 class="fw-bold mb-2">Honest Advice</h5>
-            <p class="text-muted small">No more confusing . No pushing unnecessary policies. Just clear, honest guidance with your best interest at heart.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="text-center p-3">
-            <img src="{{ url_for('static', filename='image/realpeoplerealimage.avif') }}" alt="Real Support" class="mb-3 icon-image" />
-            <h5 class="fw-bold mb-2">Real People, Real Support</h5>
-            <p class="text-muted small">When you call us, You won't talk to bots–you'll speak to trained professionals who understand both insurance and empathy.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="text-center p-3">
-            <img src="{{ url_for('static', filename='image/digitalconvinence.avif') }}" alt="Digital Convience" class="mb-3 icon-image" />
-            <h5 class="fw-bold mb-2">Digital convinence</h5>
-            <p class="text-muted small">Get insured online in minutes, with help just a phone call away.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="text-center p-3">
-            <img src="{{ url_for('static', filename='image/freedomtochoose.avif') }}" alt="Freedom to Choose" class="mb-3 icon-image" />
-            <h5 class="fw-bold mb-2">Freedom to Choose</h5>
-            <p class="text-muted small">We partner with multiple trusted insurers so you get the freedom to compare, customize, and choose what fits your life, not the other way around.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="container py-5" id="services">
-  <h2 class="text-center display-4 fw-bold mb-5"><span class="typing-service">Our Services</span></h2>
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card h-100 border-0 shadow-sm">
-        <div class="card-body text-center">
-          <img src="{{ url_for('static', filename='image/buynewpolicy.avif') }}" alt="Buy new policy" class="card-img-top rounded-circle mb-3 service-card-img" />
-          <h4 class="card-title fw-bold"><u>Buy new policy</u></h4>
-          <p class="card-text text-muted">Buying insurance doesn't have to be boring. Let's simplify your policy purchase with expert tips and zero jargon.</p>
+    <h2 class="text-center display-4 fw-bold mb-5">
+        <span class="typing-service">Our Services</span>
+    </h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <img
+                        src="{{ url_for('static', filename='image/buynewpolicy.avif') }}"
+                        alt="Buy new policy"
+                        class="card-img-top rounded-circle mb-3 service-card-img"
+                    />
+                    <h4 class="card-title fw-bold"><u>Buy new policy</u></h4>
+                    <p class="card-text text-muted">
+                        Buying insurance doesn't have to be boring. Let's
+                        simplify your policy purchase with expert tips and zero
+                        jargon.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card h-100 border-0 shadow-sm">
-        <div class="card-body text-center">
-          <img src="{{ url_for('static', filename='image/renewpolicy.avif') }}" alt="Renew policy" class="card-img-top rounded-circle mb-3 service-card-img" />
-          <h4 class="card-title fw-bold"><u>Renew policy</u></h4>
-          <p class="card-text text-muted">No queues. No chaos. Just quick renewals. Trust us to keep your policy active with zero hassle.</p>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <img
+                        src="{{ url_for('static', filename='image/renewpolicy.avif') }}"
+                        alt="Renew policy"
+                        class="card-img-top rounded-circle mb-3 service-card-img"
+                    />
+                    <h4 class="card-title fw-bold"><u>Renew policy</u></h4>
+                    <p class="card-text text-muted">
+                        No queues. No chaos. Just quick renewals. Trust us to
+                        keep your policy active with zero hassle.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card h-100 border-0 shadow-sm">
-        <div class="card-body text-center">
-          <img src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}" alt="Underwriting & claim" class="card-img-top rounded-circle mb-3 service-card-img" />
-          <h4 class="card-title fw-bold"><u>Underwriting & claim</u></h4>
-          <p class="card-text text-muted">Underwriting and claims made simple. Get clear insights, quick support, and no complicated terms. Just the coverage you need, stress-free.</p>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <img
+                        src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}"
+                        alt="Underwriting & claim"
+                        class="card-img-top rounded-circle mb-3 service-card-img"
+                    />
+                    <h4 class="card-title fw-bold">
+                        <u>Underwriting & claim</u>
+                    </h4>
+                    <p class="card-text text-muted">
+                        Underwriting and claims made simple. Get clear insights,
+                        quick support, and no complicated terms. Just the
+                        coverage you need, stress-free.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="container-fluid py-5 text-center">
-  <h3 class="display-6 fw-bold mb-4">Fast claims. Firm support. Always protected.</h3>
-  <div class="row justify-content-center g-3 mt-4">
-    <div class="col-md-3 col-6">
-      <div class="card h-100 border-0 shadow-sm bg-warning text-dark animate-fade-in">
-        <div class="card-body p-4">
-          <h5 class="card-title fw-bold"><u>Motor</u></h5>
-          <p class="card-text">One crash can cost you lakhs,<br>Drive stress-free with coverage that saves your wallet!</p>
+    <h3 class="display-6 fw-bold mb-4">
+        Fast claims. Firm support. Always protected.
+    </h3>
+    <div class="row justify-content-center g-3 mt-4">
+        <div class="col-md-3 col-6">
+            <div
+                class="card h-100 border-0 shadow-sm bg-warning text-dark animate-fade-in"
+            >
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold"><u>Motor</u></h5>
+                    <p class="card-text">
+                        One crash can cost you lakhs,<br />Drive stress-free
+                        with coverage that saves your wallet!
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-3 col-6">
-      <div class="card h-100 border-0 shadow-sm bg-primary text-white animate-fade-in delay-1">
-        <div class="card-body p-4">
-          <h5 class="card-title fw-bold"><u>Health</u></h5>
-          <p class="card-text">Hospital bills can drain you,<br>Secure your health & wealth in one simple step!</p>
+        <div class="col-md-3 col-6">
+            <div
+                class="card h-100 border-0 shadow-sm bg-primary text-white animate-fade-in delay-1"
+            >
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold"><u>Health</u></h5>
+                    <p class="card-text">
+                        Hospital bills can drain you,<br />Secure your health &
+                        wealth in one simple step!
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-3 col-6">
-      <div class="card h-100 border-0 shadow-sm bg-orange text-dark animate-fade-in delay-2">
-        <div class="card-body p-4">
-          <h5 class="card-title fw-bold"><u>Fire & Burglary</u></h5>
-          <p class="card-text">Protect your home & shop from fire and theft before it's too late, Don't risk it!</p>
+        <div class="col-md-3 col-6">
+            <div
+                class="card h-100 border-0 shadow-sm bg-orange text-dark animate-fade-in delay-2"
+            >
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold"><u>Fire & Burglary</u></h5>
+                    <p class="card-text">
+                        Protect your home & shop from fire and theft before it's
+                        too late, Don't risk it!
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-3 col-6">
-      <div class="card h-100 border-0 shadow-sm bg-success text-dark animate-fade-in delay-3">
-        <div class="card-body p-4">
-          <h5 class="card-title fw-bold"><u>Travel</u></h5>
-          <p class="card-text">Flight delayed? Luggage lost?<br>Get paid instead of panicking, Insure your next trip now!</p>
+        <div class="col-md-3 col-6">
+            <div
+                class="card h-100 border-0 shadow-sm bg-success text-dark animate-fade-in delay-3"
+            >
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold"><u>Travel</u></h5>
+                    <p class="card-text">
+                        Flight delayed? Luggage lost?<br />Get paid instead of
+                        panicking, Insure your next trip now!
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- New Section: The faith that Fuels us -->
 <div class="faith-section">
-  <div class="cube">
-    <div class="face front">The faith that<br>Fuels us <br>50,000+ <br>Happy Customers <br>ans still <br> counting... <br>Truested Protection <br> Insurance Excellence</div>
-    <div class="face back">The faith that<br>Fuels us <br>50,000+ <br>Happy Customers <br>ans still <br> counting... <br>Truested Protection <br> Insurance Excellence</div>
-    <div class="face right">The faith that<br>Fuels us <br>50,000+ <br>Happy Customers <br>ans still <br> counting... <br>Truested Protection <br> Insurance Excellence</div>
-    <div class="face left">The faith that<br>Fuels us <br>50,000+ <br>Happy Customers <br>ans still <br> counting... <br>Truested Protection <br> Insurance Excellence</div>
-    <div class="face top">The faith that<br>Fuels us <br>50,000+ <br>Happy Customers <br>ans still <br> counting... <br>Truested Protection <br> Insurance Excellence</div>
-    <div class="face bottom">The faith that<br>Fuels us <br>50,000+ <br>Happy Customers <br>ans still <br> counting... <br>Truested Protection <br> Insurance Excellence</div>
-  </div>
+    <div class="cube">
+        <div class="face front">
+            The faith that<br />Fuels us <br />50,000+ <br />Happy Customers
+            <br />ans still <br />
+            counting... <br />Truested Protection <br />
+            Insurance Excellence
+        </div>
+        <div class="face back">
+            The faith that<br />Fuels us <br />50,000+ <br />Happy Customers
+            <br />ans still <br />
+            counting... <br />Truested Protection <br />
+            Insurance Excellence
+        </div>
+        <div class="face right">
+            The faith that<br />Fuels us <br />50,000+ <br />Happy Customers
+            <br />ans still <br />
+            counting... <br />Truested Protection <br />
+            Insurance Excellence
+        </div>
+        <div class="face left">
+            The faith that<br />Fuels us <br />50,000+ <br />Happy Customers
+            <br />ans still <br />
+            counting... <br />Truested Protection <br />
+            Insurance Excellence
+        </div>
+        <div class="face top">
+            The faith that<br />Fuels us <br />50,000+ <br />Happy Customers
+            <br />ans still <br />
+            counting... <br />Truested Protection <br />
+            Insurance Excellence
+        </div>
+        <div class="face bottom">
+            The faith that<br />Fuels us <br />50,000+ <br />Happy Customers
+            <br />ans still <br />
+            counting... <br />Truested Protection <br />
+            Insurance Excellence
+        </div>
+    </div>
 </div>
 
 <div class="container-fluid py-5 fade-in">
-  <h2 class="text-center display-4 fw-bold mb-4">Our Service Partners</h2>
-  <div class="row justify-content-center g-3 partners-logos">
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/unitedindia.avif') }}" alt="United India" class="img-fluid" style="max-width: 80px;" />
+    <h2 class="text-center display-4 fw-bold mb-4">Our Service Partners</h2>
+    <div class="row justify-content-center g-3 partners-logos">
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/unitedindia.avif') }}"
+                alt="United India"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/tataagi.avif') }}"
+                alt="Tata AIG"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/blueroundlogo.avif') }}"
+                alt="Oriental Insurance"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/bajajlogo.avif') }}"
+                alt="Bajaj Allianz"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/hdfclogo.avif') }}"
+                alt="HDFC ERGO"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/libartylogo.avif') }}"
+                alt="Liberty Insurance"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/magmalogo.avif') }}"
+                alt="Magma HDI"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/icicilogo.avif') }}"
+                alt="ICICI Lombard"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/iffco.jpeg') }}"
+                alt="IFFCO Tokio"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/relincelogo.avif') }}"
+                alt="Reliance General Insurance"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}"
+                alt="Royal Sundaram"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/univercellogo.avif') }}"
+                alt="Universal Sompo"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}"
+                alt="SBI General Insurance"
+                class="img-fluid"
+                style="max-width: 100px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/niva.avif') }}"
+                alt="Niva"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/Go-Digit.webp') }}"
+                alt="Go-Digit"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/cholams.avif') }}"
+                alt="Cholams"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/hdfcergo.png') }}"
+                alt="HDFC ERGO"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/oriental.png') }}"
+                alt="Oriental"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
+        <div
+            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
+        >
+            <img
+                src="{{ url_for('static', filename='image/newindia.png') }}"
+                alt="New India"
+                class="img-fluid"
+                style="max-width: 80px"
+            />
+        </div>
     </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/tataagi.avif') }}" alt="Tata AIG" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/blueroundlogo.avif') }}" alt="Oriental Insurance" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/bajajlogo.avif') }}" alt="Bajaj Allianz" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/hdfclogo.avif') }}" alt="HDFC ERGO" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/libartylogo.avif') }}" alt="Liberty Insurance" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/magmalogo.avif') }}" alt="Magma HDI" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/icicilogo.avif') }}" alt="ICICI Lombard" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/iffco.jpeg') }}" alt="IFFCO Tokio" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/relincelogo.avif') }}" alt="Reliance General Insurance" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}" alt="Royal Sundaram" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/univercellogo.avif') }}" alt="Universal Sompo" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}" alt="SBI General Insurance" class="img-fluid" style="max-width: 100px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/niva.avif') }}" alt="Niva" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/Go-Digit.webp') }}" alt="Go-Digit" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/cholams.avif') }}" alt="Cholams" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/hdfcergo.png') }}" alt="HDFC ERGO" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/oriental.png') }}" alt="Oriental" class="img-fluid" style="max-width: 80px;" />
-    </div>
-    <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center">
-      <img src="{{ url_for('static', filename='image/newindia.png') }}" alt="New India" class="img-fluid" style="max-width: 80px;" />
-    </div>
-
-  </div>
-  <p class="text-center fw-bold mt-3">Different Brokers</p>
+    <p class="text-center fw-bold mt-3">Different Brokers</p>
 </div>
 
 <div class="text-center mt-1">
-  <img src="{{ url_for('static', filename='image/publiclogo.avif') }}" alt="Faith Image" class="img-fluid d-inline-block" />
+    <img
+        src="{{ url_for('static', filename='image/publiclogo.avif') }}"
+        alt="Faith Image"
+        class="img-fluid d-inline-block"
+    />
 </div>
-<br>
+<br />
 <div class="container-fluid py-5">
-  <div class="row align-items-center">
-    <h2 class="fw-bold mb-4 text-center display-4">Connect With Us</h2>
-    <div class="col-md-6 text-center mb-4 mb-md-0">
-      <img src="{{ url_for('static', filename='image/contactwithusimage.avif') }}" alt="Connect With Us" class="img-fluid rounded contact-image" />
+    <div class="row align-items-center">
+        <h2 class="fw-bold mb-4 text-center display-4">Connect With Us</h2>
+        <div class="col-md-6 text-center mb-4 mb-md-0">
+            <img
+                src="{{ url_for('static', filename='image/contactwithusimage.avif') }}"
+                alt="Connect With Us"
+                class="img-fluid rounded contact-image"
+            />
+        </div>
+        <div class="col-md-6">
+            <form id="contactForm" class="p-4 bg-light rounded shadow-sm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label fw-bold"
+                            >First Name*</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="firstName"
+                            name="firstName"
+                            pattern="[A-Za-z\s]+"
+                            title="Only letters and spaces allowed"
+                            required
+                        />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label fw-bold"
+                            >Last Name*</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="lastName"
+                            name="lastName"
+                            pattern="[A-Za-z\s]+"
+                            title="Only letters and spaces allowed"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label fw-bold"
+                            >Phone*</label
+                        >
+                        <input
+                            type="tel"
+                            class="form-control"
+                            id="phone"
+                            name="phone"
+                            pattern="[0-9]+"
+                            title="Only numbers allowed"
+                            required
+                        />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label fw-bold"
+                            >Email*</label
+                        >
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            required
+                        />
+                    </div>
+                </div>
+                <fieldset class="mb-3">
+                    <legend class="col-form-label pt-0">I Want To*</legend>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="wantTo"
+                            id="buyPolicy"
+                            value="Buy policy"
+                            required
+                            style="
+                                border: 1px solid #000;
+                                width: 20px;
+                                height: 20px;
+                            "
+                        />
+                        <label class="form-check-label" for="buyPolicy"
+                            >Buy policy</label
+                        >
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="wantTo"
+                            id="renewPolicy"
+                            value="Renew Policy"
+                            style="
+                                border: 1px solid #000;
+                                width: 20px;
+                                height: 20px;
+                            "
+                        />
+                        <label class="form-check-label" for="renewPolicy"
+                            >Renew Policy</label
+                        >
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="wantTo"
+                            id="underwriteClaim"
+                            value="Underwrite Claim"
+                            style="
+                                border: 1px solid #000;
+                                width: 20px;
+                                height: 20px;
+                            "
+                        />
+                        <label class="form-check-label" for="underwriteClaim"
+                            >Underwrite Claim</label
+                        >
+                    </div>
+                </fieldset>
+                <div class="mb-3">
+                    <label for="insuranceType" class="form-label"
+                        >Insurance Type*</label
+                    >
+                    <select
+                        class="form-select"
+                        id="insuranceType"
+                        name="insuranceType"
+                        required
+                    >
+                        <option value="" disabled selected>
+                            Select Insurance Type
+                        </option>
+                        <option value="Health">Health</option>
+                        <option value="Motor">Motor</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Fire & Burglary">Fire & Burglary</option>
+                        <option value="Marine & cargo Insurance">
+                            Marine & cargo Insurance
+                        </option>
+                        <option value="Workmen Compensation">
+                            Workmen Compensation
+                        </option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-dark btn-lg w-100">
+                    Submit
+                </button>
+            </form>
+            <div
+                id="form-message"
+                style="
+                    text-align: center;
+                    font-weight: bold;
+                    margin-top: 15px;
+                    color: green;
+                "
+            ></div>
+        </div>
     </div>
-    <div class="col-md-6">
-      <form id="contactForm" class="p-4 bg-light rounded shadow-sm">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="firstName" class="form-label fw-bold">First Name*</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
-          </div>
-          <div class="col-md-6">
-            <label for="lastName" class="form-label fw-bold">Last Name*</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required />
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="phone" class="form-label fw-bold">Phone*</label>
-            <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]+" title="Only numbers allowed" required />
-          </div>
-          <div class="col-md-6">
-            <label for="email" class="form-label fw-bold">Email*</label>
-            <input type="email" class="form-control" id="email" name="email" required />
-          </div>
-        </div>
-        <fieldset class="mb-3">
-          <legend class="col-form-label pt-0">I Want To*</legend>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="wantTo" id="buyPolicy" value="Buy policy" required style="border: 1px solid #000; width: 20px; height: 20px;" />
-            <label class="form-check-label" for="buyPolicy">Buy policy</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="wantTo" id="renewPolicy" value="Renew Policy" style="border: 1px solid #000; width: 20px; height: 20px;" />
-            <label class="form-check-label" for="renewPolicy">Renew Policy</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="wantTo" id="underwriteClaim" value="Underwrite Claim" style="border: 1px solid #000; width: 20px; height: 20px;" />
-            <label class="form-check-label" for="underwriteClaim">Underwrite Claim</label>
-          </div>
-        </fieldset>
-        <div class="mb-3">
-          <label for="insuranceType" class="form-label">Insurance Type*</label>
-          <select class="form-select" id="insuranceType" name="insuranceType" required>
-            <option value="" disabled selected>Select Insurance Type</option>
-            <option value="Health">Health</option>
-            <option value="Motor">Motor</option>
-            <option value="Travel">Travel</option>
-            <option value="Fire & Burglary">Fire & Burglary</option>
-            <option value="Marine & cargo Insurance">Marine & cargo Insurance</option>
-            <option value="Workmen Compensation">Workmen Compensation</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-dark btn-lg w-100">Submit</button>
-      </form>
-      <div id="form-message" style="text-align:center; font-weight:bold; margin-top: 15px; color: green;"></div>
-    </div>
-  </div>
 </div>
 
 <!-- Testimonial Section -->
-<div class="container-fluid py-5" style="background: #f0ad00; color: #000; border-radius: 2rem;">
-  <div class="container">
-    <h2 class="text-center display-4 fw-bold mb-4" style="color: #000;">What our customers say</h2>
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="text-center position-relative" style="min-height: 300px;">
-          <div id="testimonial-name" class="fw-bold text-danger display-6 mb-3 testimonial-name">Naveen Chandrakar</div>
-          <div id="testimonial-text" class="lead mb-4 testimonial-text">
-            text 1
-          </div>
-          <div class="position-absolute top-50 start-0 translate-middle-y d-none d-md-block" style="cursor: pointer;">
-            <span id="arrow-left" class="fs-2 arrow">&#8592;</span>
-          </div>
-          <div class="position-absolute top-50 end-0 translate-middle-y d-none d-md-block" style="cursor: pointer;">
-            <span id="arrow-right" class="fs-2 arrow">&#8594;</span>
-          </div>
-          <div id="dots" class="d-flex justify-content-center gap-2 mt-4">
-            <div class="dot active" data-index="0"></div>
-            <div class="dot" data-index="1"></div>
-            <div class="dot" data-index="2"></div>
-            <div class="dot" data-index="3"></div>
-          </div>
+<div
+    class="container-fluid py-5"
+    style="background: #f0ad00; color: #000; border-radius: 2rem"
+>
+    <div class="container">
+        <h2 class="text-center display-4 fw-bold mb-4" style="color: #000">
+            What our customers say
+        </h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div
+                    class="text-center position-relative"
+                    style="min-height: 300px"
+                >
+                    <div
+                        id="testimonial-name"
+                        class="fw-bold text-danger display-6 mb-3 testimonial-name"
+                    >
+                        Naveen Chandrakar
+                    </div>
+                    <div
+                        id="testimonial-text"
+                        class="lead mb-4 testimonial-text"
+                    >
+                        text 1
+                    </div>
+                    <div
+                        class="position-absolute top-50 start-0 translate-middle-y d-none d-md-block"
+                        style="cursor: pointer"
+                    >
+                        <span id="arrow-left" class="fs-2 arrow">&#8592;</span>
+                    </div>
+                    <div
+                        class="position-absolute top-50 end-0 translate-middle-y d-none d-md-block"
+                        style="cursor: pointer"
+                    >
+                        <span id="arrow-right" class="fs-2 arrow">&#8594;</span>
+                    </div>
+                    <div
+                        id="dots"
+                        class="d-flex justify-content-center gap-2 mt-4"
+                    >
+                        <div class="dot active" data-index="0"></div>
+                        <div class="dot" data-index="1"></div>
+                        <div class="dot" data-index="2"></div>
+                        <div class="dot" data-index="3"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="container-fluid py-5">
-  <h2 class="text-center display-4 fw-bold mb-5">Frequently asked questions</h2>
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <div class="accordion" id="faqAccordion">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-              What is the policy period in general insurance?
-            </button>
-          </h2>
-          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Usually 1 year, but multi-year options are available in motor and health insurance.
+    <h2 class="text-center display-4 fw-bold mb-5">
+        Frequently asked questions
+    </h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faq1"
+                        >
+                            What is the policy period in general insurance?
+                        </button>
+                    </h2>
+                    <div
+                        id="faq1"
+                        class="accordion-collapse collapse show"
+                        data-bs-parent="#faqAccordion"
+                    >
+                        <div class="accordion-body">
+                            Usually 1 year, but multi-year options are available
+                            in motor and health insurance.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faq2"
+                        >
+                            Does general insurance offer tax benefits?
+                        </button>
+                    </h2>
+                    <div
+                        id="faq2"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#faqAccordion"
+                    >
+                        <div class="accordion-body">
+                            Yes, health insurance premiums are tax-deductible
+                            under Section 80D.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faq3"
+                        >
+                            How is premium decided?
+                        </button>
+                    </h2>
+                    <div
+                        id="faq3"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#faqAccordion"
+                    >
+                        <div class="accordion-body">
+                            Depends on age, sum insured, policy type, coverage,
+                            and risk factors.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faq4"
+                        >
+                            Why is third-party motor insurance mandatory?
+                        </button>
+                    </h2>
+                    <div
+                        id="faq4"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#faqAccordion"
+                    >
+                        <div class="accordion-body">
+                            It protects third parties from financial loss in
+                            case of an accident caused by the insured vehicle.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faq5"
+                        >
+                            Do pre-existing diseases get covered?
+                        </button>
+                    </h2>
+                    <div
+                        id="faq5"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#faqAccordion"
+                    >
+                        <div class="accordion-body">
+                            Yes, but usually after a waiting period of 1–4 years
+                            in health insurance.
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-              Does general insurance offer tax benefits?
-            </button>
-          </h2>
-          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Yes, health insurance premiums are tax-deductible under Section 80D.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-              How is premium decided?
-            </button>
-          </h2>
-          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Depends on age, sum insured, policy type, coverage, and risk factors.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-              Why is third-party motor insurance mandatory?
-            </button>
-          </h2>
-          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              It protects third parties from financial loss in case of an accident caused by the insured vehicle.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-              Do pre-existing diseases get covered?
-            </button>
-          </h2>
-          <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Yes, but usually after a waiting period of 1–4 years in health insurance.
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <script>
-   document.getElementById('contactForm').addEventListener('submit', function(event) {
-     event.preventDefault();
+    document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (event) {
+            event.preventDefault();
 
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const wantTo = document.querySelector('input[name="wantTo"]:checked')?.value;
-    const insuranceType = document.getElementById('insuranceType').value;
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const phone = document.getElementById("phone").value;
+            const email = document.getElementById("email").value;
+            const wantTo = document.querySelector(
+                'input[name="wantTo"]:checked',
+            )?.value;
+            const insuranceType =
+                document.getElementById("insuranceType").value;
 
-    fetch('/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        to: "sparksolutionfreelancing@gmail.com",
-        name: firstName + " " + lastName,
-        email: email,
-        subject: wantTo + " - " + insuranceType,
-        message: `Phone: ${phone}\n\nInsurance Type: ${insuranceType}\n\nMessage: ${wantTo}`
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.message) {
-        document.getElementById('form-message').textContent = data.message;
-        document.getElementById('contactForm').reset();
-      } else if (data.error) {
-        document.getElementById('form-message').textContent = 'Error: ' + data.error;
-      }
-    })
-    .catch(error => {
-      document.getElementById('form-message').textContent = 'Error: ' + error;
-    });
-  });
+            fetch("/send-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    to: "sparksolutionfreelancing@gmail.com",
+                    name: firstName + " " + lastName,
+                    email: email,
+                    subject: wantTo + " - " + insuranceType,
+                    message: `Phone: ${phone}\n\nInsurance Type: ${insuranceType}\n\nMessage: ${wantTo}`,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.message) {
+                        document.getElementById("form-message").textContent =
+                            data.message;
+                        document.getElementById("contactForm").reset();
+                    } else if (data.error) {
+                        document.getElementById("form-message").textContent =
+                            "Error: " + data.error;
+                    }
+                })
+                .catch((error) => {
+                    document.getElementById("form-message").textContent =
+                        "Error: " + error;
+                });
+        });
 </script>
 
 <script>
-  const testimonials = [
-    { name: "Naveen Chandrakar", text: "Excellent service! They made getting insurance so easy and stress-free. Highly recommend!" },
-    { name: "Priya Sharma", text: "Fast claims process and great customer support. Truly reliable insurance partners." },
-    { name: "Rajesh Kumar", text: "Transparent pricing and honest advice. No hidden fees, just straightforward insurance." },
-    { name: "Anita Patel", text: "Professional team that understands your needs. Renewed my policy without any hassle." }
-  ];
+    const testimonials = [
+        {
+            name: "Naveen Chandrakar",
+            text: "Excellent service! They made getting insurance so easy and stress-free. Highly recommend!",
+        },
+        {
+            name: "Priya Sharma",
+            text: "Fast claims process and great customer support. Truly reliable insurance partners.",
+        },
+        {
+            name: "Rajesh Kumar",
+            text: "Transparent pricing and honest advice. No hidden fees, just straightforward insurance.",
+        },
+        {
+            name: "Anita Patel",
+            text: "Professional team that understands your needs. Renewed my policy without any hassle.",
+        },
+    ];
 
-  let currentIndex = 0;
+    let currentIndex = 0;
 
-  function updateTestimonial() {
-    document.getElementById('testimonial-name').textContent = testimonials[currentIndex].name;
-    document.getElementById('testimonial-text').textContent = testimonials[currentIndex].text;
-    document.querySelectorAll('.dot').forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentIndex);
+    function updateTestimonial() {
+        document.getElementById("testimonial-name").textContent =
+            testimonials[currentIndex].name;
+        document.getElementById("testimonial-text").textContent =
+            testimonials[currentIndex].text;
+        document.querySelectorAll(".dot").forEach((dot, index) => {
+            dot.classList.toggle("active", index === currentIndex);
+        });
+    }
+
+    document.getElementById("arrow-left").addEventListener("click", () => {
+        currentIndex =
+            (currentIndex - 1 + testimonials.length) % testimonials.length;
+        updateTestimonial();
     });
-  }
 
-  document.getElementById('arrow-left').addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
-    updateTestimonial();
-  });
-
-  document.getElementById('arrow-right').addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % testimonials.length;
-    updateTestimonial();
-  });
-
-  document.querySelectorAll('.dot').forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      currentIndex = index;
-      updateTestimonial();
+    document.getElementById("arrow-right").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        updateTestimonial();
     });
-  });
 
-  // Initialize
-  updateTestimonial();
+    document.querySelectorAll(".dot").forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+            currentIndex = index;
+            updateTestimonial();
+        });
+    });
+
+    // Initialize
+    updateTestimonial();
 </script>
-
 
 {% endblock %}
