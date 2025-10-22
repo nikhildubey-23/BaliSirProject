@@ -39,7 +39,7 @@
     align-items: center;
     gap: 1rem;
     box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
-    cursor: default;
+    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
@@ -95,28 +95,28 @@
     <img src="{{ url_for('static', filename='image/contactwithusimage.avif') }}" alt="Contact Illustration" />
   </div>
   <div class="contact-section-right">
-    <div class="contact-box">
+    <div class="contact-box" onclick="window.open('https://wa.me/918462001409', '_blank')">
       <img src="{{ url_for('static', filename='image/wh1.avif') }}" alt="Whatsapp" />
       <div class="contact-info">
         <strong>Whatsapp</strong>
         <span>+91 84620-01409</span>
       </div>
     </div>
-    <div class="contact-box">
+    <div class="contact-box" onclick="window.open('mailto:Support@bimawithbali.com', '_blank')">
       <img src="{{ url_for('static', filename='image/em1.avif') }}" alt="Email" />
       <div class="contact-info">
         <strong>Email</strong>
         <span>Support@bimawithbali.com</span>
       </div>
     </div>
-    <div class="contact-box">
+    <div class="contact-box" onclick="window.open('tel:+918462001409', '_blank')">
       <img src="{{ url_for('static', filename='image/su1.avif') }}" alt="24/7 Support" />
       <div class="contact-info">
         <strong>24/7 support</strong>
         <span>+91 84620-01409</span>
       </div>
     </div>
-    <div class="contact-box">
+    <div class="contact-box" onclick="window.open('tel:+918462001409', '_blank')">
       <img src="{{ url_for('static', filename='image/bu1.avif') }}" alt="Buy/Renew Policy" />
       <div class="contact-info">
         <strong>Buy/Renew policy</strong>
