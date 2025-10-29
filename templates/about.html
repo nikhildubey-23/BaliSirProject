@@ -335,7 +335,7 @@
   .team-images-container {
     display: flex;
     gap: 2rem;
-    width: calc(200px * 14 + 2rem * 13);
+    width: calc(200px * 20 + 2rem * 19);
     margin: 0 auto;
     overflow: hidden;
     position: relative;
@@ -385,7 +385,7 @@
   /* Mobile: Continuous Scrolling Animation */
   @media (max-width: 768px) {
     .team-images-container {
-      width: calc(300px * 14 + 2rem * 13);
+      width: calc(300px * 20 + 2rem * 19);
       animation: scrollLeft 120s linear infinite;
     }
 
@@ -397,7 +397,7 @@
 
   @media (max-width: 480px) {
     .team-images-container {
-      width: calc(260px * 14 + 2rem * 13);
+      width: calc(260px * 20 + 2rem * 19);
     }
 
     .team-image {
@@ -1244,6 +1244,8 @@
       <img src="/static/image/imgr5.png" alt="Team member 5" class="team-image" data-index="4" />
       <img src="/static/image/imgr6.png" alt="Team member 6" class="team-image" data-index="5" />
       <img src="/static/image/imgr7.png" alt="Team member 7" class="team-image" data-index="6" />
+     
+      
       <!-- Duplicate for continuous scroll -->
       <img src="/static/image/imgr1.png" alt="Team member 1" class="team-image" />
       <img src="/static/image/myimg.png" alt="Team member 2" class="team-image" />
@@ -1252,6 +1254,8 @@
       <img src="/static/image/imgr5.png" alt="Team member 5" class="team-image" />
       <img src="/static/image/imgr6.png" alt="Team member 6" class="team-image" />
       <img src="/static/image/imgr7.png" alt="Team member 7" class="team-image" />
+      <a href="{{ url_for('career') }}"><img src="/static/image/join.png" alt="Team member 8" class="team-image" /></a>
+
     </div>
 
 
