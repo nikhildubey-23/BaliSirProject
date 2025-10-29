@@ -1,13 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
 
+<style>
+@media (max-width: 767px) {
+  .miscellaneous-section section {
+    flex-direction: column !important;
+  }
+  .text-content {
+    order: 1;
+    flex: 1 1 227px !important;
+  }
+  .image-content {
+    order: 2;
+    flex: 1 1 227px !important;
+  }
+  .miscellaneous-section h2 {
+    font-size: 1.2rem !important;
+    text-align:center;
+  }
+  .miscellaneous-section p {
+    font-size: 1rem !important;
+   
+  }
+}
+</style>
+
 <section class="miscellaneous-section" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
   <h1 style="font-weight: bold; font-size: 3rem; color: black; text-align: center; margin-bottom: 2rem;">
     Miscellaneous <span style="color:#f4b41a">Insurance</span> Options
   </h1>
 
   <section class="professional-indemnity-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Professional <span style="color:black">Indemnity Insurance</span>
       </h2>
@@ -18,16 +42,16 @@
         Because professionals deserve protection too.
       </p>
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/pi.jpg') }}" alt="Professional Indemnity Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
   </section>
 
   <section class="commercial-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/ci.jpeg') }}" alt="Commercial Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Commercial <span style="color:black">Insurance</span>
       </h2>
@@ -41,7 +65,7 @@
   </section>
 
   <section class="home-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Home <span style="color:black">Insurance</span>
       </h2>
@@ -52,16 +76,16 @@
         Because every home deserves protection, just like the people who live in it.
       </p>
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/hi.jpg') }}" alt="Home Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
   </section>
 
   <section class="micro-rural-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/mr.jpg') }}" alt="Micro and Rural Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Micro <span style="color:black">and Rural Insurance</span>
       </h2>
@@ -75,7 +99,7 @@
   </section>
 
   <section class="gun-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Gun <span style="color:black">Insurance</span>
       </h2>
@@ -86,16 +110,16 @@
         Because responsible ownership deserves trusted protection.
       </p>
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/gun.jpg') }}" alt="Gun Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
   </section>
 
   <section class="director-liability-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/d.jpg') }}" alt="Director and Key Personnel Liability Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Director <span style="color:black">and Key Personnel Liability Insurance</span>
       </h2>
@@ -108,7 +132,7 @@
   </section>
 
   <section class="cyber-kavach-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Cyber <span style="color:black">Kavach Insurance</span>
       </h2>
@@ -119,16 +143,16 @@
         Because online safety deserves real-world protection.
       </p>
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/cyber.jpg') }}" alt="Cyber Kavach Insurance Illustration" style="width: 100%; height: auto; max-width: 500px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
   </section>
 
   <section class="cradle-care-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
-    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+    <div class="image-content" style="flex: 1 1 300px; min-width: 280px; text-align: center;">
       <img src="{{ url_for('static', filename='image/credel.jpg') }}" alt="Cradle Care Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
     </div>
-    <div style="flex: 1 1 300px; min-width: 280px;">
+    <div class="text-content" style="flex: 1 1 300px; min-width: 280px;">
       <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
         Cradle <span style="color:black">Care Insurance</span>
       </h2>
