@@ -4,8 +4,8 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-6 text-center text-md-start">
-        <h2 class="renewal-heading fw-bold display-4">
-          “Secure your tomorrow renew with <em>Bima with Bali</em> and keep peace of mind just a click away”
+        <h2 class="renewal-heading" style="font-weight:bold;font-size:3.5rem">
+          “Secure your tomorrow renew with <em style="color:#f0ad00">Bima with Bali</em> and keep peace of mind just a click away”
         </h2>
       </div>
       <div class="col-md-6 text-center">
@@ -38,7 +38,6 @@
           <input type="number" class="form-control" id="age" required>
         </div>
 
-
         <div class="col-md-6">
           <label for="insuranceType" class="form-label">Insurance Type*</label>
           <select class="form-select" id="insuranceType" required>
@@ -52,6 +51,12 @@
             <option value="fire">Fire & Burglary</option>
             <option value="others">Others</option>
           </select>
+        </div>
+
+        <!-- Aadhaar Field - shown after insurance type selection -->
+        <div class="col-md-6" id="aadhaarContainer" style="display: none;">
+          <label for="aadhaar" class="form-label">Aadhaar Number*</label>
+          <input type="text" class="form-control" id="aadhaar" pattern="[0-9]{12}" maxlength="12" required placeholder="Enter 12-digit Aadhaar number">
         </div>
 
         <!-- Dynamic Fields -->
@@ -214,8 +219,14 @@
     const selectedType = this.value;
     const groups = document.querySelectorAll('.dynamic-group');
     groups.forEach(group => group.style.display = 'none');
+
+    // Show Aadhaar field when insurance type is selected
+    const aadhaarContainer = document.getElementById('aadhaarContainer');
     if (selectedType) {
+      aadhaarContainer.style.display = 'block';
       document.getElementById(selectedType + 'Fields').style.display = 'block';
+    } else {
+      aadhaarContainer.style.display = 'none';
     }
   });
 </script>

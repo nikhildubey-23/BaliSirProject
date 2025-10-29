@@ -1035,11 +1035,49 @@
 <!-- Leaders Section -->
 <section class="leaders-section">
   <div class="container">
-    <h2 class="fw-bold text-center mb-5" style="background: linear-gradient(135deg, #f0ad00, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-      <span style="background-color: #f0ad00; border-radius: 50% 0 0 50%; padding: 0 0.5rem; color: white;">&#40;</span>
-      Our Leaders
-      <span style="background-color: #f0ad00; border-radius: 0 50% 50% 0; padding: 0 0.5rem; color: white;">&#41;</span>
-    </h2>
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2 class="fw-bold leaders-title" style="color: #333; font-size: 2.5rem; position: relative; display: inline-block; margin: 0; cursor: pointer;">
+        <span style="color: #ffb800;">Our</span> Leaders
+        <span class="underline"></span>
+      </h2>
+    </div>
+
+    <style>
+      .leaders-title {
+        transition: all 0.3s ease;
+      }
+
+      .leaders-title:hover {
+        transform: translateY(-2px);
+        color: #f0ad00;
+      }
+
+      .underline {
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #f0ad00, #ff6b35);
+        transition: width 0.6s ease;
+        border-radius: 2px;
+      }
+
+      .leaders-title:hover .underline {
+        width: 100%;
+      }
+
+      .leaders-title:hover {
+        animation: pulse 0.6s ease;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+      }
+    </style>
 
     <!-- Leader 1 -->
     <div class="leader-card">
@@ -1200,7 +1238,7 @@
 
     <div class="team-images-container">
       <img src="/static/image/imgr1.png" alt="Team member 1" class="team-image" data-index="0" />
-      <img src="/static/image/imgr2.png" alt="Team member 2" class="team-image" data-index="1" />
+      <img src="/static/image/myimg.png" alt="Team member 2" class="team-image" data-index="1" />
       <img src="/static/image/imgr3.png" alt="Team member 3" class="team-image" data-index="2" />
       <img src="/static/image/img4r.png" alt="Team member 4" class="team-image" data-index="3" />
       <img src="/static/image/imgr5.png" alt="Team member 5" class="team-image" data-index="4" />
@@ -1208,7 +1246,7 @@
       <img src="/static/image/imgr7.png" alt="Team member 7" class="team-image" data-index="6" />
       <!-- Duplicate for continuous scroll -->
       <img src="/static/image/imgr1.png" alt="Team member 1" class="team-image" />
-      <img src="/static/image/imgr2.png" alt="Team member 2" class="team-image" />
+      <img src="/static/image/myimg.png" alt="Team member 2" class="team-image" />
       <img src="/static/image/imgr3.png" alt="Team member 3" class="team-image" />
       <img src="/static/image/img4r.png" alt="Team member 4" class="team-image" />
       <img src="/static/image/imgr5.png" alt="Team member 5" class="team-image" />
@@ -1229,8 +1267,11 @@
       </iframe>
     </div>
     <div class="video-text">
-      <h2>Free Advice & Guidance Available</h2>
-      <p>from our experienced surveyors and loss assessors</p>
+      <h2 style="position: relative; display: inline-block; margin: 10px auto;">
+        Free Advice & Guidance Available
+        <span style="position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 100%; height: 3px; background-color: #ffb800; border-radius: 2px;"></span>
+      </h2>
+      <p style="color:black;font-weight:bold">from our experienced surveyors and loss assessors</p>
     </div>
   </div>
 </section>

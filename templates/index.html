@@ -45,7 +45,7 @@
 
     <div class="container h-100 position-relative z-index-10">
         <div
-            class="row align-items-center justify-content-center h-100 text-center py-5" 
+            class="row align-items-center justify-content-center h-100 text-center py-5"
         >
             <div class="col-lg-10 col-md-12">
                 <!-- 3D Logo Animation -->
@@ -84,42 +84,61 @@
 
                 <!-- Interactive Insurance Icons -->
                 <div class="insurance-icons-grid mb-5">
-                    <div class="insurance-icon icon-1">
+                    <a
+                        href="{{ url_for('motor_insurance') }}"
+                        class="insurance-icon icon-1"
+                    >
                         <div class="icon-wrapper">
                             <i class="fas fa-car"></i>
                         </div>
-                        <span>Auto</span>
-                    </div>
-                    <div class="insurance-icon icon-2">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <span>Home</span>
-                    </div>
-                    <div class="insurance-icon icon-3">
+                        <span>Vehicle</span>
+                    </a>
+
+                    <a
+                        href="{{ url_for('health_insurance') }}"
+                        class="insurance-icon icon-3"
+                    >
                         <div class="icon-wrapper">
                             <i class="fas fa-heartbeat"></i>
                         </div>
                         <span>Health</span>
-                    </div>
-                    <div class="insurance-icon icon-4">
+                    </a>
+                    <a
+                        href="{{ url_for('travel_insurance') }}"
+                        class="insurance-icon icon-4"
+                    >
                         <div class="icon-wrapper">
                             <i class="fas fa-plane"></i>
                         </div>
                         <span>Travel</span>
-                    </div>
-                    <div class="insurance-icon icon-5">
+                    </a>
+                    <a
+                        href="{{ url_for('fire_burglary_insurance') }}"
+                        class="insurance-icon icon-5"
+                    >
                         <div class="icon-wrapper">
                             <i class="fas fa-fire"></i>
                         </div>
                         <span>Fire</span>
-                    </div>
-                    <div class="insurance-icon icon-6">
+                    </a>
+                    <a
+                        href="{{ url_for('marine_cargo_insurance') }}"
+                        class="insurance-icon icon-6"
+                    >
                         <div class="icon-wrapper">
                             <i class="fas fa-ship"></i>
                         </div>
                         <span>Marine</span>
-                    </div>
+                    </a>
+                    <a
+                        href="{{ url_for('get_now') }}"
+                        class="insurance-icon icon-2"
+                    >
+                        <div class="icon-wrapper">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span>Other Insurance</span>
+                    </a>
                 </div>
 
                 <!-- CTA Buttons -->
@@ -142,8 +161,6 @@
             </div>
         </div>
     </div>
-
-    
 </div>
 
 <!-- Modern 3D Hero Section Styles -->
@@ -347,14 +364,12 @@
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 50%;
         animation: ring-rotate 8s linear infinite;
-       
     }
 
     .ring-1 {
         width: 140px;
         height: 140px;
         animation-delay: 0s;
-        
     }
 
     .ring-2 {
@@ -383,7 +398,7 @@
         display: inline-block;
         margin-right: 20px;
         color: #fff;
-        
+
         animation: word-float 3s ease-in-out infinite;
     }
 
@@ -425,7 +440,7 @@
     /* Subtitle Styling */
     .hero-subtitle-text {
         font-size: 1.4rem;
-        color:black;
+        color: black;
         font-weight: 300;
         max-width: 700px;
         margin: 0 auto;
@@ -447,6 +462,8 @@
         flex-direction: column;
         align-items: center;
         animation: icon-bounce 4s ease-in-out infinite;
+        text-decoration: none;
+        color: inherit;
     }
 
     .icon-wrapper {
@@ -833,10 +850,13 @@
     }
 </style>
 <!-- Why Choose Us Section -->
-<div class="container-fluid py-2 fade-in my-3" style="background-color: #f9f9f9">
+<div
+    class="container-fluid py-2 fade-in my-3"
+    style="background-color: #f9f9f9"
+>
     <div class="row align-items-center">
         <h2 id="typing-text" class="display-4 fw-bold mb-4 typewriter">
-            Why Choose Us.
+            Why<span style="color: #ffb800">Choose</span> Us.
         </h2>
         <div class="col-md-5 text-center">
             <img
@@ -941,7 +961,9 @@
 
 <div class="container py-5" id="services">
     <h2 class="text-center display-4 fw-bold mb-5">
-        <span class="typing-service">Our Services</span>
+        <span class="typing-service"
+            ><span style="color: #ffb800">Our</span> Services</span
+        >
     </h2>
     <div class="row g-4">
         <div class="col-md-4">
@@ -1001,7 +1023,8 @@
 
 <div class="container-fluid py-5 text-center">
     <h3 class="display-6 fw-bold mb-4">
-        Fast claims. Firm support. Always protected.
+        Fast service. <span style="color: #ffb800">Firm trust</span>. Your
+        safety, our priority.
     </h3>
     <div class="row justify-content-center g-3 mt-4">
         <div class="col-md-3 col-6">
@@ -1102,202 +1125,76 @@
 </div>
 
 <div class="container-fluid py-5 fade-in">
-    <h2 class="text-center display-4 fw-bold mb-4">Our Service Partners</h2>
-    <div class="row justify-content-center g-3 partners-logos">
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/unitedindia.avif') }}"
-                alt="United India"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/tataagi.avif') }}"
-                alt="Tata AIG"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/blueroundlogo.avif') }}"
-                alt="Oriental Insurance"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/bajajlogo.avif') }}"
-                alt="Bajaj Allianz"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/hdfclogo.avif') }}"
-                alt="HDFC ERGO"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/libartylogo.avif') }}"
-                alt="Liberty Insurance"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/magmalogo.avif') }}"
-                alt="Magma HDI"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/icicilogo.avif') }}"
-                alt="ICICI Lombard"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/iffco.jpeg') }}"
-                alt="IFFCO Tokio"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/relincelogo.avif') }}"
-                alt="Reliance General Insurance"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}"
-                alt="Royal Sundaram"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/univercellogo.avif') }}"
-                alt="Universal Sompo"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-6 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}"
-                alt="SBI General Insurance"
-                class="img-fluid"
-                style="max-width: 100px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/niva.avif') }}"
-                alt="Niva"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/Go-Digit.webp') }}"
-                alt="Go-Digit"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/cholams.avif') }}"
-                alt="Cholams"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/hdfcergo.png') }}"
-                alt="HDFC ERGO"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/oriental.png') }}"
-                alt="Oriental"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
-        </div>
-        <div
-            class="col-4 col-sm-2 col-md-1 d-flex justify-content-center align-items-center"
-        >
-            <img
-                src="{{ url_for('static', filename='image/newindia.png') }}"
-                alt="New India"
-                class="img-fluid"
-                style="max-width: 80px"
-            />
+    <h2 class="text-center display-4 fw-bold mb-4">
+        Our Service <span style="color: #ffb800">Partners</span>
+    </h2>
+    <div class="partners-logos-container">
+        <div class="partners-logos">
+            <img src="{{ url_for('static', filename='image/unitedindia.avif') }}" alt="United India" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/tataagi.avif') }}" alt="Tata AIG" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/blueroundlogo.avif') }}" alt="Oriental Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/bajajlogo.avif') }}" alt="Bajaj Allianz" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/hdfclogo.avif') }}" alt="HDFC ERGO" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/libartylogo.avif') }}" alt="Liberty Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/magmalogo.avif') }}" alt="Magma HDI" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/icicilogo.avif') }}" alt="ICICI Lombard" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/iffco.jpeg') }}" alt="IFFCO Tokio" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/relincelogo.avif') }}" alt="Reliance General Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}" alt="Royal Sundaram" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/univercellogo.avif') }}" alt="Universal Sompo" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}" alt="SBI General Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/niva.avif') }}" alt="Niva" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/Go-Digit.webp') }}" alt="Go-Digit" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/cholams.avif') }}" alt="Cholams" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/hdfcergo.png') }}" alt="HDFC ERGO" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/oriental.png') }}" alt="Oriental" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/newindia.png') }}" alt="New India" class="partner-logo">
+            <!-- Duplicate for seamless loop -->
+            <img src="{{ url_for('static', filename='image/unitedindia.avif') }}" alt="United India" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/tataagi.avif') }}" alt="Tata AIG" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/blueroundlogo.avif') }}" alt="Oriental Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/bajajlogo.avif') }}" alt="Bajaj Allianz" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/hdfclogo.avif') }}" alt="HDFC ERGO" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/libartylogo.avif') }}" alt="Liberty Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/magmalogo.avif') }}" alt="Magma HDI" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/icicilogo.avif') }}" alt="ICICI Lombard" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/iffco.jpeg') }}" alt="IFFCO Tokio" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/relincelogo.avif') }}" alt="Reliance General Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/royalsundaramlogo.avif') }}" alt="Royal Sundaram" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/univercellogo.avif') }}" alt="Universal Sompo" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/sbigenerallogo.avif') }}" alt="SBI General Insurance" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/niva.avif') }}" alt="Niva" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/Go-Digit.webp') }}" alt="Go-Digit" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/cholams.avif') }}" alt="Cholams" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/hdfcergo.png') }}" alt="HDFC ERGO" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/oriental.png') }}" alt="Oriental" class="partner-logo">
+            <img src="{{ url_for('static', filename='image/newindia.png') }}" alt="New India" class="partner-logo">
         </div>
     </div>
     <p class="text-center fw-bold mt-3">Different Brokers</p>
 </div>
-
+<style>
+.partners-logos-container {
+    overflow: hidden;
+    width: 100%;
+}
+.partners-logos {
+    display: flex;
+    justify-content: flex-start;
+    animation: scroll-left 40s linear infinite;
+    width: 200%;
+    gap: 20px;
+}
+.partner-logo {
+    max-width: 149px;
+  height: 35px;
+  flex-shrink: 0;
+}
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+</style>
 <div class="text-center mt-1">
     <img
         src="{{ url_for('static', filename='image/publiclogo.avif') }}"
@@ -1311,7 +1208,7 @@
         <h2 class="fw-bold mb-4 text-center display-4">Connect With Us</h2>
         <div class="col-md-6 text-center mb-4 mb-md-0">
             <img
-                src="{{ url_for('static', filename='image/contactwithusimage.avif') }}"
+                src="{{ url_for('static', filename='image/homeimageyello.jpg') }}"
                 alt="Connect With Us"
                 class="img-fluid rounded contact-image"
             />
@@ -1430,6 +1327,28 @@
                             >Underwrite Claim</label
                         >
                     </div>
+
+
+                     <div class="form-check form-check-inline">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="wantTo"
+                            id="underwriteClaim"
+                            value="Claim Assistance "
+                            style="
+                                border: 1px solid #000;
+                                width: 20px;
+                                height: 20px;
+                            "
+                        />
+                        <label class="form-check-label" for="claimAssistance "
+                            >Claim Assistance </label
+                        >
+                    </div>
+
+
+
                 </fieldset>
                 <div class="mb-3">
                     <label for="insuranceType" class="form-label"
@@ -1542,6 +1461,7 @@
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#faq1"
+                            style="font-weight: bold"
                         >
                             What is the policy period in general insurance?
                         </button>
@@ -1551,7 +1471,7 @@
                         class="accordion-collapse collapse show"
                         data-bs-parent="#faqAccordion"
                     >
-                        <div class="accordion-body">
+                        <div class="accordion-body" style="color: red">
                             Usually 1 year, but multi-year options are available
                             in motor and health insurance.
                         </div>
@@ -1564,6 +1484,7 @@
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#faq2"
+                            style="font-weight: bold"
                         >
                             Does general insurance offer tax benefits?
                         </button>
@@ -1573,7 +1494,7 @@
                         class="accordion-collapse collapse"
                         data-bs-parent="#faqAccordion"
                     >
-                        <div class="accordion-body">
+                        <div class="accordion-body" style="color: red">
                             Yes, health insurance premiums are tax-deductible
                             under Section 80D.
                         </div>
@@ -1586,6 +1507,7 @@
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#faq3"
+                            style="font-weight: bold"
                         >
                             How is premium decided?
                         </button>
@@ -1595,7 +1517,7 @@
                         class="accordion-collapse collapse"
                         data-bs-parent="#faqAccordion"
                     >
-                        <div class="accordion-body">
+                        <div class="accordion-body" style="color: red">
                             Depends on age, sum insured, policy type, coverage,
                             and risk factors.
                         </div>
@@ -1608,6 +1530,7 @@
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#faq4"
+                            style="font-weight: bold"
                         >
                             Why is third-party motor insurance mandatory?
                         </button>
@@ -1617,7 +1540,7 @@
                         class="accordion-collapse collapse"
                         data-bs-parent="#faqAccordion"
                     >
-                        <div class="accordion-body">
+                        <div class="accordion-body" style="color: red">
                             It protects third parties from financial loss in
                             case of an accident caused by the insured vehicle.
                         </div>
@@ -1630,6 +1553,7 @@
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#faq5"
+                            style="font-weight: bold"
                         >
                             Do pre-existing diseases get covered?
                         </button>
@@ -1639,7 +1563,7 @@
                         class="accordion-collapse collapse"
                         data-bs-parent="#faqAccordion"
                     >
-                        <div class="accordion-body">
+                        <div class="accordion-body" style="color: red">
                             Yes, but usually after a waiting period of 1–4 years
                             in health insurance.
                         </div>
@@ -1749,6 +1673,12 @@
 
     // Initialize
     updateTestimonial();
+
+    // Auto-change testimonial every 2 seconds
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        updateTestimonial();
+    }, 2000);
 </script>
 
 {% endblock %}

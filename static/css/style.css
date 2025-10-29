@@ -141,8 +141,8 @@ body {
 }
 
 .marine-trust-text-large {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 900;
+  font-size: 4rem;
+  font-weight: bold;
   line-height: 1.2;
   margin: 0;
   color: #333;
@@ -1121,8 +1121,9 @@ html, body {
 }
 
 .contact-image {
-  height: 700px;
+  height: 447px;
   object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 #form-message {
@@ -1203,9 +1204,9 @@ html, body {
   }
 
   .workmen-hero-text h2 {
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 3.5rem;
+    font-weight: bold;
+    
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     color: black;
   }
