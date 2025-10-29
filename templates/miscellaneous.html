@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="miscellaneous-section" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h1 style="font-weight: bold; font-size: 3rem; color: black; text-align: center; margin-bottom: 2rem;">
+    Miscellaneous <span style="color:#f4b41a">Insurance</span> Options
+  </h1>
+
+  <section class="professional-indemnity-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Professional <span style="color:black">Indemnity Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Professional Indemnity Insurance - protects your reputation, your peace of mind, and your hard work.
+        One small error shouldn’t cost you your career or credibility.
+        We stand by you when things don’t go as planned — so you can focus on doing what you do best.
+        Because professionals deserve protection too.
+      </p>
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/pi.jpg') }}" alt="Professional Indemnity Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+  </section>
+
+  <section class="commercial-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/ci.jpeg') }}" alt="Commercial Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Commercial <span style="color:black">Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Commercial Insurance safeguards your enterprise from unexpected risks and losses.
+        From fire and theft to liability and property damage — we’ve got your back.
+        We help you protect what you’ve built, so you can keep growing with confidence.
+        Protect your business today — because stability begins with security.
+      </p>
+    </div>
+  </section>
+
+  <section class="home-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Home <span style="color:black">Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Home Insurance protects your home from fire, theft, natural calamities, and unforeseen damage.
+        So even if life brings the unexpected, your peace of mind stays intact.
+        We help you rebuild not just a house, but your sense of security.
+        Because every home deserves protection, just like the people who live in it.
+      </p>
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/hi.jpg') }}" alt="Home Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+  </section>
+
+  <section class="micro-rural-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/mr.jpg') }}" alt="Micro and Rural Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Micro <span style="color:black">and Rural Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Micro and Rural Insurance plans are designed to safeguard farmers, small entrepreneurs, and rural families from financial hardships.
+        These policies cover health, livelihood, livestock, and crop-related risks with affordable premiums.
+        We aim to promote financial inclusion and strengthen rural resilience through accessible protection.
+        Because every life, everywhere, deserves security and peace of mind.
+      </p>
+    </div>
+  </section>
+
+  <section class="gun-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Gun <span style="color:black">Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Gun Insurance (owning a licensed firearm) safeguards your licensed weapon against loss, theft, or accidental damage.
+        It ensures peace of mind for sport shooters, security professionals, and responsible owners alike.
+        We protect not just your asset, but your sense of safety and accountability.
+        Because responsible ownership deserves trusted protection.
+      </p>
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/gun.jpg') }}" alt="Gun Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+  </section>
+
+  <section class="director-liability-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/d.jpg') }}" alt="Director and Key Personnel Liability Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Director <span style="color:black">and Key Personnel Liability Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Director and Key Personnel Liability Insurance provides protection against legal and financial liabilities arising from managerial errors, omissions, or decisions.
+        It safeguards the personal assets of directors and key executives while ensuring organizational stability.
+        With comprehensive coverage and reliable support, we help leaders focus on strategic growth with confidence. Because strong leadership deserves strong protection.
+      </p>
+    </div>
+  </section>
+
+  <section class="cyber-kavach-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Cyber <span style="color:black">Kavach Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Cyber Kavach Insurance protects you from online threats like data breaches, identity theft, and cyber fraud.
+        It ensures your privacy, finances, and reputation stay secure in the virtual world.
+        We stand with you against unseen digital risks, every step of the way.
+        Because online safety deserves real-world protection.
+      </p>
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/cyber.jpg') }}" alt="Cyber Kavach Insurance Illustration" style="width: 100%; height: auto; max-width: 500px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+  </section>
+
+  <section class="cradle-care-insurance-section" style="margin-bottom: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="flex: 1 1 300px; min-width: 280px; text-align: center;">
+      <img src="{{ url_for('static', filename='image/credel.jpg') }}" alt="Cradle Care Insurance Illustration" style="width: 100%; height: auto; max-width: 381px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    </div>
+    <div style="flex: 1 1 300px; min-width: 280px;">
+      <h2 style="font-weight: bold; font-size: 2rem; color: #f4b41a; margin-bottom: 1rem;">
+        Cradle <span style="color:black">Care Insurance</span>
+      </h2>
+      <p style="font-weight: 500; color: black; font-size: 1.1rem; line-height: 1.6;">
+        Cradle Care Insurance ensures financial protection for mother and child during pregnancy and after birth.
+        It covers maternity expenses, newborn care, and medical emergencies with ease.
+        We’re here to make your parenthood journey safe, supported, and worry-free.
+        Because every new beginning deserves trusted protection.
+      </p>
+    </div>
+  </section>
+
+</section>
+
+<section class="drive-smart-section" style="margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin-left: auto; margin-right: auto; border-top: 1px dotted #222222; padding-top: 1.5rem;">
+  <div style="flex: 1 1 400px; min-width: 280px; font-size: 1.5rem; font-weight: 600; color: black;">
+    Secure every aspect of life with <em style="font-weight: 700; font-style: normal; color: #f4b41a;">Bima with Bali</em> – because protection goes beyond the road.
+  </div>
+  <div style="flex: 1 1 200px; min-width: 200px; text-align: center;">
+    <a href="{{ url_for('get_now') }}" style="display: inline-block; background-color: black; color: #f4b41a; font-weight: 700; padding: 0.75rem 2rem; border-radius: 25px; text-decoration: none; cursor: pointer;">
+      REACH US
+    </a>
+    <div style="margin-top: 0.5rem; font-weight: 600; color: black;">
+      Connect with us to get insured
+    </div>
+  </div>
+</section>
+
+{% endblock %}

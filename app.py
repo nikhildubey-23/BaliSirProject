@@ -73,6 +73,10 @@ def workmen_compensation_renewal():
 def shopkeeper_insurance():
     return render_template('shopkeeper_insurance.html')
 
+@app.route('/miscellaneous')
+def miscellaneous():
+    return render_template('miscellaneous.html')
+
 @app.route('/renewal')
 def renewal():
     return render_template('renewal.html')
