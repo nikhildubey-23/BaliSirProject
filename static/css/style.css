@@ -968,11 +968,10 @@ html, body {
     max-width: 80px;
   }
   .partners-logos img {
-    max-width: 60px;
+    max-width: 75px;
     width: 100%;
-    height: auto;
-    transition: transform 0.3s ease;
-    animation: pulse 2s ease-in-out infinite;
+    height: 56px;
+    
   }
   .partners-logos > div:hover img {
     transform: scale(1.05);

@@ -1181,18 +1181,32 @@
 .partners-logos {
     display: flex;
     justify-content: flex-start;
+    flex-wrap: nowrap;
     animation: scroll-left 40s linear infinite;
     width: 200%;
     gap: 20px;
 }
 .partner-logo {
     max-width: 149px;
-  height: 35px;
-  flex-shrink: 0;
+    height: 35px;
+    flex-shrink: 0;
 }
 @keyframes scroll-left {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .partners-logos {
+        gap: 15px;
+        animation-duration: 30s; /* Faster on mobile for better visibility */
+    }
+    .partner-logo {
+        max-width: 120px; /* Smaller logos on mobile */
+        height: 30px;
+        animation: none; /* Remove any unwanted animations like zoom in/out */
+    }
 }
 </style>
 <div class="text-center mt-1">
