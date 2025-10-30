@@ -260,6 +260,7 @@ def send_email():
         message = data.get('message')
         files = {}
     else:
+        app.logger.info("Processing form data")
         to_email = request.form.get('to')
         name = request.form.get('name')
         from_email = request.form.get('email')
@@ -267,8 +268,11 @@ def send_email():
         message = request.form.get('message')
         files = request.files
 
+        app.logger.info(f"Form data - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}")
+        app.logger.info(f"Files received: {list(files.keys())}")
+
     if not all([to_email, name, from_email, subject, message]):
-        app.logger.error("Missing required fields")
+        app.logger.error(f"Missing required fields - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}, message: {message}")
         return jsonify({"error": "Missing required fields"}), 400
 
     try:
@@ -281,7 +285,7 @@ def send_email():
         msg.attach(MIMEText(body, 'plain'))
 
         # Attach files if any
-        file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan', 'resume', 'claimDocument', 'previousPolicyDocument', 'idProof', 'addressProof', 'financialStatements']
+        file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan', 'resume', 'claimDocument', 'previousPolicyDocument', 'idProof', 'addressProof', 'financialStatements', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper', 'previousPolicyOthers']
         for field in file_fields:
             if field in files and files[field].filename:
                 file = files[field]
@@ -294,6 +298,7 @@ def send_email():
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
         server.login(SMTP_USERNAME, SMTP_PASSWORD)
+        app.logger.info("Attempting to send email...")
         server.sendmail(SMTP_USERNAME, to_email, msg.as_string())
         server.quit()
 
