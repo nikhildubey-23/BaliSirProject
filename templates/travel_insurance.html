@@ -3,7 +3,7 @@
 
 <section class="secure-journey-section" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 3rem;">
   <div class="text-section" style="order: 1; flex: 1 1 180px; max-width: 50%; font-weight: bold; font-size: 4rem; color: black;">
-    Secure every journey with us and explore <span style="color: #f4b41a;">hassle free</span>
+    <h1 class="secure-journey-title">Secure every journey with us and explore <span style="color: #f4b41a;">hassle free</span></h1>
   </div>
   <div class="image-section" style="order: 2; flex: 1 1 180px; max-width: 45%;">
     <img src="{{ url_for('static', filename='image/travimg.avif') }}" alt="Travel Insurance Illustration" style="width: 100%; height: auto;" />
@@ -128,4 +128,12 @@
     </p>
   </div>
 </section>
+<style>
+@media (max-width: 768px) {
+  .secure-journey-title {
+    font-size: 2rem !important;
+  }
+}
+</style>
+
 {% endblock %}
