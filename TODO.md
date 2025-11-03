@@ -1,2 +1,4 @@
 - [x] Edit templates/base.html to add 'd-none d-md-flex' classes to the center div containing Quick Links to hide it on mobile displays.
 - [x] Make all footer text responsive by adding CSS media queries to adjust font sizes on smaller screens.
+- [x] Remove "REACH US" button and "Connect with us to get insured" text from the footer.
+- [x] Update workmen_compensation.html to style "Connect with us to get insured" below REACH US button to match other pages (use <p> with classes fw-semibold text-muted fs-6 mb-0).
