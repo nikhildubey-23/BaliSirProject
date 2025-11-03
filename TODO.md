@@ -9,3 +9,5 @@
 - [x] Make the "Because every shipment carries more than just cargo It carries trust" line responsive in marine_cargo_insurance.html for mobile display.
 - [x] Make the "Protecting more than just walls we're protecting your peace of mind" line responsive in fire_burglary_insurance.html for mobile display.
 - [x] Make the "Because behind every worker is a Family depending on them" line responsive in workmen_compensation.html for mobile display.
+- [x] Make the "Your shop is your livelihood, protect it before life gives you a shocks!" line responsive in shopkeeper_insurance.html for mobile display.
+- [x] Make the "“Secure your tomorrow renew with Bima with Bali and keep peace of mind just a click away” " line responsive in renewal.html for mobile display.
