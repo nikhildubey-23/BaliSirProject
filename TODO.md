@@ -11,3 +11,4 @@
 - [x] Make the "Because behind every worker is a Family depending on them" line responsive in workmen_compensation.html for mobile display.
 - [x] Make the "Your shop is your livelihood, protect it before life gives you a shocks!" line responsive in shopkeeper_insurance.html for mobile display.
 - [x] Make the "“Secure your tomorrow renew with Bima with Bali and keep peace of mind just a click away” " line responsive in renewal.html for mobile display.
+- [x] Make the headings "Simplification, Accessibility, Customer first approach, Consistency, Social Impact, Empowerment Knowledge, Trust & Transparency" responsive in about.html for mobile display.
