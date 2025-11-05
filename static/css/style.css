@@ -1386,8 +1386,8 @@ width: 100%;
 
  
   .workmen-cta-text {
-    font-weight: 900;
-  font-size: 3rem;
+    font-weight: bold;
+  font-size: 2.5rem;
   max-width: 60%;
   color:black
   }
