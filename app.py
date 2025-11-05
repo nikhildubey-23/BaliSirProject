@@ -69,6 +69,10 @@ def workmen_compensation():
 def workmen_compensation_renewal():
     return render_template('workmen_compensation_renewal.html')
 
+@app.route('/social-activity')
+def socialactivity():
+    return render_template('socialactivity.html')
+
 @app.route('/shopkeeper-insurance')
 def shopkeeper_insurance():
     return render_template('shopkeeper_insurance.html')
