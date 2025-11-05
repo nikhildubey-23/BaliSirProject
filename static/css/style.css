@@ -147,13 +147,12 @@ body {
   margin: 0;
   color: #333;
   text-shadow: none;
-  font-family: 'Arial Black', Arial, sans-serif;
 }
 
 .marine-trust-highlight {
   color: #f0ad00;
-  font-weight: 900;
-  text-shadow: 0 0 10px rgba(240, 173, 0, 0.5);
+  
+ 
   animation: none;
   display: block;
   margin-top: 0;
@@ -1114,10 +1113,11 @@ html, body {
 }
 
 .service-card-img {
-  width: 200px;
-  height: 200px;
+width: 234px;
+  height: 201px;
   object-fit: cover;
 }
+
 
 .contact-image {
   height: 447px;
@@ -1171,11 +1171,12 @@ html, body {
 
 /* Modern Workmen Compensation Insurance Page Styling */
   .workmen-hero-section {
-    padding: 5rem 0;
+    
     border-radius: 0 0 50px 50px;
     position: relative;
     overflow: hidden;
     color: white;
+    margin-top: 2rem;
   }
 
   .workmen-hero-section::before {
@@ -1206,7 +1207,7 @@ html, body {
     font-size: 3.5rem;
     font-weight: bold;
     
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    
     color: black;
   }
 
@@ -1388,6 +1389,7 @@ html, body {
     font-weight: 900;
   font-size: 3rem;
   max-width: 60%;
+  color:black
   }
 
   .workmen-cta-highlight {
@@ -1397,15 +1399,14 @@ html, body {
 
   .workmen-cta-button {
     display: inline-block;
-    background: #333;
-    color: #f0ad00;
-    font-weight: 700;
-    padding: 1rem 3rem;
-    border-radius: 30px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    margin-bottom: 1rem;
+  background: black;
+  color: #f0ad00;
+  font-weight: 700;
+  padding: 1rem 3rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
 
   .workmen-cta-button:hover {

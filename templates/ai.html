@@ -312,12 +312,23 @@
         <i class="fas fa-robot"></i>
       </div>
       <div class="message-bubble">
-        Welcome to BimaBot! Your personal assistant for all things insurance at Bima with Bali. Ask me anything about our insurance services.
+        Namaste ji! 👋 Welcome to Bima With Bali your trusted insurance partner since oct 1986✨
+Main Bali hoon, aapka suraksha saathi 
+Bataiye aaj kis type ka insurance chahiye? 😊
         <div class="quick-replies">
           <button class="quick-reply-btn" onclick="sendQuickReply('What is motor insurance?')">Motor Insurance</button>
           <button class="quick-reply-btn" onclick="sendQuickReply('Tell me about health insurance')">Health Insurance</button>
           <button class="quick-reply-btn" onclick="sendQuickReply('What is travel insurance?')">Travel Insurance</button>
           <button class="quick-reply-btn" onclick="sendQuickReply('How to renew my policy?')">Renew Policy</button>
+        
+          <button class="quick-reply-btn" onclick="sendQuickReply('Life & Term Insurance')">Life & Term Insurance</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Fire & Property Insurance')">Fire & Property Insurance</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Shopkeeper Insurance')">Shopkeeper Insurance</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Workmen / Employee Insurance (WC / ESIC / GPA)')">Workmen / Employee Insurance (WC / ESIC / GPA)</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Marine Insurance (Transport / Logistics)')">Marine Insurance (Transport / Logistics)</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Miscellaneous Insurance (Burglary, Liability, Cyber, Home, Office, etc.)')">Miscellaneous Insurance (Burglary, Liability, Cyber, Home, Office, etc.)</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Claim Support')">Claim Support</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('Talk to Human Expertto')">Talk to Human Expertto</button>
         </div>
       </div>
     </div>
@@ -392,6 +403,7 @@
         .replace(/>/g, ">")
         .replace(/\*/g, "-")  // Replace remaining * with dash for bullets
         .replace(/-/g, "&#8211;")   // Replace - with en dash
+        .replace(/—/g, "")   // Remove em dash
         .replace(/\n/g, "<br>");    // Preserve line breaks
     }
 
