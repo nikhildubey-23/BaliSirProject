@@ -10,9 +10,14 @@ from email import encoders
 from datetime import datetime, timedelta
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Flask app configuration
 app = Flask(__name__)
@@ -20,16 +25,25 @@ app.secret_key = os.getenv('SECRET_KEY', 'bali_admin_secret_key_2024')
 app.permanent_session_lifetime = timedelta(hours=24)
 
 # Database configuration
-DATABASE = 'admin_panel.db'
+DATABASE = os.getenv('DATABASE_URL', 'admin_panel.db')
 
-# Configure Groq API
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# Configure Groq API safely
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if GROQ_API_KEY:
+    try:
+        client = Groq(api_key=GROQ_API_KEY)
+    except Exception as e:
+        logger.warning(f"Failed to initialize Groq client: {e}")
+        client = None
+else:
+    client = None
+    logger.warning("GROQ_API_KEY not found. AI features will be disabled.")
 
 # Admin credentials
 ADMIN_USERNAME = "bali"
 ADMIN_PASSWORD_HASH = generate_password_hash("bali@123")
 
-# Email server configuration
+# Email server configuration (with error handling)
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "sparksolutionfreelancing@gmail.com"
@@ -37,67 +51,79 @@ SMTP_PASSWORD = "oqny rnem dbap yofq "
 
 # Database functions
 def get_db_connection():
-    """Get database connection"""
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """Get database connection with error handling"""
+    try:
+        conn = sqlite3.connect(DATABASE)
+        conn.row_factory = sqlite3.Row
+        return conn
+    except Exception as e:
+        logger.error(f"Database connection error: {e}")
+        return None
 
 def init_db():
     """Initialize database with required tables"""
-    conn = get_db_connection()
-    
-    # Create form submissions table
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS form_submissions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            first_name TEXT NOT NULL,
-            last_name TEXT NOT NULL,
-            phone TEXT NOT NULL,
-            email TEXT NOT NULL,
-            want_to TEXT NOT NULL,
-            insurance_type TEXT NOT NULL,
-            submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            status TEXT DEFAULT 'new',
-            notes TEXT,
-            processed_by TEXT,
-            processed_date TIMESTAMP
-        )
-    ''')
-    
-    # Create blog posts table
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS blog_posts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            slug TEXT UNIQUE NOT NULL,
-            content TEXT NOT NULL,
-            excerpt TEXT,
-            author TEXT DEFAULT 'Bima With Bali',
-            status TEXT DEFAULT 'draft',
-            created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            published_date TIMESTAMP,
-            featured_image TEXT,
-            tags TEXT,
-            meta_description TEXT
-        )
-    ''')
-    
-    # Create admin sessions table
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS admin_sessions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            session_id TEXT UNIQUE NOT NULL,
-            admin_user TEXT NOT NULL,
-            login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            ip_address TEXT,
-            user_agent TEXT
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
+    try:
+        conn = get_db_connection()
+        if conn is None:
+            logger.error("Failed to connect to database")
+            return False
+        
+        # Create form submissions table
+        conn.execute('''
+            CREATE TABLE IF NOT EXISTS form_submissions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                first_name TEXT NOT NULL,
+                last_name TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                email TEXT NOT NULL,
+                want_to TEXT NOT NULL,
+                insurance_type TEXT NOT NULL,
+                submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status TEXT DEFAULT 'new',
+                notes TEXT,
+                processed_by TEXT,
+                processed_date TIMESTAMP
+            )
+        ''')
+        
+        # Create blog posts table
+        conn.execute('''
+            CREATE TABLE IF NOT EXISTS blog_posts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                slug TEXT UNIQUE NOT NULL,
+                content TEXT NOT NULL,
+                excerpt TEXT,
+                author TEXT DEFAULT 'Bima With Bali',
+                status TEXT DEFAULT 'draft',
+                created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                published_date TIMESTAMP,
+                featured_image TEXT,
+                tags TEXT,
+                meta_description TEXT
+            )
+        ''')
+        
+        # Create admin sessions table
+        conn.execute('''
+            CREATE TABLE IF NOT EXISTS admin_sessions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                session_id TEXT UNIQUE NOT NULL,
+                admin_user TEXT NOT NULL,
+                login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                ip_address TEXT,
+                user_agent TEXT
+            )
+        ''')
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        logger.error(f"Database initialization error: {e}")
+        return False
 
 # Authentication decorator
 def admin_required(f):
@@ -135,6 +161,28 @@ def cleanup_audit_log():
 
 # Initialize database on startup
 init_db()
+
+# Static files and favicon
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/favicon.png')
+def favicon_png():
+    return send_from_directory('static', 'favicon.png', mimetype='image/png')
+
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
+
+# Error handlers
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('500.html'), 500
 
 # Basic website routes
 @app.route('/')
@@ -286,21 +334,22 @@ def send_email():
                 insurance_type = request.form.get('insuranceType', '')
                 
                 conn = get_db_connection()
-                conn.execute('''
-                    INSERT INTO form_submissions (first_name, last_name, phone, email, want_to, insurance_type)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                ''', (first_name, last_name, phone, from_email, want_to, insurance_type))
-                conn.commit()
-                conn.close()
-                
-                # Send notification email to admin
-                try:
-                    admin_msg = MIMEMultipart()
-                    admin_msg['From'] = SMTP_USERNAME
-                    admin_msg['To'] = "sparksolutionfreelancing@gmail.com"
-                    admin_msg['Subject'] = f"New Form Submission - {insurance_type}"
+                if conn:
+                    conn.execute('''
+                        INSERT INTO form_submissions (first_name, last_name, phone, email, want_to, insurance_type)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    ''', (first_name, last_name, phone, from_email, want_to, insurance_type))
+                    conn.commit()
+                    conn.close()
                     
-                    admin_body = f"""
+                    # Send notification email to admin (with error handling)
+                    try:
+                        admin_msg = MIMEMultipart()
+                        admin_msg['From'] = SMTP_USERNAME
+                        admin_msg['To'] = "sparksolutionfreelancing@gmail.com"
+                        admin_msg['Subject'] = f"New Form Submission - {insurance_type}"
+                        
+                        admin_body = f"""
 New form submission received:
 
 Name: {first_name} {last_name}
@@ -312,54 +361,66 @@ Request Type: {want_to}
 Message: {message}
 
 Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-                    """
-                    admin_msg.attach(MIMEText(admin_body, 'plain'))
-                    
-                    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-                    server.starttls()
-                    server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                    server.sendmail(SMTP_USERNAME, "sparksolutionfreelancing@gmail.com", admin_msg.as_string())
-                    server.quit()
-                except Exception as e:
-                    app.logger.error(f"Error sending admin notification: {e}")
+                        """
+                        admin_msg.attach(MIMEText(admin_body, 'plain'))
+                        
+                        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+                        server.starttls()
+                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                        server.sendmail(SMTP_USERNAME, "sparksolutionfreelancing@gmail.com", admin_msg.as_string())
+                        server.quit()
+                        app.logger.info("Admin notification sent successfully")
+                    except Exception as e:
+                        app.logger.error(f"Error sending admin notification: {e}")
         
-        msg = MIMEMultipart()
-        msg['From'] = SMTP_USERNAME
-        msg['To'] = to_email
-        msg['Subject'] = subject
+        # Try to send the main email
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = SMTP_USERNAME
+            msg['To'] = to_email
+            msg['Subject'] = subject
 
-        body = f"Name: {name}\nEmail: {from_email}\n\nMessage:\n{message}"
-        msg.attach(MIMEText(body, 'plain'))
+            body = f"Name: {name}\nEmail: {from_email}\n\nMessage:\n{message}"
+            msg.attach(MIMEText(body, 'plain'))
 
-        # Attach files if any
-        file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan', 'resume', 'claimDocument', 'previousPolicyDocument', 'idProof', 'addressProof', 'financialStatements', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper', 'previousPolicyOthers']
-        for field in file_fields:
-            if field in files and files[field].filename:
-                file = files[field]
-                part = MIMEBase('application', 'octet-stream')
-                part.set_payload(file.read())
-                encoders.encode_base64(part)
-                part.add_header('Content-Disposition', f'attachment; filename={file.filename}')
-                msg.attach(part)
+            # Attach files if any
+            file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan', 'resume', 'claimDocument', 'previousPolicyDocument', 'idProof', 'addressProof', 'financialStatements', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper', 'previousPolicyOthers']
+            for field in file_fields:
+                if field in files and files[field].filename:
+                    file = files[field]
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(file.read())
+                    encoders.encode_base64(part)
+                    part.add_header('Content-Disposition', f'attachment; filename={file.filename}')
+                    msg.attach(part)
 
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-        app.logger.info("Attempting to send email...")
-        server.sendmail(SMTP_USERNAME, to_email, msg.as_string())
-        server.quit()
+            server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+            server.starttls()
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+            app.logger.info("Attempting to send email...")
+            server.sendmail(SMTP_USERNAME, to_email, msg.as_string())
+            server.quit()
 
-        app.logger.info("Email sent successfully")
-        return jsonify({"message": "Email sent successfully"}), 200
+            app.logger.info("Email sent successfully")
+            return jsonify({"message": "Email sent successfully"}), 200
+        except Exception as email_error:
+            app.logger.error(f"Email sending failed: {email_error}")
+            # If email fails but form was saved, still return success for form submission
+            return jsonify({"message": "Form submitted successfully. Email delivery may be delayed."}), 200
+            
     except Exception as e:
-        app.logger.error(f"Error sending email: {e}")
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(f"General error in send_email: {e}")
+        return jsonify({"error": "An error occurred while processing your request. Please try again later."}), 500
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json
     user_message = data.get('message', '')
     history = data.get('history', [])
+
+    # Check if Groq client is available
+    if client is None:
+        return jsonify({'response': "I'm sorry, but the AI assistant is currently unavailable. Please contact our team directly for assistance with your insurance needs."})
 
     # Build conversation context
     messages = [{"role": "system", "content": "You are Bali, the AI assistant for Bima With Bali Insurance. Respond as Bali with the following scripts and menu. Start with the welcome message and menu. For user selections, use the category-wise scripts. For wrong inputs, use the default response. Always promote Bima With Bali."}]
@@ -392,7 +453,8 @@ def chat():
             )
             response_text = response.choices[0].message.content
         except Exception as e2:
-            response_text = f"Error generating response: {str(e2)}"
+            logger.error(f"Groq API error: {e2}")
+            response_text = "I'm sorry, but I'm having trouble connecting right now. Please try again later or contact our team directly for immediate assistance."
 
     return jsonify({'response': response_text})
 
