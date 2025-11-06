@@ -27,6 +27,13 @@ app.permanent_session_lifetime = timedelta(hours=24)
 # Database configuration
 DATABASE = os.getenv('DATABASE_URL', 'admin_panel.db')
 
+# For production environments like Vercel, use /tmp/ for database
+if os.environ.get('VERCEL') or os.environ.get('RAILWAY_ENVIRONMENT'):
+    # Use temporary directory in production
+    import tempfile
+    temp_dir = tempfile.gettempdir()
+    DATABASE = os.path.join(temp_dir, 'admin_panel.db')
+
 # Configure Groq API safely
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if GROQ_API_KEY:
@@ -165,11 +172,19 @@ init_db()
 # Static files and favicon
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    try:
+        return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    except:
+        # Return a simple 204 response if favicon doesn't exist
+        return '', 204
 
 @app.route('/favicon.png')
 def favicon_png():
-    return send_from_directory('static', 'favicon.png', mimetype='image/png')
+    try:
+        return send_from_directory('static', 'favicon.png', mimetype='image/png')
+    except:
+        # Return a simple 204 response if favicon doesn't exist
+        return '', 204
 
 @app.route('/static/<path:filename>')
 def static_files(filename):
@@ -461,37 +476,46 @@ def chat():
 # Admin Routes
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
-    """Admin login page"""
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    """Admin login page with error handling"""
+    try:
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            
+            if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
+                session['admin_logged_in'] = True
+                session['admin_username'] = username
+                session.permanent = True
+                
+                # Generate a unique session ID
+                import uuid
+                session_id = str(uuid.uuid4())
+                
+                # Log admin session (with error handling)
+                try:
+                    conn = get_db_connection()
+                    if conn:
+                        conn.execute('''
+                            INSERT INTO admin_sessions (session_id, admin_user, ip_address, user_agent)
+                            VALUES (?, ?, ?, ?)
+                        ''', (session_id, username, request.remote_addr, request.headers.get('User-Agent')))
+                        conn.commit()
+                        conn.close()
+                        
+                        # Cleanup audit log to keep only top 5
+                        cleanup_audit_log()
+                except Exception as e:
+                    app.logger.error(f"Failed to log admin session: {e}")
+                
+                return redirect(url_for('admin_dashboard'))
+            else:
+                flash('Invalid username or password', 'error')
         
-        if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
-            session['admin_logged_in'] = True
-            session['admin_username'] = username
-            session.permanent = True
-            
-            # Generate a unique session ID
-            import uuid
-            session_id = str(uuid.uuid4())
-            
-            # Log admin session
-            conn = get_db_connection()
-            conn.execute('''
-                INSERT INTO admin_sessions (session_id, admin_user, ip_address, user_agent)
-                VALUES (?, ?, ?, ?)
-            ''', (session_id, username, request.remote_addr, request.headers.get('User-Agent')))
-            conn.commit()
-            conn.close()
-            
-            # Cleanup audit log to keep only top 5
-            cleanup_audit_log()
-            
-            return redirect(url_for('admin_dashboard'))
-        else:
-            flash('Invalid username or password', 'error')
-    
-    return render_template('admin/login.html')
+        return render_template('admin/login.html')
+    except Exception as e:
+        app.logger.error(f"Admin login error: {e}")
+        flash('System error. Please try again later.', 'error')
+        return render_template('admin/login.html')
 
 @app.route('/admin/logout')
 @admin_required
@@ -503,49 +527,93 @@ def admin_logout():
 @app.route('/admin')
 @admin_required
 def admin_dashboard():
-    """Admin dashboard with key metrics"""
-    conn = get_db_connection()
-    
-    # Get dashboard statistics
-    total_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions').fetchone()['count']
-    new_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions WHERE status = "new"').fetchone()['count']
-    total_blog_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts').fetchone()['count']
-    published_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts WHERE status = "published"').fetchone()['count']
-    
-    # Get recent submissions
-    recent_submissions = conn.execute('''
-        SELECT * FROM form_submissions
-        ORDER BY submission_date DESC
-        LIMIT 10
-    ''').fetchall()
-    
-    # Get submissions by insurance type
-    submissions_by_type = conn.execute('''
-        SELECT insurance_type, COUNT(*) as count
-        FROM form_submissions
-        GROUP BY insurance_type
-        ORDER BY count DESC
-    ''').fetchall()
-    
-    # Get monthly submission trends
-    monthly_trends = conn.execute('''
-        SELECT strftime('%Y-%m', submission_date) as month, COUNT(*) as count
-        FROM form_submissions
-        WHERE submission_date >= date('now', '-12 months')
-        GROUP BY strftime('%Y-%m', submission_date)
-        ORDER BY month DESC
-    ''').fetchall()
-    
-    conn.close()
-    
-    return render_template('admin/dashboard.html',
-                         total_submissions=total_submissions,
-                         new_submissions=new_submissions,
-                         total_blog_posts=total_blog_posts,
-                         published_posts=published_posts,
-                         recent_submissions=recent_submissions,
-                         submissions_by_type=submissions_by_type,
-                         monthly_trends=monthly_trends)
+    """Admin dashboard with key metrics and error handling"""
+    try:
+        conn = get_db_connection()
+        if not conn:
+            return render_template('admin/dashboard.html',
+                                 total_submissions=0,
+                                 new_submissions=0,
+                                 total_blog_posts=0,
+                                 published_posts=0,
+                                 recent_submissions=[],
+                                 submissions_by_type=[],
+                                 monthly_trends=[])
+        
+        # Get dashboard statistics with error handling
+        try:
+            total_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions').fetchone()['count']
+        except:
+            total_submissions = 0
+            
+        try:
+            new_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions WHERE status = "new"').fetchone()['count']
+        except:
+            new_submissions = 0
+            
+        try:
+            total_blog_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts').fetchone()['count']
+        except:
+            total_blog_posts = 0
+            
+        try:
+            published_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts WHERE status = "published"').fetchone()['count']
+        except:
+            published_posts = 0
+        
+        # Get recent submissions
+        try:
+            recent_submissions = conn.execute('''
+                SELECT * FROM form_submissions
+                ORDER BY submission_date DESC
+                LIMIT 10
+            ''').fetchall()
+        except:
+            recent_submissions = []
+        
+        # Get submissions by insurance type
+        try:
+            submissions_by_type = conn.execute('''
+                SELECT insurance_type, COUNT(*) as count
+                FROM form_submissions
+                GROUP BY insurance_type
+                ORDER BY count DESC
+            ''').fetchall()
+        except:
+            submissions_by_type = []
+        
+        # Get monthly submission trends
+        try:
+            monthly_trends = conn.execute('''
+                SELECT strftime('%Y-%m', submission_date) as month, COUNT(*) as count
+                FROM form_submissions
+                WHERE submission_date >= date('now', '-12 months')
+                GROUP BY strftime('%Y-%m', submission_date)
+                ORDER BY month DESC
+            ''').fetchall()
+        except:
+            monthly_trends = []
+        
+        conn.close()
+        
+        return render_template('admin/dashboard.html',
+                             total_submissions=total_submissions,
+                             new_submissions=new_submissions,
+                             total_blog_posts=total_blog_posts,
+                             published_posts=published_posts,
+                             recent_submissions=recent_submissions,
+                             submissions_by_type=submissions_by_type,
+                             monthly_trends=monthly_trends)
+    except Exception as e:
+        app.logger.error(f"Admin dashboard error: {e}")
+        return render_template('admin/dashboard.html',
+                             total_submissions=0,
+                             new_submissions=0,
+                             total_blog_posts=0,
+                             published_posts=0,
+                             recent_submissions=[],
+                             submissions_by_type=[],
+                             monthly_trends=[])
 
 @app.route('/admin/submissions')
 @admin_required
