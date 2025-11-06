@@ -1,0 +1,358 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard - Admin Panel{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .trend-indicator {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+    
+    .trend-up {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .trend-down {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .recent-item {
+        padding: 15px;
+        border-left: 4px solid #f0ad00;
+        background: white;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .recent-item:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .quick-action {
+        background: linear-gradient(135deg, #f0ad00, #e0a800);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+    }
+    
+    .quick-action:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(240, 173, 0, 0.3);
+        color: white;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card primary">
+            <div class="d-flex align-items-center">
+                <div class="stat-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                    <div class="stat-number">{{ total_submissions }}</div>
+                    <div class="stat-label">Total Submissions</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card warning">
+            <div class="d-flex align-items-center">
+                <div class="stat-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div>
+                    <div class="stat-number">{{ new_submissions }}</div>
+                    <div class="stat-label">New Submissions</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card info">
+            <div class="d-flex align-items-center">
+                <div class="stat-icon">
+                    <i class="fas fa-blog"></i>
+                </div>
+                <div>
+                    <div class="stat-number">{{ total_blog_posts }}</div>
+                    <div class="stat-label">Total Blog Posts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card success">
+            <div class="d-flex align-items-center">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <div class="stat-number">{{ published_posts }}</div>
+                    <div class="stat-label">Published Posts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Charts Section -->
+    <div class="col-lg-8 mb-4">
+        <div class="chart-container">
+            <h5 class="mb-3"><i class="fas fa-chart-line me-2"></i>Monthly Submission Trends</h5>
+            <canvas id="monthlyTrendsChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Submissions by Type -->
+    <div class="col-lg-4 mb-4">
+        <div class="chart-container">
+            <h5 class="mb-3"><i class="fas fa-chart-pie me-2"></i>Submissions by Insurance Type</h5>
+            <canvas id="insuranceTypeChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Submissions -->
+    <div class="col-lg-8 mb-4">
+        <div class="data-table">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Recent Submissions</h5>
+                <a href="{{ url_for('admin_submissions') }}" class="btn btn-admin btn-sm">
+                    <i class="fas fa-eye me-1"></i>View All
+                </a>
+            </div>
+            <div class="p-3">
+                {% if recent_submissions %}
+                    {% for submission in recent_submissions %}
+                    <div class="recent-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">{{ submission.first_name }} {{ submission.last_name }}</h6>
+                                <p class="text-muted mb-1 small">
+                                    <i class="fas fa-envelope me-1"></i>{{ submission.email }}
+                                    <i class="fas fa-phone ms-3 me-1"></i>{{ submission.phone }}
+                                </p>
+                                <span class="badge 
+                                    {% if submission.status == 'new' %}bg-warning
+                                    {% elif submission.status == 'contacted' %}bg-info
+                                    {% elif submission.status == 'processed' %}bg-success
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ submission.status|title }}
+                                </span>
+                            </div>
+                            <div class="text-end">
+                                <small class="text-muted">{{ submission.submission_date[:16] }}</small><br>
+                                <a href="{{ url_for('admin_submission_detail', submission_id=submission.id) }}" 
+                                   class="btn btn-outline-primary btn-sm mt-1">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No submissions yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="col-lg-4 mb-4">
+        <div class="data-table">
+            <div class="p-3 border-bottom">
+                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="p-3">
+                <div class="d-grid gap-3">
+                    <a href="{{ url_for('admin_blog_new') }}" class="quick-action text-decoration-none">
+                        <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                        <div>Create New Blog Post</div>
+                    </a>
+                    
+                    <a href="{{ url_for('admin_submissions') }}?status=new" class="quick-action text-decoration-none">
+                        <i class="fas fa-tasks fa-2x mb-2"></i>
+                        <div>Review New Submissions</div>
+                    </a>
+                    
+                    <a href="{{ url_for('admin_blog') }}?status=draft" class="quick-action text-decoration-none">
+                        <i class="fas fa-edit fa-2x mb-2"></i>
+                        <div>Edit Draft Posts</div>
+                    </a>
+                    
+                    <a href="{{ url_for('admin_export_submissions') }}" class="quick-action text-decoration-none">
+                        <i class="fas fa-download fa-2x mb-2"></i>
+                        <div>Export Submissions</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- System Status -->
+        <div class="data-table mt-3">
+            <div class="p-3 border-bottom">
+                <h5 class="mb-0"><i class="fas fa-server me-2"></i>System Status</h5>
+            </div>
+            <div class="p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Database</span>
+                    <span class="badge bg-success">Connected</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Email Service</span>
+                    <span class="badge bg-success">Active</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>AI Chat</span>
+                    <span class="badge bg-success">Online</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Admin Session</span>
+                    <span class="badge bg-info">Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Monthly Trends Chart
+const monthlyCtx = document.getElementById('monthlyTrendsChart').getContext('2d');
+const monthlyLabels = [
+    {% for trend in monthly_trends %}
+        '{{ trend.month }}',
+    {% endfor %}
+];
+const monthlyData = [
+    {% for trend in monthly_trends %}
+        {{ trend.count }},
+    {% endfor %}
+];
+
+new Chart(monthlyCtx, {
+    type: 'line',
+    data: {
+        labels: monthlyLabels.reverse(),
+        datasets: [{
+            label: 'Submissions',
+            data: monthlyData.reverse(),
+            borderColor: '#f0ad00',
+            backgroundColor: 'rgba(240, 173, 0, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+// Insurance Type Chart
+const insuranceCtx = document.getElementById('insuranceTypeChart').getContext('2d');
+const insuranceLabels = [
+    {% for type in submissions_by_type %}
+        '{{ type.insurance_type }}',
+    {% endfor %}
+];
+const insuranceData = [
+    {% for type in submissions_by_type %}
+        {{ type.count }},
+    {% endfor %}
+];
+
+new Chart(insuranceCtx, {
+    type: 'doughnut',
+    data: {
+        labels: insuranceLabels,
+        datasets: [{
+            data: insuranceData,
+            backgroundColor: [
+                '#f0ad00',
+                '#007bff',
+                '#28a745',
+                '#dc3545',
+                '#ffc107',
+                '#17a2b8',
+                '#6f42c1',
+                '#e83e8c'
+            ],
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    padding: 15,
+                    usePointStyle: true
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

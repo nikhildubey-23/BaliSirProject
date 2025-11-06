@@ -1,7 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5">
-  <div class="row g-4">
+  <!-- Page Header -->
+  <div class="row mb-5">
+    <div class="col-12 text-center">
+      <h1 class="display-4 fw-bold mb-3">Insurance Blog</h1>
+      <p class="lead text-muted">Stay informed with the latest insurance tips, guides, and insights</p>
+    </div>
+  </div>
+
+  <!-- Dynamic Blog Posts from Database -->
+  {% if posts %}
+  <div class="row g-4 mb-5">
+    <div class="col-12">
+      <h2 class="mb-4">Latest Articles</h2>
+    </div>
+    {% for post in posts %}
+    <div class="col-md-4">
+      <a href="{{ url_for('blog_post', slug=post.slug) }}" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm">
+          {% if post.featured_image %}
+          <img src="{{ post.featured_image }}" class="card-img-top" alt="{{ post.title }}" />
+          {% else %}
+          <img src="{{ url_for('static', filename='image/b1c.avif') }}" class="card-img-top" alt="{{ post.title }}" />
+          {% endif %}
+          <div class="card-body bg-warning">
+            <div class="d-flex align-items-center mb-2">
+              <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
+              <small class="text-muted">{{ post.author or 'bimawithbali' }} ·
+                {% if post.published_date %}
+                  {{ post.published_date[:10] }}
+                {% else %}
+                  {{ post.created_date[:10] }}
+                {% endif %}
+                · {{ (post.content|length // 200) + 1 }} min read
+              </small>
+              <div class="ms-auto d-flex gap-3 align-items-center">
+                <small><i class="bi bi-eye"></i> {{ range(1, 20)|random }}</small>
+                <small><i class="bi bi-chat"></i> 0</small>
+                <small><i class="bi bi-heart"></i></small>
+              </div>
+            </div>
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.excerpt or post.content[:100] + '...' }}</p>
+            {% if post.tags %}
+            <div class="mt-2">
+              {% for tag in post.tags.split(',')[:2] %}
+              <span class="badge bg-secondary me-1">{{ tag.strip() }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Static Blog Posts (Fallback) -->
+  <div class="row g-4 {% if posts %}mt-5{% endif %}">
+    <div class="col-12">
+      <h2 class="mb-4">{% if posts %}More Articles{% else %}Featured Articles{% endif %}</h2>
+    </div>
     <!-- Card 1 -->
     <div class="col-md-4">
       <a href="{{ url_for('blog_b1') }}" class="text-decoration-none text-dark">
@@ -39,7 +100,7 @@
               </div>
             </div>
             <h5 class="card-title">How to Read and Understand Your Insurance Policy…</h5>
-            <p class="card-text">Don’t skip the fine print! Here's how to break down your policy: What to Check: ✅…</p>
+            <p class="card-text">Don't skip the fine print! Here's how to break down your policy: What to Check: ✅…</p>
           </div>
         </div>
       </a>
