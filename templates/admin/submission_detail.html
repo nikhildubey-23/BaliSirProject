@@ -99,9 +99,14 @@
                         <div class="col-md-6">
                             <h6 class="text-muted">Basic Information</h6>
                             <table class="table table-borderless">
-                                {% if submission.age %}
+                                {% if submission.date_of_birth %}
                                 <tr>
-                                    <td><strong>Age:</strong></td>
+                                    <td><strong>Date of Birth:</strong></td>
+                                    <td>{{ submission.date_of_birth }}</td>
+                                </tr>
+                                {% elif submission.age %}
+                                <tr>
+                                    <td><strong>Date of Birth:</strong></td>
                                     <td>{{ submission.age }}</td>
                                 </tr>
                                 {% endif %}
@@ -265,6 +270,117 @@
                 </div>
             </div>
             {% endif %}
+
+            <!-- Uploaded Files -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-paperclip"></i> Uploaded Files</h5>
+                </div>
+                <div class="card-body">
+                    {% set has_files = false %}
+                    {% if submission.vehicle_rc_file or submission.previous_policy_motor_file or submission.previous_policy_health_file or submission.previous_policy_shopkeeper_file or submission.previous_policy_others_file %}
+                        {% set has_files = true %}
+                        <div class="row g-3">
+                            {% if submission.vehicle_rc_file %}
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <h6 class="text-muted mb-2">Vehicle RC</h6>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span>
+                                            <i class="fas fa-file me-2"></i>
+                                            {{ submission.vehicle_rc_file.split('/')[-1] if submission.vehicle_rc_file else 'No file' }}
+                                        </span>
+                                        <a href="{{ url_for('uploaded_files', filename=submission.vehicle_rc_file) }}"
+                                           target="_blank"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download"></i> View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.previous_policy_motor_file %}
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <h6 class="text-muted mb-2">Previous Policy (Motor)</h6>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span>
+                                            <i class="fas fa-file me-2"></i>
+                                            {{ submission.previous_policy_motor_file.split('/')[-1] if submission.previous_policy_motor_file else 'No file' }}
+                                        </span>
+                                        <a href="{{ url_for('uploaded_files', filename=submission.previous_policy_motor_file) }}"
+                                           target="_blank"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download"></i> View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.previous_policy_health_file %}
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <h6 class="text-muted mb-2">Previous Policy (Health)</h6>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span>
+                                            <i class="fas fa-file me-2"></i>
+                                            {{ submission.previous_policy_health_file.split('/')[-1] if submission.previous_policy_health_file else 'No file' }}
+                                        </span>
+                                        <a href="{{ url_for('uploaded_files', filename=submission.previous_policy_health_file) }}"
+                                           target="_blank"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download"></i> View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.previous_policy_shopkeeper_file %}
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <h6 class="text-muted mb-2">Previous Policy (Shopkeeper)</h6>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span>
+                                            <i class="fas fa-file me-2"></i>
+                                            {{ submission.previous_policy_shopkeeper_file.split('/')[-1] if submission.previous_policy_shopkeeper_file else 'No file' }}
+                                        </span>
+                                        <a href="{{ url_for('uploaded_files', filename=submission.previous_policy_shopkeeper_file) }}"
+                                           target="_blank"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download"></i> View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.previous_policy_others_file %}
+                            <div class="col-md-6">
+                                <div class="border rounded p-3">
+                                    <h6 class="text-muted mb-2">Previous Policy (Others)</h6>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span>
+                                            <i class="fas fa-file me-2"></i>
+                                            {{ submission.previous_policy_others_file.split('/')[-1] if submission.previous_policy_others_file else 'No file' }}
+                                        </span>
+                                        <a href="{{ url_for('uploaded_files', filename=submission.previous_policy_others_file) }}"
+                                           target="_blank"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download"></i> View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted"><i class="fas fa-inbox"></i> No files uploaded with this submission.</p>
+                    {% endif %}
+                </div>
+            </div>
 
             <!-- Action History -->
             <div class="card mb-4">

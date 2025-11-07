@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime, timedelta
-import sqlite3
+import pymongo
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 
@@ -28,32 +28,59 @@ app.permanent_session_lifetime = timedelta(hours=24)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
+# Create uploads directory if it doesn't exist
+import os
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'submissions'), exist_ok=True)
+
 # File extensions allowed
 ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'csv', 'txt'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Database configuration
-DATABASE = os.getenv('DATABASE_URL', 'admin_panel.db')
+# MongoDB configuration
+from urllib.parse import quote_plus
+MONGODB_URI = f"mongodb+srv://bali:{quote_plus('bali@123')}@cluster0.xu1iuqe.mongodb.net/"
+DATABASE_NAME = "bali_insurance"
 
-# For production environments like Vercel, use /tmp/ for database
-if os.environ.get('VERCEL') or os.environ.get('RAILWAY_ENVIRONMENT'):
-    # Use temporary directory in production
-    import tempfile
-    temp_dir = tempfile.gettempdir()
-    DATABASE = os.path.join(temp_dir, 'admin_panel.db')
+# MongoDB connection
+try:
+    client = pymongo.MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
+    # Test connection
+    client.admin.command('ping')
+    db = client[DATABASE_NAME]
+    logger.info("✅ MongoDB Atlas connected successfully")
+except pymongo.errors.ServerSelectionTimeoutError:
+    logger.error("❌ MongoDB Atlas connection failed - check your connection string")
+    client = None
+    db = None
+except Exception as e:
+    logger.error(f"❌ MongoDB Atlas error: {e}")
+    client = None
+    db = None
+
+# MongoDB collections
+def get_collections():
+    """Get MongoDB collections"""
+    if db is None:
+        return None, None, None
+    return (
+        db.form_submissions,
+        db.blog_posts,
+        db.admin_sessions
+    )
 
 # Configure Groq API safely
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if GROQ_API_KEY:
     try:
-        client = Groq(api_key=GROQ_API_KEY)
+        groq_client = Groq(api_key=GROQ_API_KEY)
     except Exception as e:
         logger.warning(f"Failed to initialize Groq client: {e}")
-        client = None
+        groq_client = None
 else:
-    client = None
+    groq_client = None
     logger.warning("GROQ_API_KEY not found. AI features will be disabled.")
 
 # Admin credentials
@@ -68,111 +95,56 @@ SMTP_PASSWORD = "oqny rnem dbap yofq "
 
 # Database functions
 def get_db_connection():
-    """Get database connection with error handling"""
-    try:
-        conn = sqlite3.connect(DATABASE)
-        conn.row_factory = sqlite3.Row
-        return conn
-    except Exception as e:
-        logger.error(f"Database connection error: {e}")
-        return None
+    """Get database connection (MongoDB)"""
+    return db
 
 def init_db():
-    """Initialize database with required tables"""
+    """Initialize MongoDB collections with indexes"""
     try:
-        conn = get_db_connection()
-        if conn is None:
-            logger.error("Failed to connect to database")
+        if db is None:
+            logger.error("MongoDB connection not available")
             return False
         
-        # Create form submissions table
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS form_submissions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                first_name TEXT NOT NULL,
-                last_name TEXT NOT NULL,
-                phone TEXT NOT NULL,
-                email TEXT,
-                want_to TEXT,
-                insurance_type TEXT NOT NULL,
-                age TEXT,
-                aadhaar TEXT,
-                -- Motor fields
-                vehicle_rc TEXT,
-                previous_policy_motor TEXT,
-                -- Health fields
-                previous_policy_health TEXT,
-                pre_existing_disease TEXT,
-                -- Travel fields
-                travel_country TEXT,
-                travel_duration TEXT,
-                travel_age TEXT,
-                -- Marine fields
-                commodity_type TEXT,
-                transport_mode TEXT,
-                pre_carrying_unit TEXT,
-                -- Shopkeeper fields
-                business_nature TEXT,
-                previous_policy_shopkeeper TEXT,
-                claim_occurred TEXT,
-                -- Workmen fields
-                number_of_members TEXT,
-                salary TEXT,
-                work_nature TEXT,
-                -- Fire fields
-                sum_insured TEXT,
-                locality TEXT,
-                pincode TEXT,
-                occupancy TEXT,
-                -- Others fields
-                type_of_insurance TEXT,
-                previous_policy_others TEXT,
-                submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                status TEXT DEFAULT 'new',
-                notes TEXT,
-                processed_by TEXT,
-                processed_date TIMESTAMP
-            )
-        ''')
+        form_submissions, blog_posts, admin_sessions = get_collections()
         
-        # Create blog posts table
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS blog_posts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT NOT NULL,
-                slug TEXT UNIQUE NOT NULL,
-                content TEXT NOT NULL,
-                excerpt TEXT,
-                author TEXT DEFAULT 'Bima With Bali',
-                status TEXT DEFAULT 'draft',
-                created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                published_date TIMESTAMP,
-                featured_image TEXT,
-                tags TEXT,
-                meta_description TEXT
-            )
-        ''')
+        # Create indexes for form_submissions
+        form_submissions.create_index([("submission_date", pymongo.DESCENDING)])
+        form_submissions.create_index([("status", pymongo.ASCENDING)])
+        form_submissions.create_index([("insurance_type", pymongo.ASCENDING)])
+        form_submissions.create_index([("email", pymongo.ASCENDING)])
         
-        # Create admin sessions table
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS admin_sessions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                session_id TEXT UNIQUE NOT NULL,
-                admin_user TEXT NOT NULL,
-                login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                ip_address TEXT,
-                user_agent TEXT
-            )
-        ''')
+        # Create indexes for blog_posts
+        blog_posts.create_index([("slug", pymongo.ASCENDING)], unique=True)
+        blog_posts.create_index([("status", pymongo.ASCENDING)])
+        blog_posts.create_index([("published_date", pymongo.DESCENDING)])
+        blog_posts.create_index([("created_date", pymongo.DESCENDING)])
+        blog_posts.create_index([("tags", pymongo.ASCENDING)])
         
-        conn.commit()
-        conn.close()
+        # Create indexes for admin_sessions
+        admin_sessions.create_index([("session_id", pymongo.ASCENDING)], unique=True)
+        admin_sessions.create_index([("login_time", pymongo.DESCENDING)])
+        admin_sessions.create_index([("admin_user", pymongo.ASCENDING)])
+        
+        logger.info("✅ MongoDB collections and indexes initialized successfully")
         return True
     except Exception as e:
-        logger.error(f"Database initialization error: {e}")
+        logger.error(f"MongoDB initialization error: {e}")
         return False
+
+def cleanup_audit_log():
+    """Keep only the top 5 most recent audit log entries"""
+    try:
+        form_submissions, blog_posts, admin_sessions = get_collections()
+        if admin_sessions is not None:
+            # Get the 6th most recent entry
+            sessions = admin_sessions.find().sort("login_time", pymongo.DESCENDING).skip(5).limit(1)
+            sixth_entry = sessions.first()
+            
+            if sixth_entry:
+                # Delete all entries older than the 6th most recent
+                admin_sessions.delete_many({"_id": {"$lt": sixth_entry["_id"]}})
+    except Exception as e:
+        app.logger.error(f"Error cleaning up audit log: {e}")
 
 # Authentication decorator
 def admin_required(f):
@@ -184,29 +156,6 @@ def admin_required(f):
             return redirect(url_for('admin_login'))
         return f(*args, **kwargs)
     return decorated_function
-
-def cleanup_audit_log():
-    """Keep only the top 5 most recent audit log entries"""
-    try:
-        conn = get_db_connection()
-        # Get the ID of the 5th most recent entry
-        fifth_entry = conn.execute('''
-            SELECT id FROM admin_sessions
-            ORDER BY login_time DESC
-            LIMIT 1 OFFSET 4
-        ''').fetchone()
-        
-        if fifth_entry:
-            # Delete all entries older than the 5th most recent
-            conn.execute('''
-                DELETE FROM admin_sessions
-                WHERE id < ?
-            ''', (fifth_entry['id'],))
-            conn.commit()
-        
-        conn.close()
-    except Exception as e:
-        app.logger.error(f"Error cleaning up audit log: {e}")
 
 # Initialize database on startup
 try:
@@ -229,7 +178,29 @@ try:
     import smtplib
     app.logger.info("✅ SMTP import successful")
 except ImportError as e:
-    app.logger.error(f"❌ SMTP import failed: {e}")
+    app.logger.error("❌ SMTP import failed: {e}")
+
+# File storage utilities
+def save_uploaded_file(file, submission_id, field_name):
+    """Save uploaded file to submissions folder and return file path"""
+    if not file or not file.filename:
+        return None
+    
+    try:
+        # Create safe filename
+        import uuid
+        file_extension = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+        safe_filename = f"{submission_id}_{field_name}_{uuid.uuid4().hex[:8]}.{file_extension}"
+        
+        # Save file
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'submissions', safe_filename)
+        file.save(file_path)
+        
+        app.logger.info(f"Saved file: {safe_filename}")
+        return f"submissions/{safe_filename}"
+    except Exception as e:
+        app.logger.error(f"Error saving file {field_name}: {e}")
+        return None
 
 # Static files and favicon
 @app.route('/favicon.ico')
@@ -251,6 +222,11 @@ def favicon_png():
 @app.route('/static/<path:filename>')
 def static_files(filename):
     return send_from_directory('static', filename)
+
+# File serving route for uploaded files
+@app.route('/uploads/<path:filename>')
+def uploaded_files(filename):
+    return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename)
 
 # Error handlers
 @app.errorhandler(404)
@@ -326,47 +302,31 @@ def test():
 @app.route('/blog')
 def blog():
     """Display all blog posts"""
-    conn = get_db_connection()
-    posts = conn.execute('''
-        SELECT * FROM blog_posts
-        WHERE status = 'published'
-        ORDER BY published_date DESC, created_date DESC
-    ''').fetchall()
-    conn.close()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    posts = list(blog_posts.find({"status": "published"}).sort([("published_date", pymongo.DESCENDING), ("created_date", pymongo.DESCENDING)]))
     return render_template('blog.html', posts=posts)
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
     """Display single blog post"""
-    conn = get_db_connection()
-    post = conn.execute('''
-        SELECT * FROM blog_posts
-        WHERE slug = ? AND status = 'published'
-    ''', (slug,)).fetchone()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    post = blog_posts.find_one({"slug": slug, "status": "published"})
     
     related_posts = []
     if post:
-        if post['tags']:
+        if post.get('tags'):
             tags = post['tags'].split(',')
-            related_posts = conn.execute('''
-                SELECT * FROM blog_posts
-                WHERE status = 'published'
-                AND id != ?
-                AND (tags LIKE ? OR tags LIKE ?)
-                ORDER BY RANDOM()
-                LIMIT 3
-            ''', (post['id'], f'%{tags[0].strip()}%', f'%{tags[0].strip()}%')).fetchall()
+            related_posts = list(blog_posts.find({
+                "status": "published",
+                "_id": {"$ne": post["_id"]},
+                "tags": {"$regex": tags[0].strip(), "$options": "i"}
+            }).limit(3))
         
         if not related_posts:
-            related_posts = conn.execute('''
-                SELECT * FROM blog_posts
-                WHERE status = 'published'
-                AND id != ?
-                ORDER BY published_date DESC, created_date DESC
-                LIMIT 3
-            ''', (post['id'],)).fetchall()
-    
-    conn.close()
+            related_posts = list(blog_posts.find({
+                "status": "published",
+                "_id": {"$ne": post["_id"]}
+            }).sort([("published_date", pymongo.DESCENDING), ("created_date", pymongo.DESCENDING)]).limit(3))
     
     if not post:
         return render_template('blog_single.html', post=None, related_posts=[]), 404
@@ -543,7 +503,7 @@ def send_email():
                 email = request.form.get('email', '')
                 want_to = "renewal"
                 insurance_type = request.form.get('insuranceType', '')
-                age = request.form.get('age', '')
+                date_of_birth = request.form.get('dateOfBirth', '')
                 aadhaar = request.form.get('aadhaar', '')
                 
                 # Extract dynamic fields
@@ -573,32 +533,76 @@ def send_email():
                 app.logger.info(f"Form data extracted - Name: {first_name} {last_name}, Insurance: {insurance_type}")
                 
                 # Save to database
-                conn = get_db_connection()
-                if conn:
+                form_submissions, blog_posts, admin_sessions = get_collections()
+                if form_submissions is not None:
                     try:
                         app.logger.info("Attempting database insert...")
-                        conn.execute('''
-                            INSERT INTO form_submissions (
-                                first_name, last_name, phone, email, want_to, insurance_type, age, aadhaar,
-                                vehicle_rc, previous_policy_motor, previous_policy_health, pre_existing_disease,
-                                travel_country, travel_duration, travel_age, commodity_type, transport_mode, pre_carrying_unit,
-                                business_nature, previous_policy_shopkeeper, claim_occurred, number_of_members, salary, work_nature,
-                                sum_insured, locality, pincode, occupancy, type_of_insurance, previous_policy_others
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        ''', (
-                            first_name, last_name, phone, email, want_to, insurance_type, age, aadhaar,
-                            vehicle_rc, previous_policy_motor, previous_policy_health, pre_existing_disease,
-                            travel_country, travel_duration, travel_age, commodity_type, transport_mode, pre_carrying_unit,
-                            business_nature, previous_policy_shopkeeper, claim_occurred, number_of_members, salary, work_nature,
-                            sum_insured, locality, pincode, occupancy, type_of_insurance, previous_policy_others
-                        ))
-                        conn.commit()
-                        app.logger.info("Database insert successful")
+                        
+                        # Create submission document
+                        submission_doc = {
+                            "first_name": first_name,
+                            "last_name": last_name,
+                            "phone": phone,
+                            "email": email,
+                            "want_to": want_to,
+                            "insurance_type": insurance_type,
+                            "date_of_birth": date_of_birth,
+                            "aadhaar": aadhaar,
+                            "vehicle_rc": vehicle_rc,
+                            "previous_policy_motor": previous_policy_motor,
+                            "previous_policy_health": previous_policy_health,
+                            "pre_existing_disease": pre_existing_disease,
+                            "travel_country": travel_country,
+                            "travel_duration": travel_duration,
+                            "travel_age": travel_age,
+                            "commodity_type": commodity_type,
+                            "transport_mode": transport_mode,
+                            "pre_carrying_unit": pre_carrying_unit,
+                            "business_nature": business_nature,
+                            "previous_policy_shopkeeper": previous_policy_shopkeeper,
+                            "claim_occurred": claim_occurred,
+                            "number_of_members": number_of_members,
+                            "salary": salary,
+                            "work_nature": work_nature,
+                            "sum_insured": sum_insured,
+                            "locality": locality,
+                            "pincode": pincode,
+                            "occupancy": occupancy,
+                            "type_of_insurance": type_of_insurance,
+                            "previous_policy_others": previous_policy_others,
+                            "submission_date": datetime.now(),
+                            "status": "new"
+                        }
+                        
+                        result = form_submissions.insert_one(submission_doc)
+                        submission_id = result.inserted_id
+                        app.logger.info(f"Submission created with ID: {submission_id}")
+                        
+                        # Save uploaded files
+                        saved_files = {}
+                        file_fields = {
+                            'vehicleRC': 'vehicle_rc_file',
+                            'previousPolicyMotor': 'previous_policy_motor_file',
+                            'previousPolicyHealth': 'previous_policy_health_file',
+                            'previousPolicyShopkeeper': 'previous_policy_shopkeeper_file',
+                            'previousPolicyOthers': 'previous_policy_others_file'
+                        }
+                        
+                        for field_name, db_column in file_fields.items():
+                            if field_name in files and files[field_name].filename:
+                                file_path = save_uploaded_file(files[field_name], submission_id, field_name)
+                                if file_path:
+                                    saved_files[field_name] = file_path
+                                    form_submissions.update_one(
+                                        {"_id": submission_id},
+                                        {"$set": {db_column: file_path}}
+                                    )
+                        
+                        app.logger.info(f"Files saved: {saved_files}")
+                        app.logger.info("Database insert with file storage successful")
                     except Exception as db_error:
                         app.logger.error(f"Database error: {db_error}")
                         raise db_error
-                    finally:
-                        conn.close()
                 
                 # Send admin notification email
                 try:
@@ -612,7 +616,7 @@ def send_email():
 Name: {first_name} {last_name}
 Email: {email}
 Phone: {phone}
-Age: {age}
+Date of Birth: {date_of_birth}
 Insurance Type: {insurance_type}
 Aadhaar: {aadhaar}
 
@@ -710,7 +714,7 @@ def chat():
     history = data.get('history', [])
 
     # Check if Groq client is available
-    if client is None:
+    if groq_client is None:
         return jsonify({'response': "I'm sorry, but the AI assistant is currently unavailable. Please contact our team directly for assistance with your insurance needs."})
 
     # Build conversation context
@@ -726,7 +730,7 @@ def chat():
 
     # Use Groq API to generate response
     try:
-        response = client.chat.completions.create(
+        response = groq_client.chat.completions.create(
             model="llama3-8b-8192",
             messages=messages,
             max_tokens=500,
@@ -736,7 +740,7 @@ def chat():
     except Exception as e:
         # Fallback to another model if the current one is decommissioned
         try:
-            response = client.chat.completions.create(
+            response = groq_client.chat.completions.create(
                 model="openai/gpt-oss-20b",
                 messages=messages,
                 max_tokens=500,
@@ -769,14 +773,17 @@ def admin_login():
                 
                 # Log admin session (with error handling)
                 try:
-                    conn = get_db_connection()
-                    if conn:
-                        conn.execute('''
-                            INSERT INTO admin_sessions (session_id, admin_user, ip_address, user_agent)
-                            VALUES (?, ?, ?, ?)
-                        ''', (session_id, username, request.remote_addr, request.headers.get('User-Agent')))
-                        conn.commit()
-                        conn.close()
+                    form_submissions, blog_posts, admin_sessions = get_collections()
+                    if admin_sessions is not None:
+                        session_doc = {
+                            "session_id": session_id,
+                            "admin_user": username,
+                            "login_time": datetime.now(),
+                            "last_activity": datetime.now(),
+                            "ip_address": request.remote_addr,
+                            "user_agent": request.headers.get('User-Agent')
+                        }
+                        admin_sessions.insert_one(session_doc)
                         
                         # Cleanup audit log to keep only top 5
                         cleanup_audit_log()
@@ -805,8 +812,8 @@ def admin_logout():
 def admin_dashboard():
     """Admin dashboard with key metrics and error handling"""
     try:
-        conn = get_db_connection()
-        if not conn:
+        form_submissions, blog_posts, admin_sessions = get_collections()
+        if form_submissions is None or blog_posts is None:
             return render_template('admin/dashboard.html',
                                  total_submissions=0,
                                  new_submissions=0,
@@ -818,59 +825,54 @@ def admin_dashboard():
         
         # Get dashboard statistics with error handling
         try:
-            total_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions').fetchone()['count']
+            total_submissions = form_submissions.count_documents({})
         except:
             total_submissions = 0
             
         try:
-            new_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions WHERE status = "new"').fetchone()['count']
+            new_submissions = form_submissions.count_documents({"status": "new"})
         except:
             new_submissions = 0
             
         try:
-            total_blog_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts').fetchone()['count']
+            total_blog_posts = blog_posts.count_documents({})
         except:
             total_blog_posts = 0
             
         try:
-            published_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts WHERE status = "published"').fetchone()['count']
+            published_posts = blog_posts.count_documents({"status": "published"})
         except:
             published_posts = 0
         
         # Get recent submissions
         try:
-            recent_submissions = conn.execute('''
-                SELECT * FROM form_submissions
-                ORDER BY submission_date DESC
-                LIMIT 10
-            ''').fetchall()
+            recent_submissions = list(form_submissions.find({}).sort("submission_date", pymongo.DESCENDING).limit(10))
         except:
             recent_submissions = []
         
         # Get submissions by insurance type
         try:
-            submissions_by_type = conn.execute('''
-                SELECT insurance_type, COUNT(*) as count
-                FROM form_submissions
-                GROUP BY insurance_type
-                ORDER BY count DESC
-            ''').fetchall()
+            pipeline = [
+                {"$group": {"_id": "$insurance_type", "count": {"$sum": 1}}},
+                {"$sort": {"count": pymongo.DESCENDING}}
+            ]
+            submissions_by_type = list(form_submissions.aggregate(pipeline))
         except:
             submissions_by_type = []
         
         # Get monthly submission trends
         try:
-            monthly_trends = conn.execute('''
-                SELECT strftime('%Y-%m', submission_date) as month, COUNT(*) as count
-                FROM form_submissions
-                WHERE submission_date >= date('now', '-12 months')
-                GROUP BY strftime('%Y-%m', submission_date)
-                ORDER BY month DESC
-            ''').fetchall()
+            pipeline = [
+                {"$match": {"submission_date": {"$gte": datetime.now() - timedelta(days=365)}}},
+                {"$group": {
+                    "_id": {"$dateToString": {"format": "%Y-%m", "date": "$submission_date"}},
+                    "count": {"$sum": 1}
+                }},
+                {"$sort": {"_id": pymongo.DESCENDING}}
+            ]
+            monthly_trends = list(form_submissions.aggregate(pipeline))
         except:
             monthly_trends = []
-        
-        conn.close()
         
         return render_template('admin/dashboard.html',
                              total_submissions=total_submissions,
@@ -905,43 +907,39 @@ def admin_submissions():
     per_page = 20
     
     # Build query
-    conn = get_db_connection()
-    query = 'SELECT * FROM form_submissions WHERE 1=1'
-    params = []
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    query = {}
     
     if status_filter:
-        query += ' AND status = ?'
-        params.append(status_filter)
+        query["status"] = status_filter
     
     if insurance_type_filter:
-        query += ' AND insurance_type = ?'
-        params.append(insurance_type_filter)
+        query["insurance_type"] = insurance_type_filter
     
     if date_from:
-        query += ' AND date(submission_date) >= ?'
-        params.append(date_from)
+        query["submission_date"] = {"$gte": datetime.strptime(date_from, "%Y-%m-%d")}
     
     if date_to:
-        query += ' AND date(submission_date) <= ?'
-        params.append(date_to)
+        if "submission_date" not in query:
+            query["submission_date"] = {}
+        query["submission_date"]["$lte"] = datetime.strptime(date_to, "%Y-%m-%d")
     
     if search_query:
-        query += ' AND (first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR phone LIKE ?)'
-        search_term = f'%{search_query}%'
-        params.extend([search_term, search_term, search_term, search_term])
+        query["$or"] = [
+            {"first_name": {"$regex": search_query, "$options": "i"}},
+            {"last_name": {"$regex": search_query, "$options": "i"}},
+            {"email": {"$regex": search_query, "$options": "i"}},
+            {"phone": {"$regex": search_query, "$options": "i"}}
+        ]
     
     # Get total count for pagination
-    count_query = query.replace('SELECT *', 'SELECT COUNT(*)')
-    total_count = conn.execute(count_query, params).fetchone()[0]
+    total_count = form_submissions.count_documents(query) if form_submissions is not None else 0
     
     # Get paginated results
-    query += ' ORDER BY submission_date DESC LIMIT ? OFFSET ?'
-    params.extend([per_page, (page - 1) * per_page])
-    submissions = conn.execute(query, params).fetchall()
+    submissions = list(form_submissions.find(query).sort("submission_date", pymongo.DESCENDING).skip((page - 1) * per_page).limit(per_page)) if form_submissions is not None else []
     
     # Get filter options
-    insurance_types = conn.execute('SELECT DISTINCT insurance_type FROM form_submissions').fetchall()
-    conn.close()
+    insurance_types = list(form_submissions.distinct("insurance_type")) if form_submissions is not None else []
     
     total_pages = (total_count + per_page - 1) // per_page
     
@@ -959,13 +957,12 @@ def admin_submissions():
                              'search': search_query
                          })
 
-@app.route('/admin/submissions/<int:submission_id>')
+@app.route('/admin/submissions/<submission_id>')
 @admin_required
 def admin_submission_detail(submission_id):
     """View submission detail"""
-    conn = get_db_connection()
-    submission = conn.execute('SELECT * FROM form_submissions WHERE id = ?', (submission_id,)).fetchone()
-    conn.close()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    submission = form_submissions.find_one({"_id": pymongo.ObjectId(submission_id)}) if form_submissions is not None else None
     
     if not submission:
         flash('Submission not found', 'error')
@@ -973,7 +970,7 @@ def admin_submission_detail(submission_id):
     
     return render_template('admin/submission_detail.html', submission=submission)
 
-@app.route('/admin/submissions/<int:submission_id>/update', methods=['POST'])
+@app.route('/admin/submissions/<submission_id>/update', methods=['POST'])
 @admin_required
 def admin_update_submission(submission_id):
     """Update submission status and notes"""
@@ -989,15 +986,14 @@ def admin_update_submission(submission_id):
         if not status:
             return jsonify({"success": False, "message": "Status is required"}), 400
         
-        conn = get_db_connection()
-        conn.execute('''
-            UPDATE form_submissions
-            SET status = ?, notes = ?, processed_by = ?, processed_date = CURRENT_TIMESTAMP
-            WHERE id = ?
-        ''', (status, notes, session['admin_username'], submission_id))
-        
-        conn.commit()
-        conn.close()
+        form_submissions, blog_posts, admin_sessions = get_collections()
+        update_data = {
+            "status": status,
+            "notes": notes,
+            "processed_by": session['admin_username'],
+            "processed_date": datetime.now()
+        }
+        form_submissions.update_one({"_id": pymongo.ObjectId(submission_id)}, {"$set": update_data}) if form_submissions is not None else None
         
         if request.is_json:
             return jsonify({"success": True, "message": "Submission updated successfully"})
@@ -1007,36 +1003,35 @@ def admin_update_submission(submission_id):
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-@app.route('/admin/submissions/<int:submission_id>/delete', methods=['POST'])
+@app.route('/admin/submissions/<submission_id>/delete', methods=['POST'])
 @admin_required
 def admin_delete_submission(submission_id):
     """Delete a submission completely from database"""
     try:
-        conn = get_db_connection()
+        form_submissions, blog_posts, admin_sessions = get_collections()
         
         # Check if submission exists
-        submission = conn.execute('SELECT * FROM form_submissions WHERE id = ?', (submission_id,)).fetchone()
+        submission = form_submissions.find_one({"_id": pymongo.ObjectId(submission_id)}) if form_submissions is not None else None
         
         if not submission:
-            conn.close()
             return jsonify({"success": False, "message": "Submission not found"}), 404
         
         # Delete the submission
-        conn.execute('DELETE FROM form_submissions WHERE id = ?', (submission_id,))
-        conn.commit()
-        conn.close()
+        form_submissions.delete_one({"_id": pymongo.ObjectId(submission_id)}) if form_submissions is not None else None
         
         # Log the deletion in audit log
         try:
-            conn = get_db_connection()
-            conn.execute('''
-                INSERT INTO admin_sessions (session_id, admin_user, ip_address, user_agent)
-                VALUES (?, ?, ?, ?)
-            ''', (f"deleted_submission_{submission_id}", session['admin_username'],
-                  request.remote_addr, f"Deleted submission {submission_id} - {submission['first_name']} {submission['last_name']}"))
-            conn.commit()
-            conn.close()
-            cleanup_audit_log()
+            if admin_sessions is not None:
+                session_doc = {
+                    "session_id": f"deleted_submission_{submission_id}",
+                    "admin_user": session['admin_username'],
+                    "login_time": datetime.now(),
+                    "last_activity": datetime.now(),
+                    "ip_address": request.remote_addr,
+                    "user_agent": f"Deleted submission {submission_id} - {submission.get('first_name', '')} {submission.get('last_name', '')}"
+                }
+                admin_sessions.insert_one(session_doc)
+                cleanup_audit_log()
         except Exception as e:
             app.logger.error(f"Failed to log deletion: {e}")
         
@@ -1054,29 +1049,23 @@ def admin_blog():
     page = request.args.get('page', 1, type=int)
     per_page = 15
     
-    conn = get_db_connection()
-    query = 'SELECT * FROM blog_posts WHERE 1=1'
-    params = []
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    query = {}
     
     if status_filter:
-        query += ' AND status = ?'
-        params.append(status_filter)
+        query["status"] = status_filter
     
     if search_query:
-        query += ' AND (title LIKE ? OR content LIKE ?)'
-        search_term = f'%{search_query}%'
-        params.extend([search_term, search_term])
+        query["$or"] = [
+            {"title": {"$regex": search_query, "$options": "i"}},
+            {"content": {"$regex": search_query, "$options": "i"}}
+        ]
     
     # Get total count
-    count_query = query.replace('SELECT *', 'SELECT COUNT(*)')
-    total_count = conn.execute(count_query, params).fetchone()[0]
+    total_count = blog_posts.count_documents(query) if blog_posts is not None else 0
     
     # Get paginated results
-    query += ' ORDER BY created_date DESC LIMIT ? OFFSET ?'
-    params.extend([per_page, (page - 1) * per_page])
-    posts = conn.execute(query, params).fetchall()
-    
-    conn.close()
+    posts = list(blog_posts.find(query).sort("created_date", pymongo.DESCENDING).skip((page - 1) * per_page).limit(per_page)) if blog_posts is not None else []
     
     total_pages = (total_count + per_page - 1) // per_page
     
@@ -1104,32 +1093,41 @@ def admin_blog_new():
         # Generate slug from title
         slug = title.lower().replace(' ', '-').replace(',', '').replace('.', '')
         
-        conn = get_db_connection()
+        form_submissions, blog_posts, admin_sessions = get_collections()
         try:
-            conn.execute('''
-                INSERT INTO blog_posts (title, slug, content, excerpt, status, featured_image, tags, meta_description)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (title, slug, content, excerpt, status, featured_image, tags, meta_description))
+            post_doc = {
+                "title": title,
+                "slug": slug,
+                "content": content,
+                "excerpt": excerpt,
+                "status": status,
+                "featured_image": featured_image,
+                "tags": tags,
+                "meta_description": meta_description,
+                "author": "Bima With Bali",
+                "created_date": datetime.now(),
+                "updated_date": datetime.now()
+            }
             
-            conn.commit()
+            if status == "published":
+                post_doc["published_date"] = datetime.now()
+            
+            blog_posts.insert_one(post_doc) if blog_posts is not None else None
             flash('Blog post created successfully', 'success')
             return redirect(url_for('admin_blog'))
-        except sqlite3.IntegrityError:
+        except pymongo.errors.DuplicateKeyError:
             flash('A blog post with this title already exists', 'error')
-        finally:
-            conn.close()
     
     return render_template('admin/blog_new.html')
 
-@app.route('/admin/blog/<int:post_id>/edit', methods=['GET', 'POST'])
+@app.route('/admin/blog/<post_id>/edit', methods=['GET', 'POST'])
 @admin_required
 def admin_blog_edit(post_id):
     """Edit blog post"""
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM blog_posts WHERE id = ?', (post_id,)).fetchone()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    post = blog_posts.find_one({"_id": pymongo.ObjectId(post_id)}) if blog_posts is not None else None
     
     if not post:
-        conn.close()
         flash('Blog post not found', 'error')
         return redirect(url_for('admin_blog'))
     
@@ -1146,66 +1144,64 @@ def admin_blog_edit(post_id):
         slug = title.lower().replace(' ', '-').replace(',', '').replace('.', '')
         
         try:
-            conn.execute('''
-                UPDATE blog_posts
-                SET title = ?, slug = ?, content = ?, excerpt = ?, status = ?,
-                    featured_image = ?, tags = ?, meta_description = ?, updated_date = CURRENT_TIMESTAMP
-                WHERE id = ?
-            ''', (title, slug, content, excerpt, status, featured_image, tags, meta_description, post_id))
+            update_data = {
+                "title": title,
+                "slug": slug,
+                "content": content,
+                "excerpt": excerpt,
+                "status": status,
+                "featured_image": featured_image,
+                "tags": tags,
+                "meta_description": meta_description,
+                "updated_date": datetime.now()
+            }
             
-            conn.commit()
+            # Set published date if status is published
+            if status == "published" and post.get("status") != "published":
+                update_data["published_date"] = datetime.now()
+            
+            blog_posts.update_one({"_id": pymongo.ObjectId(post_id)}, {"$set": update_data}) if blog_posts is not None else None
             flash('Blog post updated successfully', 'success')
             return redirect(url_for('admin_blog'))
-        except sqlite3.IntegrityError:
+        except pymongo.errors.DuplicateKeyError:
             flash('A blog post with this title already exists', 'error')
     
-    conn.close()
     return render_template('admin/blog_edit.html', post=post)
 
-@app.route('/admin/blog/<int:post_id>/status', methods=['POST'])
+@app.route('/admin/blog/<post_id>/status', methods=['POST'])
 @admin_required
 def admin_blog_status(post_id):
     """Update blog post status"""
     data = request.json
     new_status = data.get('status')
     
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM blog_posts WHERE id = ?', (post_id,)).fetchone()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    post = blog_posts.find_one({"_id": pymongo.ObjectId(post_id)}) if blog_posts is not None else None
     
     if post:
-        # Update status
-        update_query = 'UPDATE blog_posts SET status = ?, updated_date = CURRENT_TIMESTAMP'
-        params = [new_status, post_id]
+        update_data = {"status": new_status, "updated_date": datetime.now()}
         
         # Set published date if status is published
-        if new_status == 'published':
-            update_query += ', published_date = CURRENT_TIMESTAMP'
+        if new_status == "published":
+            update_data["published_date"] = datetime.now()
         
-        conn.execute(update_query, params)
-        
-        conn.commit()
-        conn.close()
+        blog_posts.update_one({"_id": pymongo.ObjectId(post_id)}, {"$set": update_data}) if blog_posts is not None else None
         
         return jsonify({"success": True, "message": "Status updated successfully"})
     else:
-        conn.close()
         return jsonify({"success": False, "message": "Post not found"})
 
-@app.route('/admin/blog/<int:post_id>/delete', methods=['POST'])
+@app.route('/admin/blog/<post_id>/delete', methods=['POST'])
 @admin_required
 def admin_blog_delete(post_id):
     """Delete blog post"""
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM blog_posts WHERE id = ?', (post_id,)).fetchone()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    post = blog_posts.find_one({"_id": pymongo.ObjectId(post_id)}) if blog_posts is not None else None
     
     if post:
-        conn.execute('DELETE FROM blog_posts WHERE id = ?', (post_id,))
-        
-        conn.commit()
-        conn.close()
+        blog_posts.delete_one({"_id": pymongo.ObjectId(post_id)}) if blog_posts is not None else None
         return jsonify({'success': True, 'message': 'Blog post deleted successfully'})
     else:
-        conn.close()
         return jsonify({'success': False, 'message': 'Blog post not found'}), 404
 
 @app.route('/admin/export/submissions')
@@ -1215,33 +1211,74 @@ def admin_export_submissions():
     import csv
     from io import StringIO
     
-    conn = get_db_connection()
-    submissions = conn.execute('SELECT * FROM form_submissions ORDER BY submission_date DESC').fetchall()
-    conn.close()
+    form_submissions, blog_posts, admin_sessions = get_collections()
+    submissions = list(form_submissions.find({}).sort("submission_date", pymongo.DESCENDING)) if form_submissions is not None else []
     
     output = StringIO()
     writer = csv.writer(output)
     
     # Write header
-    writer.writerow(['ID', 'First Name', 'Last Name', 'Phone', 'Email', 'Want To', 'Insurance Type', 'Age', 'Aadhaar',
+    writer.writerow(['ID', 'First Name', 'Last Name', 'Phone', 'Email', 'Want To', 'Insurance Type', 'Date of Birth', 'Aadhaar',
                     'Vehicle RC', 'Previous Policy Motor', 'Previous Policy Health', 'Pre-existing Disease',
                     'Travel Country', 'Travel Duration', 'Travel Age', 'Commodity Type', 'Transport Mode', 'Pre-carrying Unit',
                     'Business Nature', 'Previous Policy Shopkeeper', 'Claim Occurred', 'Number of Members', 'Salary', 'Work Nature',
                     'Sum Insured', 'Locality', 'Pincode', 'Occupancy', 'Type of Insurance', 'Previous Policy Others',
+                    'Vehicle RC File', 'Previous Policy Motor File', 'Previous Policy Health File', 'Previous Policy Shopkeeper File', 'Previous Policy Others File',
                     'Submission Date', 'Status', 'Notes', 'Processed By', 'Processed Date'])
     
     # Write data
     for submission in submissions:
+        # Helper function to safely get column values
+        def safe_get(field_name, default=''):
+            return submission.get(field_name, default) or default
+        
+        # Get date of birth (fallback to age for backward compatibility)
+        date_of_birth = safe_get('date_of_birth')
+        if not date_of_birth:
+            date_of_birth = safe_get('age')  # fallback for old submissions
+        
         writer.writerow([
-            submission['id'], submission['first_name'], submission['last_name'],
-            submission['phone'], submission['email'], submission['want_to'],
-            submission['insurance_type'], submission['age'], submission['aadhaar'],
-            submission['vehicle_rc'], submission['previous_policy_motor'], submission['previous_policy_health'], submission['pre_existing_disease'],
-            submission['travel_country'], submission['travel_duration'], submission['travel_age'], submission['commodity_type'], submission['transport_mode'], submission['pre_carrying_unit'],
-            submission['business_nature'], submission['previous_policy_shopkeeper'], submission['claim_occurred'], submission['number_of_members'], submission['salary'], submission['work_nature'],
-            submission['sum_insured'], submission['locality'], submission['pincode'], submission['occupancy'], submission['type_of_insurance'], submission['previous_policy_others'],
-            submission['submission_date'], submission['status'],
-            submission['notes'], submission['processed_by'], submission['processed_date']
+            str(submission.get('_id', '')),
+            submission.get('first_name', ''),
+            submission.get('last_name', ''),
+            submission.get('phone', ''),
+            submission.get('email', ''),
+            submission.get('want_to', ''),
+            submission.get('insurance_type', ''),
+            date_of_birth,
+            submission.get('aadhaar', ''),
+            submission.get('vehicle_rc', ''),
+            submission.get('previous_policy_motor', ''),
+            submission.get('previous_policy_health', ''),
+            submission.get('pre_existing_disease', ''),
+            submission.get('travel_country', ''),
+            submission.get('travel_duration', ''),
+            submission.get('travel_age', ''),
+            submission.get('commodity_type', ''),
+            submission.get('transport_mode', ''),
+            submission.get('pre_carrying_unit', ''),
+            submission.get('business_nature', ''),
+            submission.get('previous_policy_shopkeeper', ''),
+            submission.get('claim_occurred', ''),
+            submission.get('number_of_members', ''),
+            submission.get('salary', ''),
+            submission.get('work_nature', ''),
+            submission.get('sum_insured', ''),
+            submission.get('locality', ''),
+            submission.get('pincode', ''),
+            submission.get('occupancy', ''),
+            submission.get('type_of_insurance', ''),
+            submission.get('previous_policy_others', ''),
+            safe_get('vehicle_rc_file'),
+            safe_get('previous_policy_motor_file'),
+            safe_get('previous_policy_health_file'),
+            safe_get('previous_policy_shopkeeper_file'),
+            safe_get('previous_policy_others_file'),
+            submission.get('submission_date', '').strftime('%Y-%m-%d %H:%M:%S') if submission.get('submission_date') else '',
+            submission.get('status', ''),
+            submission.get('notes', ''),
+            submission.get('processed_by', ''),
+            submission.get('processed_date', '').strftime('%Y-%m-%d %H:%M:%S') if submission.get('processed_date') else ''
         ])
     
     output.seek(0)
@@ -1261,29 +1298,23 @@ def admin_audit_log():
     # Always cleanup before showing
     cleanup_audit_log()
     
-    conn = get_db_connection()
+    form_submissions, blog_posts, admin_sessions = get_collections()
     # Get top 5 admin sessions for audit log
-    sessions = conn.execute('''
-        SELECT * FROM admin_sessions
-        ORDER BY login_time DESC
-        LIMIT 5
-    ''').fetchall()
-    
-    conn.close()
+    sessions = list(admin_sessions.find({}).sort("login_time", pymongo.DESCENDING).limit(5)) if admin_sessions is not None else []
     
     # Transform sessions to match template expectations
     logs = []
     for session in sessions:
         log_entry = {
-            'id': session['id'],
+            'id': str(session.get('_id', '')),
             'action': 'LOGIN',
             'table_name': 'admin_sessions',
-            'record_id': session['id'],
-            'admin_user': session['admin_user'],
-            'ip_address': session['ip_address'],
-            'timestamp': session['login_time'],
+            'record_id': str(session.get('_id', '')),
+            'admin_user': session.get('admin_user', ''),
+            'ip_address': session.get('ip_address', ''),
+            'timestamp': session.get('login_time', '').strftime('%Y-%m-%d %H:%M:%S') if session.get('login_time') else '',
             'old_values': None,
-            'new_values': f"Session ID: {session['session_id']}, User Agent: {session['user_agent']}"
+            'new_values': f"Session ID: {session.get('session_id', '')}, User Agent: {session.get('user_agent', '')}"
         }
         logs.append(log_entry)
     
@@ -1303,14 +1334,9 @@ def admin_export_audit_log():
     # Cleanup before export
     cleanup_audit_log()
     
-    conn = get_db_connection()
+    form_submissions, blog_posts, admin_sessions = get_collections()
     # Export only top 5 sessions
-    sessions = conn.execute('''
-        SELECT * FROM admin_sessions
-        ORDER BY login_time DESC
-        LIMIT 5
-    ''').fetchall()
-    conn.close()
+    sessions = list(admin_sessions.find({}).sort("login_time", pymongo.DESCENDING).limit(5)) if admin_sessions is not None else []
     
     output = StringIO()
     writer = csv.writer(output)
@@ -1321,13 +1347,13 @@ def admin_export_audit_log():
     # Write data
     for session in sessions:
         writer.writerow([
-            session['id'],
-            session['admin_user'],
-            session['session_id'],
-            session['login_time'],
-            session['last_activity'],
-            session['ip_address'],
-            session['user_agent']
+            str(session.get('_id', '')),
+            session.get('admin_user', ''),
+            session.get('session_id', ''),
+            session.get('login_time', '').strftime('%Y-%m-%d %H:%M:%S') if session.get('login_time') else '',
+            session.get('last_activity', '').strftime('%Y-%m-%d %H:%M:%S') if session.get('last_activity') else '',
+            session.get('ip_address', ''),
+            session.get('user_agent', '')
         ])
     
     output.seek(0)
