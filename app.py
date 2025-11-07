@@ -306,6 +306,127 @@ def blog_post(slug):
     
     return render_template('blog_single.html', post=post, related_posts=related_posts)
 
+# Static Blog Post Routes
+@app.route('/blog/b1')
+def blog_b1():
+    return render_template('blog_b1.html')
+
+@app.route('/blog/b2')
+def blog_b2():
+    return render_template('blog_b2.html')
+
+@app.route('/blog/b3')
+def blog_b3():
+    return render_template('blog_b3.html')
+
+@app.route('/blog/b4')
+def blog_b4():
+    return render_template('blog_b4.html')
+
+@app.route('/blog/b5')
+def blog_b5():
+    return render_template('blog_b5.html')
+
+@app.route('/blog/b6')
+def blog_b6():
+    return render_template('blog_b6.html')
+
+@app.route('/blog/b7')
+def blog_b7():
+    return render_template('blog_b7.html')
+
+@app.route('/blog/b8')
+def blog_b8():
+    return render_template('blog_b8.html')
+
+@app.route('/blog/b9')
+def blog_b9():
+    return render_template('blog_b9.html')
+
+@app.route('/blog/b10')
+def blog_b10():
+    return render_template('blog_b10.html')
+
+@app.route('/blog/b11')
+def blog_b11():
+    return render_template('blog_b11.html')
+
+@app.route('/blog/b12')
+def blog_b12():
+    return render_template('blog_b12.html')
+
+@app.route('/blog/b13')
+def blog_b13():
+    return render_template('blog_b13.html')
+
+@app.route('/blog/b14')
+def blog_b14():
+    return render_template('blog_b14.html')
+
+@app.route('/blog/b15')
+def blog_b15():
+    return render_template('blog_b15.html')
+
+@app.route('/blog/b16')
+def blog_b16():
+    return render_template('blog_b16.html')
+
+@app.route('/blog/b17')
+def blog_b17():
+    return render_template('blog_b17.html')
+
+@app.route('/blog/b18')
+def blog_b18():
+    return render_template('blog_b18.html')
+
+@app.route('/blog/b19')
+def blog_b19():
+    return render_template('blog_b19.html')
+
+@app.route('/blog/b20')
+def blog_b20():
+    return render_template('blog_b20.html')
+
+@app.route('/blog/b21')
+def blog_b21():
+    return render_template('blog_b21.html')
+
+@app.route('/blog/b22')
+def blog_b22():
+    return render_template('blog_b22.html')
+
+@app.route('/blog/b23')
+def blog_b23():
+    return render_template('blog_b23.html')
+
+@app.route('/blog/b24')
+def blog_b24():
+    return render_template('blog_b24.html')
+
+@app.route('/blog/b25')
+def blog_b25():
+    return render_template('blog_b25.html')
+
+@app.route('/blog/b26')
+def blog_b26():
+    return render_template('blog_b26.html')
+
+@app.route('/blog/b27')
+def blog_b27():
+    return render_template('blog_b27.html')
+
+@app.route('/blog/b28')
+def blog_b28():
+    return render_template('blog_b28.html')
+
+@app.route('/blog/b29')
+def blog_b29():
+    return render_template('blog_b29.html')
+
+@app.route('/blog/b30')
+def blog_b30():
+    return render_template('blog_b30.html')
+
 @app.route('/send-email', methods=['POST'])
 def send_email():
     import logging

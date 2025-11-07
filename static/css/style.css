@@ -59,7 +59,7 @@ body {
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
-  background-color: #f9f9f9;
+  background-color:#fff;
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -522,6 +522,7 @@ body {
 @media (max-width: 768px) {
   .coverage-offer-section {
     padding: var(--spacing-xl) var(--spacing-sm);
+   
   }
 
   .coverage-offer-container {
@@ -541,7 +542,7 @@ body {
 /* ===== MARINE COVERAGE SECTION (CTA) ===== */
 .marine-coverage-section {
   padding: var(--spacing-xxl) var(--spacing-md);
-  background-color: #E3F2FD;
+ 
 }
 
 .marine-coverage-container {
@@ -628,7 +629,10 @@ body {
   .why-need-section,
   .coverage-offer-section,
   .marine-coverage-section {
-    padding: 3rem 1rem;
+    padding-top: 0rem;
+    padding-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .marine-trust-text-large {
@@ -1459,7 +1463,7 @@ width: 100%;
   .secure-journey-section {
     flex-direction: column !important;
     text-align: center;
-    gap: 2rem;
+    
     margin-top: 2rem;
   }
 
