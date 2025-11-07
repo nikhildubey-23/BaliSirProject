@@ -76,12 +76,14 @@
           <div id="motorFields" class="dynamic-group" style="display: none;">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="vehicleRC" class="form-label">Vehicle RC</label>
-                <input class="form-control" type="file" id="vehicleRC" name="vehicleRC" accept="image/*,application/pdf">
+                <label for="vehicleRC" class="form-label">Vehicle RC <small class="text-muted">(Max 5MB)</small></label>
+                <input class="form-control" type="file" id="vehicleRC" name="vehicleRC" accept="image/*,application/pdf" data-max-size="5242880">
+                <div class="invalid-feedback" id="vehicleRC-error"></div>
               </div>
               <div class="col-md-6">
-                <label for="previousPolicyMotor" class="form-label">Previous Policy Copy</label>
-                <input class="form-control" type="file" id="previousPolicyMotor" name="previousPolicyMotor" accept="image/*,application/pdf">
+                <label for="previousPolicyMotor" class="form-label">Previous Policy Copy <small class="text-muted">(Max 5MB)</small></label>
+                <input class="form-control" type="file" id="previousPolicyMotor" name="previousPolicyMotor" accept="image/*,application/pdf" data-max-size="5242880">
+                <div class="invalid-feedback" id="previousPolicyMotor-error"></div>
               </div>
             </div>
           </div>
@@ -90,8 +92,9 @@
           <div id="healthFields" class="dynamic-group" style="display: none;">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="previousPolicyHealth" class="form-label">Previous Policy Copy</label>
-                <input class="form-control" type="file" id="previousPolicyHealth" name="previousPolicyHealth" accept="image/*,application/pdf">
+                <label for="previousPolicyHealth" class="form-label">Previous Policy Copy <small class="text-muted">(Max 5MB)</small></label>
+                <input class="form-control" type="file" id="previousPolicyHealth" name="previousPolicyHealth" accept="image/*,application/pdf" data-max-size="5242880">
+                <div class="invalid-feedback" id="previousPolicyHealth-error"></div>
               </div>
               <div class="col-md-6">
                 <label for="preExistingDisease" class="form-label">Pre-existing Disease</label>
@@ -149,8 +152,9 @@
                 <input type="text" class="form-control" id="businessNature" name="businessNature">
               </div>
               <div class="col-md-4">
-                <label for="previousPolicyShopkeeper" class="form-label">Previous Policy Document</label>
-                <input class="form-control" type="file" id="previousPolicyShopkeeper" name="previousPolicyShopkeeper" accept="image/*,application/pdf">
+                <label for="previousPolicyShopkeeper" class="form-label">Previous Policy Document <small class="text-muted">(Max 5MB)</small></label>
+                <input class="form-control" type="file" id="previousPolicyShopkeeper" name="previousPolicyShopkeeper" accept="image/*,application/pdf" data-max-size="5242880">
+                <div class="invalid-feedback" id="previousPolicyShopkeeper-error"></div>
               </div>
               <div class="col-md-4">
                 <label for="claimOccurred" class="form-label">Claim Occurred</label>
@@ -211,8 +215,9 @@
                 <input type="text" class="form-control" id="typeOfInsurance" name="typeOfInsurance">
               </div>
               <div class="col-md-6">
-                <label for="previousPolicyOthers" class="form-label">Previous Policy Copy</label>
-                <input class="form-control" type="file" id="previousPolicyOthers" name="previousPolicyOthers" accept="image/*,application/pdf">
+                <label for="previousPolicyOthers" class="form-label">Previous Policy Copy <small class="text-muted">(Max 5MB)</small></label>
+                <input class="form-control" type="file" id="previousPolicyOthers" name="previousPolicyOthers" accept="image/*,application/pdf" data-max-size="5242880">
+                <div class="invalid-feedback" id="previousPolicyOthers-error"></div>
               </div>
             </div>
           </div>
@@ -247,6 +252,38 @@
   const renewalForm = document.getElementById('renewalForm');
   console.log('Form element:', renewalForm);
 
+  // File size validation function
+  function validateFileSize(input) {
+    const maxSize = parseInt(input.getAttribute('data-max-size')) || 5242880; // 5MB default
+    const file = input.files[0];
+    
+    if (file) {
+      const fileSize = file.size;
+      const errorElement = document.getElementById(input.id + '-error');
+      
+      if (fileSize > maxSize) {
+        const maxSizeMB = Math.round(maxSize / 1024 / 1024);
+        const actualSizeMB = Math.round(fileSize / 1024 / 1024);
+        errorElement.textContent = `File size (${actualSizeMB}MB) exceeds maximum allowed size (${maxSizeMB}MB)`;
+        input.classList.add('is-invalid');
+        return false;
+      } else {
+        errorElement.textContent = '';
+        input.classList.remove('is-invalid');
+        return true;
+      }
+    }
+    return true;
+  }
+
+  // Add file size validation to all file inputs
+  const fileInputs = document.querySelectorAll('input[type="file"]');
+  fileInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      validateFileSize(this);
+    });
+  });
+
   renewalForm.addEventListener('submit', function(event) {
     console.log('Form submit event triggered');
     event.preventDefault();
@@ -258,6 +295,22 @@
       renewalForm.reportValidity();
       return;
     }
+
+    // Check file sizes
+    let fileSizeValid = true;
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(input => {
+      if (!validateFileSize(input)) {
+        fileSizeValid = false;
+      }
+    });
+
+    if (!fileSizeValid) {
+      console.log('File size validation failed');
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Please ensure all uploaded files are smaller than 5MB.</div>';
+      return;
+    }
+
     console.log('Form is valid, proceeding...');
 
     const submitButton = document.querySelector('#renewalForm button[type="submit"]');

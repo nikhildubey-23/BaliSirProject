@@ -24,6 +24,16 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'bali_admin_secret_key_2024')
 app.permanent_session_lifetime = timedelta(hours=24)
 
+# Set file upload limits (16MB max per request, 5MB per file)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+app.config['UPLOAD_FOLDER'] = 'uploads'
+
+# File extensions allowed
+ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'csv', 'txt'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 # Database configuration
 DATABASE = os.getenv('DATABASE_URL', 'admin_panel.db')
 
@@ -82,9 +92,41 @@ def init_db():
                 first_name TEXT NOT NULL,
                 last_name TEXT NOT NULL,
                 phone TEXT NOT NULL,
-                email TEXT NOT NULL,
-                want_to TEXT NOT NULL,
+                email TEXT,
+                want_to TEXT,
                 insurance_type TEXT NOT NULL,
+                age TEXT,
+                aadhaar TEXT,
+                -- Motor fields
+                vehicle_rc TEXT,
+                previous_policy_motor TEXT,
+                -- Health fields
+                previous_policy_health TEXT,
+                pre_existing_disease TEXT,
+                -- Travel fields
+                travel_country TEXT,
+                travel_duration TEXT,
+                travel_age TEXT,
+                -- Marine fields
+                commodity_type TEXT,
+                transport_mode TEXT,
+                pre_carrying_unit TEXT,
+                -- Shopkeeper fields
+                business_nature TEXT,
+                previous_policy_shopkeeper TEXT,
+                claim_occurred TEXT,
+                -- Workmen fields
+                number_of_members TEXT,
+                salary TEXT,
+                work_nature TEXT,
+                -- Fire fields
+                sum_insured TEXT,
+                locality TEXT,
+                pincode TEXT,
+                occupancy TEXT,
+                -- Others fields
+                type_of_insurance TEXT,
+                previous_policy_others TEXT,
                 submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 status TEXT DEFAULT 'new',
                 notes TEXT,
@@ -167,7 +209,27 @@ def cleanup_audit_log():
         app.logger.error(f"Error cleaning up audit log: {e}")
 
 # Initialize database on startup
-init_db()
+try:
+    db_initialized = init_db()
+    if db_initialized:
+        app.logger.info("✅ Database initialized successfully")
+    else:
+        app.logger.error("❌ Database initialization failed")
+except Exception as e:
+    app.logger.error(f"❌ Database startup error: {e}")
+
+# Test imports
+try:
+    from groq import Groq
+    app.logger.info("✅ Groq import successful")
+except ImportError as e:
+    app.logger.warning(f"⚠️ Groq import failed: {e}")
+
+try:
+    import smtplib
+    app.logger.info("✅ SMTP import successful")
+except ImportError as e:
+    app.logger.error(f"❌ SMTP import failed: {e}")
 
 # Static files and favicon
 @app.route('/favicon.ico')
@@ -255,6 +317,11 @@ def renewal():
 @app.route('/career')
 def career():
     return render_template('career.html')
+
+# Test route to verify server is working
+@app.route('/test')
+def test():
+    return jsonify({"status": "Server is working", "time": datetime.now().isoformat()}), 200
 
 @app.route('/blog')
 def blog():
@@ -429,88 +496,146 @@ def blog_b30():
 
 @app.route('/send-email', methods=['POST'])
 def send_email():
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
-    app.logger.info("Received send-email request")
-
-    if request.is_json:
-        data = request.json
-        app.logger.debug(f"Request data: {data}")
-        to_email = data.get('to')
-        name = data.get('name')
-        from_email = data.get('email')
-        subject = data.get('subject')
-        message = data.get('message')
-        files = {}
-    else:
-        app.logger.info("Processing form data")
-        to_email = request.form.get('to')
-        name = request.form.get('name')
-        from_email = request.form.get('email')
-        subject = request.form.get('subject')
-        message = request.form.get('message')
-        files = request.files
-
-        app.logger.info(f"Form data - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}")
-        app.logger.info(f"Files received: {list(files.keys())}")
-
-    if not all([to_email, name, from_email, subject, message]):
-        app.logger.error(f"Missing required fields - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}, message: {message}")
-        return jsonify({"error": "Missing required fields"}), 400
-
+    app.logger.info("=== SEND EMAIL FUNCTION CALLED ===")
+    
     try:
-        # Save to database if this is a form submission (not admin email)
-        if 'insuranceType' in request.form if not request.is_json else 'insuranceType' in data:
-            # This is a contact form submission
-            if not request.is_json:
+        # Check if this is a JSON request (API) or form request
+        if request.is_json:
+            app.logger.info("Processing JSON request")
+            data = request.json
+            to_email = data.get('to')
+            name = data.get('name')
+            from_email = data.get('email')
+            subject = data.get('subject')
+            message = data.get('message')
+            files = {}
+            is_form_submission = False
+        else:
+            app.logger.info("Processing FORM request")
+            to_email = request.form.get('to')
+            name = request.form.get('name')
+            from_email = request.form.get('email')
+            subject = request.form.get('subject')
+            message = request.form.get('message')
+            files = request.files
+            
+            # Check if this is a renewal form submission
+            is_form_submission = 'insuranceType' in request.form
+            app.logger.info(f"Is renewal form submission: {is_form_submission}")
+            app.logger.info(f"Form keys: {list(request.form.keys())}")
+
+        app.logger.info(f"Required fields check - to: {bool(to_email)}, name: {bool(name)}, from: {bool(from_email)}, subject: {bool(subject)}, message: {bool(message)}")
+
+        # Validate required fields
+        if not all([to_email, name, from_email, subject, message]):
+            app.logger.error(f"Missing required fields - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}, message: {message}")
+            return jsonify({"error": "Missing required fields"}), 400
+
+        # Handle renewal form submission
+        if is_form_submission:
+            app.logger.info("=== PROCESSING RENEWAL FORM SUBMISSION ===")
+            
+            try:
+                # Extract form data
                 first_name = request.form.get('firstName', '')
                 last_name = request.form.get('lastName', '')
                 phone = request.form.get('phone', '')
-                want_to = request.form.get('wantTo', '')
+                email = request.form.get('email', '')
+                want_to = "renewal"
                 insurance_type = request.form.get('insuranceType', '')
+                age = request.form.get('age', '')
+                aadhaar = request.form.get('aadhaar', '')
                 
+                # Extract dynamic fields
+                vehicle_rc = request.form.get('vehicleRC', '')
+                previous_policy_motor = request.form.get('previousPolicyMotor', '')
+                previous_policy_health = request.form.get('previousPolicyHealth', '')
+                pre_existing_disease = request.form.get('preExistingDisease', '')
+                travel_country = request.form.get('travelCountry', '')
+                travel_duration = request.form.get('travelDuration', '')
+                travel_age = request.form.get('travelAge', '')
+                commodity_type = request.form.get('commodityType', '')
+                transport_mode = request.form.get('transportMode', '')
+                pre_carrying_unit = request.form.get('preCarryingUnit', '')
+                business_nature = request.form.get('businessNature', '')
+                previous_policy_shopkeeper = request.form.get('previousPolicyShopkeeper', '')
+                claim_occurred = request.form.get('claimOccurred', '')
+                number_of_members = request.form.get('numberOfMembers', '')
+                salary = request.form.get('salary', '')
+                work_nature = request.form.get('workNature', '')
+                sum_insured = request.form.get('sumInsured', '')
+                locality = request.form.get('locality', '')
+                pincode = request.form.get('pincode', '')
+                occupancy = request.form.get('occupancy', '')
+                type_of_insurance = request.form.get('typeOfInsurance', '')
+                previous_policy_others = request.form.get('previousPolicyOthers', '')
+                
+                app.logger.info(f"Form data extracted - Name: {first_name} {last_name}, Insurance: {insurance_type}")
+                
+                # Save to database
                 conn = get_db_connection()
                 if conn:
-                    conn.execute('''
-                        INSERT INTO form_submissions (first_name, last_name, phone, email, want_to, insurance_type)
-                        VALUES (?, ?, ?, ?, ?, ?)
-                    ''', (first_name, last_name, phone, from_email, want_to, insurance_type))
-                    conn.commit()
-                    conn.close()
-                    
-                    # Send notification email to admin (with error handling)
                     try:
-                        admin_msg = MIMEMultipart()
-                        admin_msg['From'] = SMTP_USERNAME
-                        admin_msg['To'] = "sparksolutionfreelancing@gmail.com"
-                        admin_msg['Subject'] = f"New Form Submission - {insurance_type}"
-                        
-                        admin_body = f"""
-New form submission received:
+                        app.logger.info("Attempting database insert...")
+                        conn.execute('''
+                            INSERT INTO form_submissions (
+                                first_name, last_name, phone, email, want_to, insurance_type, age, aadhaar,
+                                vehicle_rc, previous_policy_motor, previous_policy_health, pre_existing_disease,
+                                travel_country, travel_duration, travel_age, commodity_type, transport_mode, pre_carrying_unit,
+                                business_nature, previous_policy_shopkeeper, claim_occurred, number_of_members, salary, work_nature,
+                                sum_insured, locality, pincode, occupancy, type_of_insurance, previous_policy_others
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ''', (
+                            first_name, last_name, phone, email, want_to, insurance_type, age, aadhaar,
+                            vehicle_rc, previous_policy_motor, previous_policy_health, pre_existing_disease,
+                            travel_country, travel_duration, travel_age, commodity_type, transport_mode, pre_carrying_unit,
+                            business_nature, previous_policy_shopkeeper, claim_occurred, number_of_members, salary, work_nature,
+                            sum_insured, locality, pincode, occupancy, type_of_insurance, previous_policy_others
+                        ))
+                        conn.commit()
+                        app.logger.info("Database insert successful")
+                    except Exception as db_error:
+                        app.logger.error(f"Database error: {db_error}")
+                        raise db_error
+                    finally:
+                        conn.close()
+                
+                # Send admin notification email
+                try:
+                    admin_msg = MIMEMultipart()
+                    admin_msg['From'] = SMTP_USERNAME
+                    admin_msg['To'] = "sparksolutionfreelancing@gmail.com"
+                    admin_msg['Subject'] = f"New Renewal Form Submission - {insurance_type}"
+                    
+                    admin_body = f"""New renewal form submission received:
 
 Name: {first_name} {last_name}
-Email: {from_email}
+Email: {email}
 Phone: {phone}
+Age: {age}
 Insurance Type: {insurance_type}
-Request Type: {want_to}
+Aadhaar: {aadhaar}
 
-Message: {message}
+Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
+                    admin_msg.attach(MIMEText(admin_body, 'plain'))
+                    
+                    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+                    server.starttls()
+                    server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                    server.sendmail(SMTP_USERNAME, "sparksolutionfreelancing@gmail.com", admin_msg.as_string())
+                    server.quit()
+                    app.logger.info("Admin notification sent successfully")
+                except Exception as email_error:
+                    app.logger.error(f"Admin notification failed: {email_error}")
+                    # Don't fail the whole request if email fails
+                    
+            except Exception as form_error:
+                app.logger.error(f"Form processing error: {form_error}")
+                raise form_error
 
-Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-                        """
-                        admin_msg.attach(MIMEText(admin_body, 'plain'))
-                        
-                        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-                        server.starttls()
-                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                        server.sendmail(SMTP_USERNAME, "sparksolutionfreelancing@gmail.com", admin_msg.as_string())
-                        server.quit()
-                        app.logger.info("Admin notification sent successfully")
-                    except Exception as e:
-                        app.logger.error(f"Error sending admin notification: {e}")
-        
-        # Try to send the main email
+        # Send main email
         try:
+            app.logger.info("Sending main email...")
             msg = MIMEMultipart()
             msg['From'] = SMTP_USERNAME
             msg['To'] = to_email
@@ -519,34 +644,64 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
             body = f"Name: {name}\nEmail: {from_email}\n\nMessage:\n{message}"
             msg.attach(MIMEText(body, 'plain'))
 
-            # Attach files if any
-            file_fields = ['vehicleRC', 'previousInsurance', 'aadharCard', 'pan', 'resume', 'claimDocument', 'previousPolicyDocument', 'idProof', 'addressProof', 'financialStatements', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper', 'previousPolicyOthers']
-            for field in file_fields:
-                if field in files and files[field].filename:
-                    file = files[field]
-                    part = MIMEBase('application', 'octet-stream')
-                    part.set_payload(file.read())
-                    encoders.encode_base64(part)
-                    part.add_header('Content-Disposition', f'attachment; filename={file.filename}')
-                    msg.attach(part)
+            # Handle file attachments for form submissions
+            if is_form_submission:
+                file_fields = ['vehicleRC', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper', 'previousPolicyOthers']
+                for field in file_fields:
+                    if field in files and files[field].filename:
+                        try:
+                            file = files[field]
+                            # Validate file size
+                            file.seek(0, 2)
+                            file_size = file.tell()
+                            file.seek(0)
+                            
+                            if file_size > 5 * 1024 * 1024:  # 5MB
+                                app.logger.error(f"File {file.filename} exceeds 5MB limit")
+                                return jsonify({"error": f"File {file.filename} is too large. Maximum size allowed is 5MB."}), 400
+                            
+                            # Validate file extension
+                            if not allowed_file(file.filename):
+                                app.logger.error(f"File {file.filename} has invalid extension")
+                                return jsonify({"error": f"File {file.filename} has invalid extension. Only PDF and image files are allowed."}), 400
+                            
+                            part = MIMEBase('application', 'octet-stream')
+                            part.set_payload(file.read())
+                            encoders.encode_base64(part)
+                            part.add_header('Content-Disposition', f'attachment; filename={file.filename}')
+                            msg.attach(part)
+                            app.logger.info(f"Attached file: {file.filename}")
+                        except Exception as file_error:
+                            app.logger.error(f"Error processing file {field}: {file_error}")
 
+            # Send email
             server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
             server.starttls()
             server.login(SMTP_USERNAME, SMTP_PASSWORD)
-            app.logger.info("Attempting to send email...")
             server.sendmail(SMTP_USERNAME, to_email, msg.as_string())
             server.quit()
 
             app.logger.info("Email sent successfully")
-            return jsonify({"message": "Email sent successfully"}), 200
+            
+            # Return success response
+            if is_form_submission:
+                return jsonify({"message": "Renewal form submitted successfully! Our team will contact you shortly."}), 200
+            else:
+                return jsonify({"message": "Email sent successfully"}), 200
+                
         except Exception as email_error:
-            app.logger.error(f"Email sending failed: {email_error}")
-            # If email fails but form was saved, still return success for form submission
-            return jsonify({"message": "Form submitted successfully. Email delivery may be delayed."}), 200
+            app.logger.error(f"Main email sending failed: {email_error}")
+            # If this was a form submission, still return success since we saved to database
+            if is_form_submission:
+                return jsonify({"message": "Form submitted successfully. Email delivery may be delayed."}), 200
+            else:
+                return jsonify({"error": "Email sending failed. Please try again later."}), 500
             
     except Exception as e:
-        app.logger.error(f"General error in send_email: {e}")
-        return jsonify({"error": "An error occurred while processing your request. Please try again later."}), 500
+        app.logger.error(f"CRITICAL ERROR in send_email: {str(e)}")
+        import traceback
+        app.logger.error(f"Traceback: {traceback.format_exc()}")
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -852,6 +1007,44 @@ def admin_update_submission(submission_id):
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+@app.route('/admin/submissions/<int:submission_id>/delete', methods=['POST'])
+@admin_required
+def admin_delete_submission(submission_id):
+    """Delete a submission completely from database"""
+    try:
+        conn = get_db_connection()
+        
+        # Check if submission exists
+        submission = conn.execute('SELECT * FROM form_submissions WHERE id = ?', (submission_id,)).fetchone()
+        
+        if not submission:
+            conn.close()
+            return jsonify({"success": False, "message": "Submission not found"}), 404
+        
+        # Delete the submission
+        conn.execute('DELETE FROM form_submissions WHERE id = ?', (submission_id,))
+        conn.commit()
+        conn.close()
+        
+        # Log the deletion in audit log
+        try:
+            conn = get_db_connection()
+            conn.execute('''
+                INSERT INTO admin_sessions (session_id, admin_user, ip_address, user_agent)
+                VALUES (?, ?, ?, ?)
+            ''', (f"deleted_submission_{submission_id}", session['admin_username'],
+                  request.remote_addr, f"Deleted submission {submission_id} - {submission['first_name']} {submission['last_name']}"))
+            conn.commit()
+            conn.close()
+            cleanup_audit_log()
+        except Exception as e:
+            app.logger.error(f"Failed to log deletion: {e}")
+        
+        return jsonify({"success": True, "message": "Submission deleted successfully"})
+    except Exception as e:
+        app.logger.error(f"Error deleting submission {submission_id}: {e}")
+        return jsonify({"success": False, "message": "An error occurred while deleting the submission"}), 500
+
 @app.route('/admin/blog')
 @admin_required
 def admin_blog():
@@ -1030,7 +1223,11 @@ def admin_export_submissions():
     writer = csv.writer(output)
     
     # Write header
-    writer.writerow(['ID', 'First Name', 'Last Name', 'Phone', 'Email', 'Want To', 'Insurance Type',
+    writer.writerow(['ID', 'First Name', 'Last Name', 'Phone', 'Email', 'Want To', 'Insurance Type', 'Age', 'Aadhaar',
+                    'Vehicle RC', 'Previous Policy Motor', 'Previous Policy Health', 'Pre-existing Disease',
+                    'Travel Country', 'Travel Duration', 'Travel Age', 'Commodity Type', 'Transport Mode', 'Pre-carrying Unit',
+                    'Business Nature', 'Previous Policy Shopkeeper', 'Claim Occurred', 'Number of Members', 'Salary', 'Work Nature',
+                    'Sum Insured', 'Locality', 'Pincode', 'Occupancy', 'Type of Insurance', 'Previous Policy Others',
                     'Submission Date', 'Status', 'Notes', 'Processed By', 'Processed Date'])
     
     # Write data
@@ -1038,7 +1235,12 @@ def admin_export_submissions():
         writer.writerow([
             submission['id'], submission['first_name'], submission['last_name'],
             submission['phone'], submission['email'], submission['want_to'],
-            submission['insurance_type'], submission['submission_date'], submission['status'],
+            submission['insurance_type'], submission['age'], submission['aadhaar'],
+            submission['vehicle_rc'], submission['previous_policy_motor'], submission['previous_policy_health'], submission['pre_existing_disease'],
+            submission['travel_country'], submission['travel_duration'], submission['travel_age'], submission['commodity_type'], submission['transport_mode'], submission['pre_carrying_unit'],
+            submission['business_nature'], submission['previous_policy_shopkeeper'], submission['claim_occurred'], submission['number_of_members'], submission['salary'], submission['work_nature'],
+            submission['sum_insured'], submission['locality'], submission['pincode'], submission['occupancy'], submission['type_of_insurance'], submission['previous_policy_others'],
+            submission['submission_date'], submission['status'],
             submission['notes'], submission['processed_by'], submission['processed_date']
         ])
     

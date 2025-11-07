@@ -87,6 +87,185 @@
                 </div>
             </div>
 
+            <!-- Renewal Form Details -->
+            {% if submission.insurance_type %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Renewal Form Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Basic Fields -->
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Basic Information</h6>
+                            <table class="table table-borderless">
+                                {% if submission.age %}
+                                <tr>
+                                    <td><strong>Age:</strong></td>
+                                    <td>{{ submission.age }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if submission.aadhaar %}
+                                <tr>
+                                    <td><strong>Aadhaar Number:</strong></td>
+                                    <td>{{ submission.aadhaar }}</td>
+                                </tr>
+                                {% endif %}
+                            </table>
+                        </div>
+                        
+                        <!-- Insurance Type Specific Fields -->
+                        <div class="col-md-6">
+                            <h6 class="text-muted">{{ submission.insurance_type|title }} Insurance Details</h6>
+                            <table class="table table-borderless">
+                                {% if submission.insurance_type == 'motor' %}
+                                    {% if submission.vehicle_rc %}
+                                    <tr>
+                                        <td><strong>Vehicle RC:</strong></td>
+                                        <td>{{ submission.vehicle_rc }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.previous_policy_motor %}
+                                    <tr>
+                                        <td><strong>Previous Policy:</strong></td>
+                                        <td>{{ submission.previous_policy_motor }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'health' %}
+                                    {% if submission.previous_policy_health %}
+                                    <tr>
+                                        <td><strong>Previous Policy:</strong></td>
+                                        <td>{{ submission.previous_policy_health }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.pre_existing_disease %}
+                                    <tr>
+                                        <td><strong>Pre-existing Disease:</strong></td>
+                                        <td>{{ submission.pre_existing_disease }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'travel' %}
+                                    {% if submission.travel_country %}
+                                    <tr>
+                                        <td><strong>Country:</strong></td>
+                                        <td>{{ submission.travel_country }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.travel_duration %}
+                                    <tr>
+                                        <td><strong>Duration:</strong></td>
+                                        <td>{{ submission.travel_duration }} days</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.travel_age %}
+                                    <tr>
+                                        <td><strong>Age:</strong></td>
+                                        <td>{{ submission.travel_age }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'marine' %}
+                                    {% if submission.commodity_type %}
+                                    <tr>
+                                        <td><strong>Commodity Type:</strong></td>
+                                        <td>{{ submission.commodity_type }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.transport_mode %}
+                                    <tr>
+                                        <td><strong>Transport Mode:</strong></td>
+                                        <td>{{ submission.transport_mode }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.pre_carrying_unit %}
+                                    <tr>
+                                        <td><strong>Pre-carrying Unit:</strong></td>
+                                        <td>{{ submission.pre_carrying_unit }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'shopkeeper' %}
+                                    {% if submission.business_nature %}
+                                    <tr>
+                                        <td><strong>Nature of Business:</strong></td>
+                                        <td>{{ submission.business_nature }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.previous_policy_shopkeeper %}
+                                    <tr>
+                                        <td><strong>Previous Policy:</strong></td>
+                                        <td>{{ submission.previous_policy_shopkeeper }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.claim_occurred %}
+                                    <tr>
+                                        <td><strong>Claim Occurred:</strong></td>
+                                        <td>{{ submission.claim_occurred }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'workmen' %}
+                                    {% if submission.number_of_members %}
+                                    <tr>
+                                        <td><strong>Number of Members:</strong></td>
+                                        <td>{{ submission.number_of_members }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.salary %}
+                                    <tr>
+                                        <td><strong>Salary:</strong></td>
+                                        <td>{{ submission.salary }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.work_nature %}
+                                    <tr>
+                                        <td><strong>Nature of Work:</strong></td>
+                                        <td>{{ submission.work_nature }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'fire' %}
+                                    {% if submission.sum_insured %}
+                                    <tr>
+                                        <td><strong>Sum Insured:</strong></td>
+                                        <td>{{ submission.sum_insured }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.locality %}
+                                    <tr>
+                                        <td><strong>Locality:</strong></td>
+                                        <td>{{ submission.locality }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.pincode %}
+                                    <tr>
+                                        <td><strong>Pincode:</strong></td>
+                                        <td>{{ submission.pincode }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.occupancy %}
+                                    <tr>
+                                        <td><strong>Occupancy:</strong></td>
+                                        <td>{{ submission.occupancy }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% elif submission.insurance_type == 'others' %}
+                                    {% if submission.type_of_insurance %}
+                                    <tr>
+                                        <td><strong>Type of Insurance:</strong></td>
+                                        <td>{{ submission.type_of_insurance }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if submission.previous_policy_others %}
+                                    <tr>
+                                        <td><strong>Previous Policy:</strong></td>
+                                        <td>{{ submission.previous_policy_others }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endif %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             <!-- Action History -->
             <div class="card mb-4">
                 <div class="card-header">
