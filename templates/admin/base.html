@@ -300,11 +300,7 @@
                             <i class="fas fa-blog me-1"></i>Blog
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('admin_audit_log') }}">
-                            <i class="fas fa-history me-1"></i>Audit Log
-                        </a>
-                    </li>
+
                 </ul>
                 
                 <ul class="navbar-nav">
@@ -351,12 +347,7 @@
                                 <i class="fas fa-blog"></i>Blog Management
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.endpoint == 'admin_audit_log' %}active{% endif %}" 
-                               href="{{ url_for('admin_audit_log') }}">
-                                <i class="fas fa-history"></i>Audit Log
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>

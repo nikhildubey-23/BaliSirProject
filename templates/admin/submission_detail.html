@@ -104,11 +104,6 @@
                                     <td><strong>Date of Birth:</strong></td>
                                     <td>{{ submission.date_of_birth }}</td>
                                 </tr>
-                                {% elif submission.age %}
-                                <tr>
-                                    <td><strong>Date of Birth:</strong></td>
-                                    <td>{{ submission.age }}</td>
-                                </tr>
                                 {% endif %}
                                 {% if submission.aadhaar %}
                                 <tr>
@@ -512,9 +507,7 @@
                         <button class="btn btn-outline-primary" onclick="createTask()">
                             <i class="fas fa-tasks"></i> Create Task
                         </button>
-                        <button class="btn btn-outline-info" onclick="viewAuditLog()">
-                            <i class="fas fa-history"></i> View Audit Log
-                        </button>
+
                         <button class="btn btn-outline-secondary" onclick="printDetails()">
                             <i class="fas fa-print"></i> Print Details
                         </button>
@@ -659,9 +652,7 @@ function createTask() {
     alert('Task creation feature will be implemented in future update.');
 }
 
-function viewAuditLog() {
-    window.location.href = `/admin/audit-log?record_id={{ submission.id }}&table_name=form_submissions`;
-}
+
 
 function printDetails() {
     window.print();
