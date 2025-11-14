@@ -95,7 +95,7 @@ def init_db():
                 email TEXT,
                 want_to TEXT,
                 insurance_type TEXT NOT NULL,
-                age TEXT,
+                age INTEGER,
                 date_of_birth TEXT,
                 aadhaar TEXT,
                 -- Motor fields
@@ -466,7 +466,7 @@ def blog_b30():
 @app.route('/send-email', methods=['POST'])
 def send_email():
     app.logger.info("=== SEND EMAIL FUNCTION CALLED ===")
-    
+
     try:
         # Check if this is a JSON request (API) or form request
         if request.is_json:
@@ -493,17 +493,19 @@ def send_email():
             app.logger.info(f"Is renewal form submission: {is_form_submission}")
             app.logger.info(f"Form keys: {list(request.form.keys())}")
 
-        app.logger.info(f"Required fields check - to: {bool(to_email)}, name: {bool(name)}, from: {bool(from_email)}, subject: {bool(subject)}, message: {bool(message)}")
+        app.logger.info(
+            f"Required fields check - to: {bool(to_email)}, name: {bool(name)}, from: {bool(from_email)}, subject: {bool(subject)}, message: {bool(message)}")
 
         # Validate required fields
         if not all([to_email, name, from_email, subject, message]):
-            app.logger.error(f"Missing required fields - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}, message: {message}")
+            app.logger.error(
+                f"Missing required fields - to: {to_email}, name: {name}, email: {from_email}, subject: {subject}, message: {message}")
             return jsonify({"error": "Missing required fields"}), 400
 
         # Handle renewal form submission
         if is_form_submission:
             app.logger.info("=== PROCESSING RENEWAL FORM SUBMISSION ===")
-            
+
             try:
                 # Extract form data
                 first_name = request.form.get('firstName', '')
@@ -512,9 +514,10 @@ def send_email():
                 email = request.form.get('email', '')
                 want_to = "renewal"
                 insurance_type = request.form.get('insuranceType', '')
-                age = request.form.get('age', '')
+                age = request.form.get('age', type=int)  # Get age as integer
+                date_of_birth = request.form.get('dateOfBirth', '')
                 aadhaar = request.form.get('aadhaar', '')
-                
+
                 # Extract dynamic fields
                 vehicle_rc = request.form.get('vehicleRC', '')
                 previous_policy_motor = request.form.get('previousPolicyMotor', '')
@@ -538,9 +541,10 @@ def send_email():
                 occupancy = request.form.get('occupancy', '')
                 type_of_insurance = request.form.get('typeOfInsurance', '')
                 previous_policy_others = request.form.get('previousPolicyOthers', '')
-                
-                app.logger.info(f"Form data extracted - Name: {first_name} {last_name}, Insurance: {insurance_type}")
-                
+
+                app.logger.info(
+                    f"Form data extracted - Name: {first_name} {last_name}, Insurance: {insurance_type}")
+
                 # Save to database
                 conn = get_db_connection()
                 if conn:
@@ -555,7 +559,7 @@ def send_email():
                                 sum_insured, locality, pincode, occupancy, type_of_insurance, previous_policy_others
                             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         ''', (
-                            first_name, last_name, phone, email, want_to, insurance_type, age, request.form.get('dateOfBirth'), aadhaar,
+                            first_name, last_name, phone, email, want_to, insurance_type, age, date_of_birth, aadhaar,
                             vehicle_rc, previous_policy_motor, previous_policy_health, pre_existing_disease,
                             travel_country, travel_duration, travel_age, commodity_type, transport_mode, pre_carrying_unit,
                             business_nature, previous_policy_shopkeeper, claim_occurred, number_of_members, salary, work_nature,
@@ -565,17 +569,20 @@ def send_email():
                         app.logger.info("Database insert successful")
                     except Exception as db_error:
                         app.logger.error(f"Database error: {db_error}")
+                        # Optionally, rollback the transaction
+                        # conn.rollback()
+                        # Re-raise the exception to be caught by the outer try-except block
                         raise db_error
                     finally:
                         conn.close()
-                
+
                 # Send admin notification email
                 try:
                     admin_msg = MIMEMultipart()
                     admin_msg['From'] = SMTP_USERNAME
                     admin_msg['To'] = "sparksolutionfreelancing@gmail.com"
                     admin_msg['Subject'] = f"New Renewal Form Submission - {insurance_type}"
-                    
+
                     admin_body = f"""New renewal form submission received:
 
 Name: {first_name} {last_name}
@@ -587,7 +594,7 @@ Aadhaar: {aadhaar}
 
 Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
                     admin_msg.attach(MIMEText(admin_body, 'plain'))
-                    
+
                     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
                     server.starttls()
                     server.login(SMTP_USERNAME, SMTP_PASSWORD)
@@ -597,9 +604,12 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
                 except Exception as email_error:
                     app.logger.error(f"Admin notification failed: {email_error}")
                     # Don't fail the whole request if email fails
-                    
+
             except Exception as form_error:
                 app.logger.error(f"Form processing error: {form_error}")
+                # Optionally, rollback the transaction
+                # conn.rollback()
+                # Re-raise the exception to be caught by the outer try-except block
                 raise form_error
 
         # Send main email
@@ -615,7 +625,8 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
 
             # Handle file attachments for form submissions
             if is_form_submission:
-                file_fields = ['vehicleRC', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper', 'previousPolicyOthers']
+                file_fields = ['vehicleRC', 'previousPolicyMotor', 'previousPolicyHealth', 'previousPolicyShopkeeper',
+                               'previousPolicyOthers']
                 for field in file_fields:
                     if field in files and files[field].filename:
                         try:
@@ -624,16 +635,17 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
                             file.seek(0, 2)
                             file_size = file.tell()
                             file.seek(0)
-                            
+
                             if file_size > 5 * 1024 * 1024:  # 5MB
                                 app.logger.error(f"File {file.filename} exceeds 5MB limit")
                                 return jsonify({"error": f"File {file.filename} is too large. Maximum size allowed is 5MB."}), 400
-                            
+
                             # Validate file extension
                             if not allowed_file(file.filename):
                                 app.logger.error(f"File {file.filename} has invalid extension")
-                                return jsonify({"error": f"File {file.filename} has invalid extension. Only PDF and image files are allowed."}), 400
-                            
+                                return jsonify(
+                                    {"error": f"File {file.filename} has invalid extension. Only PDF and image files are allowed."}), 400
+
                             part = MIMEBase('application', 'octet-stream')
                             part.set_payload(file.read())
                             encoders.encode_base64(part)
@@ -651,13 +663,14 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
             server.quit()
 
             app.logger.info("Email sent successfully")
-            
+
             # Return success response
             if is_form_submission:
-                return jsonify({"message": "Renewal form submitted successfully! Our team will contact you shortly."}), 200
+                return jsonify(
+                    {"message": "Renewal form submitted successfully! Our team will contact you shortly."}), 200
             else:
                 return jsonify({"message": "Email sent successfully"}), 200
-                
+
         except Exception as email_error:
             app.logger.error(f"Main email sending failed: {email_error}")
             # If this was a form submission, still return success since we saved to database
@@ -665,537 +678,9 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
                 return jsonify({"message": "Form submitted successfully. Email delivery may be delayed."}), 200
             else:
                 return jsonify({"error": "Email sending failed. Please try again later."}), 500
-            
+
     except Exception as e:
         app.logger.error(f"CRITICAL ERROR in send_email: {str(e)}")
         import traceback
         app.logger.error(f"Traceback: {traceback.format_exc()}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
-
-@app.route('/api/chat', methods=['POST'])
-def chat():
-    data = request.json
-    user_message = data.get('message', '')
-    history = data.get('history', [])
-
-    # Check if Groq client is available
-    if client is None:
-        return jsonify({'response': "I'm sorry, but the AI assistant is currently unavailable. Please contact our team directly for assistance with your insurance needs."})
-
-    # Build conversation context
-    messages = [{"role": "system", "content": "You are Bali, the AI assistant for Bima With Bali Insurance. Respond as Bali with the following scripts and menu. Start with the welcome message and menu. For user selections, use the category-wise scripts. For wrong inputs, use the default response. Always promote Bima With Bali."}]
-
-    # Add conversation history
-    for msg in history[-10:]:  # Keep last 10 messages to avoid token limit
-        role = "assistant" if msg['role'] == 'bot' else "user"
-        messages.append({"role": role, "content": msg['content']})
-
-    # Add current user message
-    messages.append({"role": "user", "content": user_message})
-
-    # Use Groq API to generate response
-    try:
-        response = client.chat.completions.create(
-            model="llama3-8b-8192",
-            messages=messages,
-            max_tokens=500,
-            temperature=0.0
-        )
-        response_text = response.choices[0].message.content
-    except Exception as e:
-        # Fallback to another model if the current one is decommissioned
-        try:
-            response = client.chat.completions.create(
-                model="openai/gpt-oss-20b",
-                messages=messages,
-                max_tokens=500,
-                temperature=0.0
-            )
-            response_text = response.choices[0].message.content
-        except Exception as e2:
-            logger.error(f"Groq API error: {e2}")
-            response_text = "I'm sorry, but I'm having trouble connecting right now. Please try again later or contact our team directly for immediate assistance."
-
-    return jsonify({'response': response_text})
-
-# Admin Routes
-@app.route('/admin/login', methods=['GET', 'POST'])
-def admin_login():
-    """Admin login page with error handling"""
-    try:
-        if request.method == 'POST':
-            username = request.form.get('username')
-            password = request.form.get('password')
-            
-            if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
-                session['admin_logged_in'] = True
-                session['admin_username'] = username
-                session.permanent = True
-                
-                # Generate a unique session ID
-                import uuid
-                session_id = str(uuid.uuid4())
-                
-                return redirect(url_for('admin_dashboard'))
-            else:
-                flash('Invalid username or password', 'error')
-
-        return render_template('admin/login.html')
-    except Exception as e:
-        app.logger.error(f"Admin login error: {e}")
-        flash('System error. Please try again later.', 'error')
-        return render_template('admin/login.html')
-
-@app.route('/admin/logout')
-@admin_required
-def admin_logout():
-    """Admin logout"""
-    session.clear()
-    return redirect(url_for('admin_login'))
-
-@app.route('/admin')
-@admin_required
-def admin_dashboard():
-    """Admin dashboard with key metrics and error handling"""
-    try:
-        conn = get_db_connection()
-        if not conn:
-            return render_template('admin/dashboard.html',
-                                 total_submissions=0,
-                                 new_submissions=0,
-                                 total_blog_posts=0,
-                                 published_posts=0,
-                                 recent_submissions=[],
-                                 submissions_by_type=[],
-                                 monthly_trends=[])
-        
-        # Get dashboard statistics with error handling
-        try:
-            total_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions').fetchone()['count']
-        except:
-            total_submissions = 0
-            
-        try:
-            new_submissions = conn.execute('SELECT COUNT(*) as count FROM form_submissions WHERE status = "new"').fetchone()['count']
-        except:
-            new_submissions = 0
-            
-        try:
-            total_blog_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts').fetchone()['count']
-        except:
-            total_blog_posts = 0
-            
-        try:
-            published_posts = conn.execute('SELECT COUNT(*) as count FROM blog_posts WHERE status = "published"').fetchone()['count']
-        except:
-            published_posts = 0
-        
-        # Get recent submissions
-        try:
-            recent_submissions = conn.execute('''
-                SELECT * FROM form_submissions
-                ORDER BY submission_date DESC
-                LIMIT 10
-            ''').fetchall()
-        except:
-            recent_submissions = []
-        
-        # Get submissions by insurance type
-        try:
-            submissions_by_type = conn.execute('''
-                SELECT insurance_type, COUNT(*) as count
-                FROM form_submissions
-                GROUP BY insurance_type
-                ORDER BY count DESC
-            ''').fetchall()
-        except:
-            submissions_by_type = []
-        
-        # Get monthly submission trends
-        try:
-            monthly_trends = conn.execute('''
-                SELECT strftime('%Y-%m', submission_date) as month, COUNT(*) as count
-                FROM form_submissions
-                WHERE submission_date >= date('now', '-12 months')
-                GROUP BY strftime('%Y-%m', submission_date)
-                ORDER BY month DESC
-            ''').fetchall()
-        except:
-            monthly_trends = []
-        
-        conn.close()
-        
-        return render_template('admin/dashboard.html',
-                             total_submissions=total_submissions,
-                             new_submissions=new_submissions,
-                             total_blog_posts=total_blog_posts,
-                             published_posts=published_posts,
-                             recent_submissions=recent_submissions,
-                             submissions_by_type=submissions_by_type,
-                             monthly_trends=monthly_trends)
-    except Exception as e:
-        app.logger.error(f"Admin dashboard error: {e}")
-        return render_template('admin/dashboard.html',
-                             total_submissions=0,
-                             new_submissions=0,
-                             total_blog_posts=0,
-                             published_posts=0,
-                             recent_submissions=[],
-                             submissions_by_type=[],
-                             monthly_trends=[])
-
-@app.route('/admin/submissions')
-@admin_required
-def admin_submissions():
-    """Manage form submissions"""
-    # Get filter parameters
-    status_filter = request.args.get('status', '')
-    insurance_type_filter = request.args.get('insurance_type', '')
-    date_from = request.args.get('date_from', '')
-    date_to = request.args.get('date_to', '')
-    search_query = request.args.get('search', '')
-    page = request.args.get('page', 1, type=int)
-    per_page = 20
-    
-    # Build query
-    conn = get_db_connection()
-    query = 'SELECT * FROM form_submissions WHERE 1=1'
-    params = []
-    
-    if status_filter:
-        query += ' AND status = ?'
-        params.append(status_filter)
-    
-    if insurance_type_filter:
-        query += ' AND insurance_type = ?'
-        params.append(insurance_type_filter)
-    
-    if date_from:
-        query += ' AND date(submission_date) >= ?'
-        params.append(date_from)
-    
-    if date_to:
-        query += ' AND date(submission_date) <= ?'
-        params.append(date_to)
-    
-    if search_query:
-        query += ' AND (first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR phone LIKE ?)'
-        search_term = f'%{search_query}%'
-        params.extend([search_term, search_term, search_term, search_term])
-    
-    # Get total count for pagination
-    count_query = query.replace('SELECT *', 'SELECT COUNT(*)')
-    total_count = conn.execute(count_query, params).fetchone()[0]
-    
-    # Get paginated results
-    query += ' ORDER BY submission_date DESC LIMIT ? OFFSET ?'
-    params.extend([per_page, (page - 1) * per_page])
-    submissions = conn.execute(query, params).fetchall()
-    
-    # Get filter options
-    insurance_types = conn.execute('SELECT DISTINCT insurance_type FROM form_submissions').fetchall()
-    conn.close()
-    
-    total_pages = (total_count + per_page - 1) // per_page
-    
-    return render_template('admin/submissions.html',
-                         submissions=submissions,
-                         insurance_types=insurance_types,
-                         current_page=page,
-                         total_pages=total_pages,
-                         total_count=total_count,
-                         filters={
-                             'status': status_filter,
-                             'insurance_type': insurance_type_filter,
-                             'date_from': date_from,
-                             'date_to': date_to,
-                             'search': search_query
-                         })
-
-@app.route('/admin/submissions/<int:submission_id>')
-@admin_required
-def admin_submission_detail(submission_id):
-    """View submission detail"""
-    conn = get_db_connection()
-    submission = conn.execute('SELECT * FROM form_submissions WHERE id = ?', (submission_id,)).fetchone()
-    conn.close()
-    
-    if not submission:
-        flash('Submission not found', 'error')
-        return redirect(url_for('admin_submissions'))
-    
-    return render_template('admin/submission_detail.html', submission=submission)
-
-@app.route('/admin/submissions/<int:submission_id>/update', methods=['POST'])
-@admin_required
-def admin_update_submission(submission_id):
-    """Update submission status and notes"""
-    try:
-        if request.is_json:
-            data = request.json
-            status = data.get('status')
-            notes = data.get('notes')
-        else:
-            status = request.form.get('status')
-            notes = request.form.get('notes')
-        
-        if not status:
-            return jsonify({"success": False, "message": "Status is required"}), 400
-        
-        conn = get_db_connection()
-        conn.execute('''
-            UPDATE form_submissions
-            SET status = ?, notes = ?, processed_by = ?, processed_date = CURRENT_TIMESTAMP
-            WHERE id = ?
-        ''', (status, notes, session['admin_username'], submission_id))
-        
-        conn.commit()
-        conn.close()
-        
-        if request.is_json:
-            return jsonify({"success": True, "message": "Submission updated successfully"})
-        else:
-            flash('Submission updated successfully', 'success')
-            return redirect(url_for('admin_submission_detail', submission_id=submission_id))
-    except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
-
-@app.route('/admin/submissions/<int:submission_id>/delete', methods=['POST'])
-@admin_required
-def admin_delete_submission(submission_id):
-    """Delete a submission completely from database"""
-    try:
-        conn = get_db_connection()
-        
-        # Check if submission exists
-        submission = conn.execute('SELECT * FROM form_submissions WHERE id = ?', (submission_id,)).fetchone()
-        
-        if not submission:
-            conn.close()
-            return jsonify({"success": False, "message": "Submission not found"}), 404
-        
-        # Delete the submission
-        conn.execute('DELETE FROM form_submissions WHERE id = ?', (submission_id,))
-        conn.commit()
-        conn.close()
-        
-
-        
-        return jsonify({"success": True, "message": "Submission deleted successfully"})
-    except Exception as e:
-        app.logger.error(f"Error deleting submission {submission_id}: {e}")
-        return jsonify({"success": False, "message": "An error occurred while deleting the submission"}), 500
-
-@app.route('/admin/blog')
-@admin_required
-def admin_blog():
-    """Manage blog posts"""
-    status_filter = request.args.get('status', '')
-    search_query = request.args.get('search', '')
-    page = request.args.get('page', 1, type=int)
-    per_page = 15
-    
-    conn = get_db_connection()
-    query = 'SELECT * FROM blog_posts WHERE 1=1'
-    params = []
-    
-    if status_filter:
-        query += ' AND status = ?'
-        params.append(status_filter)
-    
-    if search_query:
-        query += ' AND (title LIKE ? OR content LIKE ?)'
-        search_term = f'%{search_query}%'
-        params.extend([search_term, search_term])
-    
-    # Get total count
-    count_query = query.replace('SELECT *', 'SELECT COUNT(*)')
-    total_count = conn.execute(count_query, params).fetchone()[0]
-    
-    # Get paginated results
-    query += ' ORDER BY created_date DESC LIMIT ? OFFSET ?'
-    params.extend([per_page, (page - 1) * per_page])
-    posts = conn.execute(query, params).fetchall()
-    
-    conn.close()
-    
-    total_pages = (total_count + per_page - 1) // per_page
-    
-    return render_template('admin/blog.html',
-                         posts=posts,
-                         current_page=page,
-                         total_pages=total_pages,
-                         total_count=total_count,
-                         status_filter=status_filter,
-                         search_query=search_query)
-
-@app.route('/admin/blog/new', methods=['GET', 'POST'])
-@admin_required
-def admin_blog_new():
-    """Create new blog post"""
-    if request.method == 'POST':
-        title = request.form.get('title')
-        content = request.form.get('content')
-        excerpt = request.form.get('excerpt')
-        status = request.form.get('status')
-        featured_image = request.form.get('featured_image')
-        tags = request.form.get('tags')
-        meta_description = request.form.get('meta_description')
-        
-        # Generate slug from title
-        slug = title.lower().replace(' ', '-').replace(',', '').replace('.', '')
-        
-        conn = get_db_connection()
-        try:
-            conn.execute('''
-                INSERT INTO blog_posts (title, slug, content, excerpt, status, featured_image, tags, meta_description)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (title, slug, content, excerpt, status, featured_image, tags, meta_description))
-            
-            conn.commit()
-            flash('Blog post created successfully', 'success')
-            return redirect(url_for('admin_blog'))
-        except sqlite3.IntegrityError:
-            flash('A blog post with this title already exists', 'error')
-        finally:
-            conn.close()
-    
-    return render_template('admin/blog_new.html')
-
-@app.route('/admin/blog/<int:post_id>/edit', methods=['GET', 'POST'])
-@admin_required
-def admin_blog_edit(post_id):
-    """Edit blog post"""
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM blog_posts WHERE id = ?', (post_id,)).fetchone()
-    
-    if not post:
-        conn.close()
-        flash('Blog post not found', 'error')
-        return redirect(url_for('admin_blog'))
-    
-    if request.method == 'POST':
-        title = request.form.get('title')
-        content = request.form.get('content')
-        excerpt = request.form.get('excerpt')
-        status = request.form.get('status')
-        featured_image = request.form.get('featured_image')
-        tags = request.form.get('tags')
-        meta_description = request.form.get('meta_description')
-        
-        # Generate slug from title
-        slug = title.lower().replace(' ', '-').replace(',', '').replace('.', '')
-        
-        try:
-            conn.execute('''
-                UPDATE blog_posts
-                SET title = ?, slug = ?, content = ?, excerpt = ?, status = ?,
-                    featured_image = ?, tags = ?, meta_description = ?, updated_date = CURRENT_TIMESTAMP
-                WHERE id = ?
-            ''', (title, slug, content, excerpt, status, featured_image, tags, meta_description, post_id))
-            
-            conn.commit()
-            flash('Blog post updated successfully', 'success')
-            return redirect(url_for('admin_blog'))
-        except sqlite3.IntegrityError:
-            flash('A blog post with this title already exists', 'error')
-    
-    conn.close()
-    return render_template('admin/blog_edit.html', post=post)
-
-@app.route('/admin/blog/<int:post_id>/status', methods=['POST'])
-@admin_required
-def admin_blog_status(post_id):
-    """Update blog post status"""
-    data = request.json
-    new_status = data.get('status')
-    
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM blog_posts WHERE id = ?', (post_id,)).fetchone()
-    
-    if post:
-        # Update status
-        update_query = 'UPDATE blog_posts SET status = ?, updated_date = CURRENT_TIMESTAMP'
-        params = [new_status, post_id]
-        
-        # Set published date if status is published
-        if new_status == 'published':
-            update_query += ', published_date = CURRENT_TIMESTAMP'
-        
-        conn.execute(update_query, params)
-        
-        conn.commit()
-        conn.close()
-        
-        return jsonify({"success": True, "message": "Status updated successfully"})
-    else:
-        conn.close()
-        return jsonify({"success": False, "message": "Post not found"})
-
-@app.route('/admin/blog/<int:post_id>/delete', methods=['POST'])
-@admin_required
-def admin_blog_delete(post_id):
-    """Delete blog post"""
-    conn = get_db_connection()
-    post = conn.execute('SELECT * FROM blog_posts WHERE id = ?', (post_id,)).fetchone()
-    
-    if post:
-        conn.execute('DELETE FROM blog_posts WHERE id = ?', (post_id,))
-        
-        conn.commit()
-        conn.close()
-        return jsonify({'success': True, 'message': 'Blog post deleted successfully'})
-    else:
-        conn.close()
-        return jsonify({'success': False, 'message': 'Blog post not found'}), 404
-
-@app.route('/admin/export/submissions')
-@admin_required
-def admin_export_submissions():
-    """Export submissions to CSV"""
-    import csv
-    from io import StringIO
-
-    conn = get_db_connection()
-    submissions = conn.execute('SELECT * FROM form_submissions ORDER BY submission_date DESC').fetchall()
-    conn.close()
-
-    output = StringIO()
-    writer = csv.writer(output)
-
-    # Write header
-    writer.writerow(['ID', 'First Name', 'Last Name', 'Phone', 'Email', 'Want To', 'Insurance Type', 'Age', 'Date of Birth', 'Aadhaar',
-                    'Vehicle RC', 'Previous Policy Motor', 'Previous Policy Health', 'Pre-existing Disease',
-                    'Travel Country', 'Travel Duration', 'Travel Age', 'Commodity Type', 'Transport Mode', 'Pre-carrying Unit',
-                    'Business Nature', 'Previous Policy Shopkeeper', 'Claim Occurred', 'Number of Members', 'Salary', 'Work Nature',
-                    'Sum Insured', 'Locality', 'Pincode', 'Occupancy', 'Type of Insurance', 'Previous Policy Others',
-                    'Submission Date', 'Status', 'Notes', 'Processed By', 'Processed Date'])
-
-    # Write data
-    for submission in submissions:
-        writer.writerow([
-            submission['id'], submission['first_name'], submission['last_name'],
-            submission['phone'], submission['email'], submission['want_to'],
-            submission['insurance_type'], submission['age'], submission['date_of_birth'], submission['aadhaar'],
-            submission['vehicle_rc'], submission['previous_policy_motor'], submission['previous_policy_health'], submission['pre_existing_disease'],
-            submission['travel_country'], submission['travel_duration'], submission['travel_age'], submission['commodity_type'], submission['transport_mode'], submission['pre_carrying_unit'],
-            submission['business_nature'], submission['previous_policy_shopkeeper'], submission['claim_occurred'], submission['number_of_members'], submission['salary'], submission['work_nature'],
-            submission['sum_insured'], submission['locality'], submission['pincode'], submission['occupancy'], submission['type_of_insurance'], submission['previous_policy_others'],
-            submission['submission_date'], submission['status'],
-            submission['notes'], submission['processed_by'], submission['processed_date']
-        ])
-
-    output.seek(0)
-
-    response = app.response_class(
-        output.getvalue(),
-        mimetype='text/csv',
-        headers={'Content-Disposition': 'attachment; filename=submissions.csv'}
-    )
-
-    return response
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

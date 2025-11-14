@@ -104,8 +104,16 @@
                                     <td><strong>Date of Birth:</strong></td>
                                     <td>{{ submission.date_of_birth }}</td>
                                 </tr>
-                                {% endif %}
-                                {% if submission.aadhaar %}
+                               {% endif %}
+                               {% if submission.age %}
+                               <tr>
+                                   <td><strong>Age:</strong></td>
+                                   <td>{{ submission.age }}</td>
+                               </tr>
+                               {% endif %}
+                               {% if submission.aadhaar %}
+                               
+=======
                                 <tr>
                                     <td><strong>Aadhaar Number:</strong></td>
                                     <td>{{ submission.aadhaar }}</td>

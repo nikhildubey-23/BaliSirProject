@@ -156,8 +156,10 @@
                             <th>Contact</th>
                             <th>Insurance Type</th>
                             <th>Date of Birth</th>
+                            <th>Age</th>
                             <th>Aadhaar</th>
                             <th>Submission Date</th>
+=======
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -180,6 +182,20 @@
                             </td>
                             <td>
                                 {% if submission.date_of_birth %}
+                                    <span class="badge bg-secondary">{{ submission.date_of_birth }}</span>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if submission.age %}
+                                    <span class="badge bg-secondary">{{ submission.age }}</span>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+=======
                                     <span class="badge bg-secondary">{{ submission.date_of_birth }}</span>
                                 {% else %}
                                     <span class="text-muted">-</span>

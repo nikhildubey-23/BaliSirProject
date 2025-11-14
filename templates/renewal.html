@@ -48,8 +48,13 @@
           <label for="dateOfBirth" class="form-label">Date of Birth*</label>
           <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
         </div>
-
         <div class="col-md-6">
+          <label for="age" class="form-label">Age</label>
+          <input type="text" class="form-control" id="age" name="age" readonly>
+        </div>
+
+        \<div class="col-md-6">
+=======
           <label for="insuranceType" class="form-label">Insurance Type*</label>
           <select class="form-select" id="insuranceType" name="insuranceType" required>
             <option value="" selected disabled>Select Insurance Type</option>
@@ -419,5 +424,25 @@
       submitButton.textContent = 'Submit';
     });
   });
+
+  // Function to calculate age
+  function calculateAge(dateOfBirth) {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  // Add event listener to date of birth input
+  document.getElementById('dateOfBirth').addEventListener('change', function() {
+    const dateOfBirth = this.value;
+    const age = calculateAge(dateOfBirth);
+    document.getElementById('age').value = age;
+  });
 </script>
 {% endblock %}
+=======
