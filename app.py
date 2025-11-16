@@ -10,6 +10,8 @@ from datetime import datetime, timedelta
 from functools import wraps
 from bson import ObjectId
 import json
+import io
+import csv
 import sqlite3
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -841,11 +843,104 @@ def admin_contact_submission_delete(submission_id):
         logger.error(f"Error deleting contact submission {submission_id}: {e}")
         return jsonify({"error": "Failed to delete submission"}), 500
 
+@app.route('/admin/export_contact_submissions')
+@admin_required
+def admin_export_contact_submissions():
+    """Exports filtered contact submissions to a CSV file."""
+    if mongo_db is None:
+        flash("Database not configured.", "danger")
+        return redirect(url_for('admin_contact_submissions'))
+
+    try:
+        # Re-use filtering logic from the contact submissions page
+        search_query = request.args.get('search', '')
+        status_filter = request.args.get('status', '')
+
+        query_filters = {}
+        if status_filter:
+            query_filters['status'] = status_filter
+        
+        if search_query:
+            search_regex = {'$regex': search_query, '$options': 'i'}
+            query_filters['$or'] = [
+                {'first_name': search_regex},
+                {'last_name': search_regex},
+                {'email': search_regex},
+                {'phone': search_regex},
+            ]
+
+        # Fetch all matching submissions (no pagination)
+        submissions = mongo_db.contact_submissions.find(query_filters).sort('submission_date', -1)
+
+        # Generate CSV in memory
+        output = io.StringIO()
+        writer = csv.writer(output)
+
+        # Write header
+        headers = ['ID', 'FirstName', 'LastName', 'Email', 'Phone', 'ActionRequested', 'InsuranceType', 'Status', 'SubmissionDate']
+        writer.writerow(headers)
+
+        # Write data rows
+        for sub in submissions:
+            writer.writerow([str(sub.get('_id')), sub.get('first_name'), sub.get('last_name'), sub.get('email'), sub.get('phone'), sub.get('action'), sub.get('insurance_type'), sub.get('status'), sub.get('submission_date')])
+
+        output.seek(0)
+        return Response(output, mimetype="text/csv", headers={"Content-Disposition": "attachment;filename=contact_inquiries.csv"})
+    except Exception as e:
+        logger.error(f"Error exporting contact submissions: {e}")
+        flash("An error occurred while exporting data.", "danger")
+        return redirect(url_for('admin_contact_submissions'))
 
 @app.route('/admin/export_submissions')
 @admin_required
 def admin_export_submissions():
-    return "Export functionality placeholder"
+    """Exports filtered form submissions to a CSV file."""
+    if mongo_db is None:
+        flash("Database not configured.", "danger")
+        return redirect(url_for('admin_submissions'))
+
+    try:
+        # Re-use the same filtering logic from the submissions page
+        search_query = request.args.get('search', '')
+        status_filter = request.args.get('status', '')
+        insurance_type_filter = request.args.get('insurance_type', '')
+
+        query_filters = {}
+        if status_filter:
+            query_filters['status'] = status_filter
+        if insurance_type_filter:
+            query_filters['insurance_type'] = insurance_type_filter
+        
+        if search_query:
+            search_regex = {'$regex': search_query, '$options': 'i'}
+            query_filters['$or'] = [
+                {'first_name': search_regex},
+                {'last_name': search_regex},
+                {'email': search_regex},
+                {'phone': search_regex},
+            ]
+
+        # Fetch all matching submissions (no pagination)
+        submissions = mongo_db.form_submissions.find(query_filters).sort('submission_date', -1)
+
+        # Generate CSV in memory
+        output = io.StringIO()
+        writer = csv.writer(output)
+
+        # Write header
+        headers = ['ID', 'FirstName', 'LastName', 'Email', 'Phone', 'DOB', 'Aadhaar', 'InsuranceType', 'Status', 'SubmissionDate', 'Notes']
+        writer.writerow(headers)
+
+        # Write data rows
+        for sub in submissions:
+            writer.writerow([str(sub.get('_id')), sub.get('first_name'), sub.get('last_name'), sub.get('email'), sub.get('phone'), sub.get('date_of_birth'), sub.get('aadhaar'), sub.get('insurance_type'), sub.get('status'), sub.get('submission_date'), sub.get('notes')])
+
+        output.seek(0)
+        return Response(output, mimetype="text/csv", headers={"Content-Disposition": "attachment;filename=form_submissions.csv"})
+    except Exception as e:
+        logger.error(f"Error exporting submissions: {e}")
+        flash("An error occurred while exporting data.", "danger")
+        return redirect(url_for('admin_submissions'))
 
 @app.route('/admin/submission/<submission_id>/delete', methods=['POST'])
 @admin_required
