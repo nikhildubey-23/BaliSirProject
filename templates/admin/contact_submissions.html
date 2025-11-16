@@ -108,15 +108,13 @@
                         <span class="text-muted">{{ submission.submission_date | format_datetime if submission.submission_date else 'N/A' }}</span>
                     </td>
                     <td>
-                        <span class="badge rounded-pill 
-                            {% if submission.status == 'new' %}text-bg-warning
-                            {% elif submission.status == 'processing' %}text-bg-primary
-                            {% elif submission.status == 'completed' %}text-bg-success
-                            {% else %}text-bg-light{% endif %}">
-                            {{ submission.status|title }}
-                        </span>
+                        <select class="form-select form-select-sm status-dropdown" data-id="{{ submission.id }}">
+                            <option value="new" {% if submission.status == 'new' %}selected{% endif %}>New</option>
+                            <option value="processing" {% if submission.status == 'processing' %}selected{% endif %}>Processing</option>
+                            <option value="completed" {% if submission.status == 'completed' %}selected{% endif %}>Completed</option>
+                        </select>
                     </td>
-                    <td class="text-end">
+                    <td class="text-end" id="submission-row-{{ submission.id }}">
                         <button class="btn btn-sm btn-outline-danger" title="Delete" onclick="deleteInquiry('{{ submission.id }}')">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -160,6 +158,34 @@
 
 {% block extra_scripts %}
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle status updates
+    document.querySelectorAll('.status-dropdown').forEach(dropdown => {
+        dropdown.addEventListener('change', function() {
+            const submissionId = this.dataset.id;
+            const newStatus = this.value;
+
+            fetch(`/admin/contact-submissions/${submissionId}/update`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Give visual feedback by flashing the row
+                    const row = document.getElementById(`submission-row-${submissionId}`).closest('tr');
+                    row.style.transition = 'background-color 0.5s ease';
+                    row.style.backgroundColor = '#d1e7dd'; // Bootstrap success green
+                    setTimeout(() => { row.style.backgroundColor = ''; }, 1500);
+                } else {
+                    alert('Error updating status: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(err => console.error('Failed to update status:', err));
+        });
+    });
+});
 function deleteInquiry(submissionId) {
     if (confirm('Are you sure you want to delete this inquiry? This action cannot be undone.')) {
         fetch(`/admin/contact-submissions/${submissionId}/delete`, {
