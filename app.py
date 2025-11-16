@@ -45,13 +45,15 @@ mongo_db = None
 
 def init_mongodb():
     global mongo_client, mongo_db
-    if not MONGODB_URI or not DATABASE_NAME:
+    mongodb_uri = os.getenv("MONGODB_URI")
+    database_name = os.getenv("DATABASE_NAME")
+    if not mongodb_uri or not database_name:
         logger.error("MONGODB_URI or DATABASE_NAME not set in environment variables.")
         return
     try:
         from pymongo import MongoClient
-        mongo_client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
-        mongo_db = mongo_client[DATABASE_NAME]
+        mongo_client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=5000)
+        mongo_db = mongo_client[database_name]
         mongo_client.server_info()
         logger.info(f"✅ MongoDB connected successfully to database: {mongo_db.name}")
     except Exception as e:
