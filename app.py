@@ -570,8 +570,8 @@ def admin_login():
 @admin_required
 def admin_dashboard():
     if mongo_db is None:
-        flash("MongoDB not configured. Dashboard data is unavailable.", "danger")
-        return render_template('admin/dashboard.html')
+        flash("Database not configured. Dashboard data is unavailable.", "danger")
+        return render_template('admin/dashboard.html', stats={}, recent_submissions=[], tasks=[], monthly_trends=[], submissions_by_type=[])
 
     try:
         # Fetch stats
