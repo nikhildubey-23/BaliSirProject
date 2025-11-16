@@ -69,6 +69,18 @@
             text-decoration: underline;
         }
 
+        /* Hide the text part of the back link on small screens */
+        @media (max-width: 480px) {
+            .back-link-text { display: none; }
+            .chat-input-area {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            #message-input {
+                margin-right: 0;
+            }
+        }
+
         .chat-messages {
             flex-grow: 1;
             padding: 1.5rem;
@@ -155,7 +167,9 @@
 
 <div class="chat-container">
     <div class="chat-header">
-        <a href="/" class="back-link">&larr; Back to Home</a>
+        <a href="/" class="back-link">
+            &larr; <span class="back-link-text">Back to Home</span>
+        </a>
         <span>AI Assistant</span>
     </div>
     <div class="chat-messages" id="chat-messages">
