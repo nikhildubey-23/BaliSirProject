@@ -1,0 +1,74 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Blog Management - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mt-4">Blog Management</h1>
+        <a href="{{ url_for('admin_blog_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>New Post
+        </a>
+    </div>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Blog Posts</li>
+    </ol>
+
+    <div class="card mb-4 data-table">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            All Blog Posts
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Slug</th>
+                            <th>Status</th>
+                            <th>Published Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                        <tr id="post-row-{{ post.id }}">
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.slug }}</td>
+                            <td>
+                                {% if post.status == 'published' %}
+                                    <span class="badge bg-success">Published</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ post.status | title }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if post.published_date %}
+                                    {{ post.published_date | format_datetime }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-sm" title="Edit Post">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button class="btn btn-danger btn-sm" title="Delete Post">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No blog posts found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

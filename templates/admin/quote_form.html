@@ -1,0 +1,90 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mt-4">{{ title }}</h1>
+        <a href="{{ url_for('admin_submissions') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Submissions
+        </a>
+    </div>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_submissions') }}">Submissions</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-file-invoice-dollar me-1"></i>
+            Quote Details
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="row">
+                    <!-- Quote Details -->
+                    <div class="col-md-8">
+                        <h5 class="mb-3">Policy Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="customerName" class="form-label">Customer Name</label>
+                                <input type="text" class="form-control" id="customerName" name="customerName" value="{{ submission.first_name + ' ' + submission.last_name if submission else '' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="customerEmail" class="form-label">Customer Email</label>
+                                <input type="email" class="form-control" id="customerEmail" name="customerEmail" value="{{ submission.email if submission else '' }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="insuranceType" class="form-label">Insurance Type</label>
+                                <input type="text" class="form-control" id="insuranceType" name="insuranceType" value="{{ submission.insurance_type|title if submission else '' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="policyProvider" class="form-label">Policy Provider</label>
+                                <select class="form-select" id="policyProvider" name="policyProvider" required>
+                                    <option value="" selected disabled>Select a provider...</option>
+                                    <option value="Tata AIG">Tata AIG</option>
+                                    <option value="Bajaj Allianz">Bajaj Allianz</option>
+                                    <option value="HDFC ERGO">HDFC ERGO</option>
+                                    <option value="ICICI Lombard">ICICI Lombard</option>
+                                    <option value="United India">United India</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="policyDetails" class="form-label">Policy Details / Notes</label>
+                            <textarea class="form-control" id="policyDetails" name="policyDetails" rows="5" placeholder="Enter details about the coverage, add-ons, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="col-md-4">
+                        <h5 class="mb-3">Pricing</h5>
+                        <div class="mb-3">
+                            <label for="basePremium" class="form-label">Base Premium (₹)</label>
+                            <input type="number" class="form-control" id="basePremium" name="basePremium" step="0.01" placeholder="e.g., 5000.00" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gst" class="form-label">GST (%)</label>
+                            <input type="number" class="form-control" id="gst" name="gst" value="18" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="totalPremium" class="form-label">Total Premium (₹)</label>
+                            <input type="number" class="form-control" id="totalPremium" name="totalPremium" step="0.01" readonly>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Send Quote to Customer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

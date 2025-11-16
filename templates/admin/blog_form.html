@@ -1,0 +1,111 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mt-4">{{ title }}</h1>
+        <a href="{{ url_for('admin_blog') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Blog List
+        </a>
+    </div>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('admin_blog') }}">Blog Management</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+            Post Details
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ post.title or '' }}" required>
+                        </div>
+
+                        <!-- Slug -->
+                        <div class="mb-3">
+                            <label for="slug" class="form-label">Slug</label>
+                            <input type="text" class="form-control" id="slug" name="slug" value="{{ post.slug or '' }}" placeholder="e.g., how-to-choose-insurance" required>
+                            <small class="form-text text-muted">URL-friendly version of the title.</small>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content (Markdown supported)</label>
+                            <textarea class="form-control" id="content" name="content" rows="15" required>{{ post.content or '' }}</textarea>
+                        </div>
+
+                        <!-- Excerpt -->
+                        <div class="mb-3">
+                            <label for="excerpt" class="form-label">Excerpt</label>
+                            <textarea class="form-control" id="excerpt" name="excerpt" rows="3">{{ post.excerpt or '' }}</textarea>
+                            <small class="form-text text-muted">A short summary of the post.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Status -->
+                        <div class="card mb-3">
+                            <div class="card-header">Publish</div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select" id="status" name="status">
+                                        <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
+                                        <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
+                                    </select>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta Information -->
+                        <div class="card">
+                            <div class="card-header">Meta Information</div>
+                            <div class="card-body">
+                                <!-- Author -->
+                                <div class="mb-3">
+                                    <label for="author" class="form-label">Author</label>
+                                    <input type="text" class="form-control" id="author" name="author" value="{{ post.author or 'Bima With Bali' }}">
+                                </div>
+
+                                <!-- Tags -->
+                                <div class="mb-3">
+                                    <label for="tags" class="form-label">Tags</label>
+                                    <input type="text" class="form-control" id="tags" name="tags" value="{{ post.tags or '' }}" placeholder="e.g., health, motor, tips">
+                                    <small class="form-text text-muted">Comma-separated values.</small>
+                                </div>
+
+                                <!-- Featured Image URL -->
+                                <div class="mb-3">
+                                    <label for="featured_image" class="form-label">Featured Image URL</label>
+                                    <input type="url" class="form-control" id="featured_image" name="featured_image" value="{{ post.featured_image or '' }}" placeholder="https://example.com/image.jpg">
+                                </div>
+
+                                <!-- Meta Description -->
+                                <div class="mb-3">
+                                    <label for="meta_description" class="form-label">Meta Description</label>
+                                    <textarea class="form-control" id="meta_description" name="meta_description" rows="3">{{ post.meta_description or '' }}</textarea>
+                                    <small class="form-text text-muted">For SEO purposes.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

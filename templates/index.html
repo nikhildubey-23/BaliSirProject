@@ -131,7 +131,7 @@
                         <span>Marine</span>
                     </a>
                     <a
-                        href="{{ url_for('get_now') }}"
+                        href="{{ url_for('contact') }}"
                         class="insurance-icon icon-2"
                     >
                         <div class="icon-wrapper">
@@ -143,10 +143,7 @@
 
                 <!-- CTA Buttons -->
                 <div class="hero-cta-section">
-                    <a
-                        href="{{ url_for('get_now') }}"
-                        class="btn-3d-modern btn-primary-modern mb-3"
-                    >
+                    <a href="{{ url_for('contact') }}" class="btn-3d-modern btn-primary-modern mb-3">
                         <span class="btn-text">Get Quote Now</span>
                         <div class="btn-bg"></div>
                     </a>
@@ -1467,7 +1464,7 @@
     </h2>
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="accordion" id="faqAccordion">
+            <div class="accordion" id="faqAccordion" >
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button
@@ -1589,50 +1586,45 @@
 </div>
 
 <script>
-    document
-        .getElementById("contactForm")
-        .addEventListener("submit", function (event) {
-            event.preventDefault();
+  document.getElementById("contactForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const submitButton = this.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
 
-            const firstName = document.getElementById("firstName").value;
-            const lastName = document.getElementById("lastName").value;
-            const phone = document.getElementById("phone").value;
-            const email = document.getElementById("email").value;
-            const wantTo = document.querySelector(
-                'input[name="wantTo"]:checked',
-            )?.value;
-            const insuranceType =
-                document.getElementById("insuranceType").value;
+    const form = event.target;
+    const formData = new FormData();
 
-            fetch("/send-email", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    to: "sparksolutionfreelancing@gmail.com",
-                    name: firstName + " " + lastName,
-                    email: email,
-                    subject: wantTo + " - " + insuranceType,
-                    message: `Phone: ${phone}\n\nInsurance Type: ${insuranceType}\n\nMessage: ${wantTo}`,
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.message) {
-                        document.getElementById("form-message").textContent =
-                            data.message;
-                        document.getElementById("contactForm").reset();
-                    } else if (data.error) {
-                        document.getElementById("form-message").textContent =
-                            "Error: " + data.error;
-                    }
-                })
-                .catch((error) => {
-                    document.getElementById("form-message").textContent =
-                        "Error: " + error;
-                });
-        });
+    // Append form fields for the /contact-submission endpoint
+    formData.append('firstName', document.getElementById('firstName').value);
+    formData.append('lastName', document.getElementById('lastName').value);
+    formData.append('phone', document.getElementById('phone').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('action', document.querySelector('input[name="wantTo"]:checked') ? document.querySelector('input[name="wantTo"]:checked').value : '');
+    formData.append('insuranceType', document.getElementById('insuranceType').value);
+
+    fetch('/contact-submission', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      const messageDiv = document.getElementById('form-message');
+      if (data.message) {
+        messageDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+        form.reset();
+      } else {
+        messageDiv.innerHTML = `<div class="alert alert-danger">Error: ${data.error || 'Unknown error'}</div>`;
+      }
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit';
+    })
+    .catch(error => {
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">An error occurred. Please try again.</div>';
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit';
+    });
+  });
 </script>
 
 <script>

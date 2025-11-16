@@ -14,48 +14,53 @@
     
     <style>
         :root {
-            --admin-primary: #f0ad00;
-            --admin-secondary: #6c757d;
-            --admin-success: #28a745;
-            --admin-danger: #dc3545;
-            --admin-warning: #ffc107;
-            --admin-info: #17a2b8;
+            --primary-color: #4a90e2; /* A professional blue */
+            --secondary-color: #50e3c2; /* A complementary mint green */
+            --text-color: #333;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #ffffff;
+            --navbar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.05);
         }
         
         body {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background-color: var(--bg-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
+            color: var(--text-color);
         }
         
         .admin-navbar {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-bottom: 3px solid var(--admin-primary);
+            background-color: var(--navbar-bg);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            border-bottom: 1px solid #e9ecef;
         }
         
         .admin-navbar .navbar-brand {
-            color: white !important;
+            color: var(--primary-color) !important;
             font-weight: 700;
             font-size: 1.5rem;
         }
         
         .admin-navbar .nav-link {
-            color: rgba(255,255,255,0.9) !important;
+            color: #555 !important;
             font-weight: 500;
             transition: all 0.3s ease;
         }
         
         .admin-navbar .nav-link:hover {
-            color: var(--admin-primary) !important;
-            transform: translateY(-2px);
+            color: var(--primary-color) !important;
         }
         
         .admin-sidebar {
-            background: white;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            background: var(--sidebar-bg);
+            box-shadow: 2px 0 5px var(--shadow-color);
             min-height: calc(100vh - 76px);
             border-right: 1px solid #dee2e6;
+            position: sticky;
+            top: 76px; /* Height of the navbar */
+            height: calc(100vh - 76px);
         }
         
         .sidebar-menu {
@@ -63,42 +68,45 @@
         }
         
         .sidebar-menu .nav-link {
-            color: #495057;
+            color: #5a6e7f;
             padding: 12px 20px;
             margin: 5px 10px;
             border-radius: 8px;
             transition: all 0.3s ease;
             font-weight: 500;
+            display: flex;
+            align-items: center;
         }
         
         .sidebar-menu .nav-link:hover,
         .sidebar-menu .nav-link.active {
-            background: linear-gradient(135deg, var(--admin-primary), #e0a800);
+            background-color: var(--primary-color);
             color: white !important;
             transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
         }
         
         .sidebar-menu .nav-link i {
             width: 20px;
             margin-right: 10px;
+            text-align: center;
         }
         
         .admin-content {
             padding: 30px;
-            min-height: calc(100vh - 76px);
         }
         
         .page-header {
-            background: white;
+            background: var(--card-bg);
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px var(--shadow-color);
             margin-bottom: 30px;
-            border-left: 5px solid var(--admin-primary);
+            border-left: 5px solid var(--primary-color);
         }
         
         .page-header h1 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin: 0;
             font-weight: 700;
         }
@@ -107,28 +115,25 @@
             background: none;
             padding: 0;
             margin: 10px 0 0 0;
+            font-size: 0.9rem;
         }
         
         .stat-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--admin-primary);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            border: 1px solid #e9ecef;
             transition: all 0.3s ease;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-        
-        .stat-card.primary { border-left-color: var(--admin-primary); }
-        .stat-card.success { border-left-color: var(--admin-success); }
-        .stat-card.info { border-left-color: var(--admin-info); }
-        .stat-card.warning { border-left-color: var(--admin-warning); }
-        .stat-card.danger { border-left-color: var(--admin-danger); }
         
         .stat-icon {
             width: 60px;
@@ -137,22 +142,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: white;
             margin-right: 20px;
+            flex-shrink: 0;
         }
         
-        .stat-card.primary .stat-icon { background: var(--admin-primary); }
-        .stat-card.success .stat-icon { background: var(--admin-success); }
-        .stat-card.info .stat-icon { background: var(--admin-info); }
-        .stat-card.warning .stat-icon { background: var(--admin-warning); }
-        .stat-card.danger .stat-icon { background: var(--admin-danger); }
+        .stat-card.primary .stat-icon { background: #4a90e2; }
+        .stat-card.success .stat-icon { background: #28a745; }
+        .stat-card.info .stat-icon { background: #17a2b8; }
+        .stat-card.warning .stat-icon { background: #ffc107; }
+        .stat-card.danger .stat-icon { background: #dc3545; }
         
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
             line-height: 1;
-            color: #2c3e50;
+            color: var(--text-color);
         }
         
         .stat-label {
@@ -164,42 +170,44 @@
         }
         
         .data-table {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px var(--shadow-color);
             overflow: hidden;
+            border: 1px solid #e9ecef;
         }
         
         .btn-admin {
-            background: linear-gradient(135deg, var(--admin-primary), #e0a800);
+            background-color: var(--primary-color);
             border: none;
             color: white;
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 8px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(74, 144, 226, 0.3);
         }
         
         .btn-admin:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(240, 173, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
             color: white;
+            background-color: #357ABD;
         }
         
         .btn-admin.secondary {
-            background: linear-gradient(135deg, var(--admin-secondary), #5a6268);
+            background-color: #6c757d;
+            box-shadow: 0 2px 5px rgba(108, 117, 125, 0.3);
         }
         
         .btn-admin.secondary:hover {
             box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+            background-color: #5a6268;
         }
         
         .btn-admin.danger {
-            background: linear-gradient(135deg, var(--admin-danger), #c82333);
-        }
-        
-        .btn-admin.danger:hover {
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+            background-color: #dc3545;
+            box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
         }
         
         .alert {
@@ -211,24 +219,24 @@
         .pagination .page-link {
             border-radius: 8px;
             margin: 0 2px;
-            border: none;
-            color: var(--admin-primary);
+            border: 1px solid #dee2e6;
+            color: var(--primary-color);
         }
         
         .pagination .page-link:hover {
-            background: var(--admin-primary);
+            background: var(--primary-color);
             color: white;
         }
         
         .pagination .page-item.active .page-link {
-            background: var(--admin-primary);
-            border-color: var(--admin-primary);
+            background: var(--primary-color);
+            border-color: var(--primary-color);
         }
         
         .form-control, .form-select {
             border-radius: 8px;
             border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         
         .form-control:focus, .form-select:focus {
@@ -242,7 +250,7 @@
         }
         
         .modal-header {
-            background: linear-gradient(135deg, var(--admin-primary), #e0a800);
+            background-color: var(--primary-color);
             color: white;
             border-radius: 15px 15px 0 0;
         }
@@ -252,8 +260,14 @@
         }
         
         @media (max-width: 768px) {
-            .admin-sidebar {
+            .admin-sidebar.d-none.d-md-block {
                 display: none;
+            }
+            .admin-sidebar {
+                position: fixed;
+                left: -250px; /* Hidden by default */
+                transition: left 0.3s ease;
+                z-index: 1040;
             }
             
             .admin-content {
@@ -263,6 +277,11 @@
             .stat-card {
                 margin-bottom: 15px;
             }
+        }
+
+        /* Logout button specific style */
+        .sidebar-menu .logout-link {
+            color: #dc3545;
         }
     </style>
     
@@ -342,12 +361,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'admin_contact_submissions' %}active{% endif %}"
+                               href="{{ url_for('admin_contact_submissions') }}">
+                                <i class="fas fa-headset"></i>Contact Inquiries
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {% if request.endpoint and 'admin_blog' in request.endpoint %}active{% endif %}" 
                                href="{{ url_for('admin_blog') }}">
                                 <i class="fas fa-blog"></i>Blog Management
                             </a>
                         </li>
-
+                    </ul>
+                    <ul class="nav flex-column" style="position: absolute; bottom: 20px; width: 90%;">
+                        <li class="nav-item">
+                            <a class="nav-link logout-link" href="{{ url_for('admin_logout') }}">
+                                <i class="fas fa-sign-out-alt"></i>Logout
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

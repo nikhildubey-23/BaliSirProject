@@ -59,7 +59,8 @@
   {% endif %}
 
   <!-- Static Blog Posts (Fallback) -->
-  <div class="row g-4 {% if posts %}mt-5{% endif %}">
+  {% if not posts %}
+  <div class="row g-4 mt-5">
     <div class="col-12">
       <h2 class="mb-4">{% if posts %}More Articles{% else %}Featured Articles{% endif %}</h2>
     </div>
@@ -717,5 +718,6 @@
       </a>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock %}

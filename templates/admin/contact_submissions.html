@@ -1,10 +1,10 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Form Submissions - Admin Panel{% endblock %}
-{% block page_title %}Form Submissions{% endblock %}
+{% block title %}Contact Inquiries - Admin Panel{% endblock %}
+{% block page_title %}Contact Inquiries{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item active">Form Submissions</li>
+<li class="breadcrumb-item active">Contact Inquiries</li>
 {% endblock %}
 
 {% block content %}
@@ -12,10 +12,10 @@
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="stat-card primary h-100">
-            <div class="stat-icon"><i class="fas fa-files-alt"></i></div>
+            <div class="stat-icon"><i class="fas fa-address-book"></i></div>
             <div>
                 <div class="stat-number">{{ stats.total or 0 }}</div>
-                <div class="stat-label">Total Submissions</div>
+                <div class="stat-label">Total Inquiries</div>
             </div>
         </div>
     </div>
@@ -48,46 +48,30 @@
     </div>
 </div>
 
-<!-- Submissions Table -->
+<!-- Inquiries Table -->
 <div class="data-table">
     <div class="p-3 border-bottom">
         <div class="d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><i class="fas fa-list me-2"></i>All Submissions</h5>
+            <h5 class="mb-0"><i class="fas fa-list me-2"></i>All Inquiries</h5>
             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
                 <i class="fas fa-filter me-2"></i>Filters
             </button>
         </div>
         <!-- Filter Form -->
         <div class="collapse mt-3" id="filterCollapse">
-            <form method="GET" action="{{ url_for('admin_submissions') }}">
+            <form method="GET" action="{{ url_for('admin_contact_submissions') }}">
                 <div class="row g-3 align-items-end">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label for="search" class="form-label">Search</label>
                         <input type="text" class="form-control" id="search" name="search" placeholder="Name, email, or phone..." value="{{ filters.search or '' }}">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" name="status">
                             <option value="">All Statuses</option>
                             <option value="new" {% if filters.status == 'new' %}selected{% endif %}>New</option>
-                            <option value="contacted" {% if filters.status == 'contacted' %}selected{% endif %}>Contacted</option>
                             <option value="processing" {% if filters.status == 'processing' %}selected{% endif %}>Processing</option>
                             <option value="completed" {% if filters.status == 'completed' %}selected{% endif %}>Completed</option>
-                            <option value="closed" {% if filters.status == 'closed' %}selected{% endif %}>Closed</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="insurance_type" class="form-label">Insurance Type</label>
-                        <select class="form-select" id="insurance_type" name="insurance_type">
-                            <option value="">All Types</option>
-                            <option value="motor" {% if filters.insurance_type == 'motor' %}selected{% endif %}>Motor</option>
-                            <option value="health" {% if filters.insurance_type == 'health' %}selected{% endif %}>Health</option>
-                            <option value="travel" {% if filters.insurance_type == 'travel' %}selected{% endif %}>Travel</option>
-                            <option value="marine" {% if filters.insurance_type == 'marine' %}selected{% endif %}>Marine</option>
-                            <option value="shopkeeper" {% if filters.insurance_type == 'shopkeeper' %}selected{% endif %}>Shopkeeper</option>
-                            <option value="workmen" {% if filters.insurance_type == 'workmen' %}selected{% endif %}>Workmen</option>
-                            <option value="fire" {% if filters.insurance_type == 'fire' %}selected{% endif %}>Fire</option>
-                            <option value="others" {% if filters.insurance_type == 'others' %}selected{% endif %}>Others</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -102,8 +86,7 @@
             <thead class="table-light">
                 <tr>
                     <th scope="col">Customer</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Insurance Type</th>
+                    <th scope="col">Inquiry</th>
                     <th scope="col">Submitted</th>
                     <th scope="col">Status</th>
                     <th scope="col" class="text-end">Actions</th>
@@ -114,13 +97,12 @@
                 <tr>
                     <td>
                         <div class="fw-bold">{{ submission.first_name }} {{ submission.last_name }}</div>
-                    </td>
-                    <td>
                         <div class="text-muted small">{{ submission.email }}</div>
                         <div class="text-muted small">{{ submission.phone }}</div>
                     </td>
                     <td>
-                        <span class="badge bg-primary bg-opacity-25 text-primary-emphasis">{{ submission.insurance_type|title }}</span>
+                        <div class="fw-bold">{{ submission.action }}</div>
+                        <div class="text-muted small">Insurance: {{ submission.insurance_type|title }}</div>
                     </td>
                     <td>
                         <span class="text-muted">{{ submission.submission_date | format_datetime if submission.submission_date else 'N/A' }}</span>
@@ -128,29 +110,24 @@
                     <td>
                         <span class="badge rounded-pill 
                             {% if submission.status == 'new' %}text-bg-warning
-                            {% elif submission.status == 'contacted' %}text-bg-info
                             {% elif submission.status == 'processing' %}text-bg-primary
                             {% elif submission.status == 'completed' %}text-bg-success
-                            {% elif submission.status == 'closed' %}text-bg-secondary
                             {% else %}text-bg-light{% endif %}">
                             {{ submission.status|title }}
                         </span>
                     </td>
                     <td class="text-end">
-                        <a href="{{ url_for('admin_submission_detail', submission_id=submission.id) }}" class="btn btn-sm btn-outline-primary" title="View Details">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <button class="btn btn-sm btn-outline-danger" title="Delete" onclick="deleteSubmission('{{ submission.id }}')">
+                        <button class="btn btn-sm btn-outline-danger" title="Delete" onclick="deleteInquiry('{{ submission.id }}')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="6" class="text-center py-5">
+                    <td colspan="5" class="text-center py-5">
                         <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                        <p class="text-muted">No submissions found matching your criteria.</p>
-                        <a href="{{ url_for('admin_submissions') }}" class="btn btn-sm btn-outline-secondary">Clear Filters</a>
+                        <p class="text-muted">No inquiries found matching your criteria.</p>
+                        <a href="{{ url_for('admin_contact_submissions') }}" class="btn btn-sm btn-outline-secondary">Clear Filters</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -164,15 +141,15 @@
         <nav aria-label="Page navigation">
             <ul class="pagination mb-0">
                 <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
-                    <a class="page-link" href="{{ url_for('admin_submissions', page=current_page-1, **filters) }}">Previous</a>
+                    <a class="page-link" href="{{ url_for('admin_contact_submissions', page=current_page-1, **filters) }}">Previous</a>
                 </li>
                 {% for page_num in range(1, total_pages + 1) %}
                 <li class="page-item {% if page_num == current_page %}active{% endif %}">
-                    <a class="page-link" href="{{ url_for('admin_submissions', page=page_num, **filters) }}">{{ page_num }}</a>
+                    <a class="page-link" href="{{ url_for('admin_contact_submissions', page=page_num, **filters) }}">{{ page_num }}</a>
                 </li>
                 {% endfor %}
                 <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
-                    <a class="page-link" href="{{ url_for('admin_submissions', page=current_page+1, **filters) }}">Next</a>
+                    <a class="page-link" href="{{ url_for('admin_contact_submissions', page=current_page+1, **filters) }}">Next</a>
                 </li>
             </ul>
         </nav>
@@ -183,9 +160,9 @@
 
 {% block extra_scripts %}
 <script>
-function deleteSubmission(submissionId) {
-    if (confirm('Are you sure you want to delete this submission? This action cannot be undone.')) {
-        fetch(`/admin/submission/${submissionId}/delete`, {
+function deleteInquiry(submissionId) {
+    if (confirm('Are you sure you want to delete this inquiry? This action cannot be undone.')) {
+        fetch(`/admin/contact-submissions/${submissionId}/delete`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -194,15 +171,15 @@ function deleteSubmission(submissionId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Submission deleted successfully.');
+                alert('Inquiry deleted successfully.');
                 location.reload();
             } else {
-                alert('Error: ' + (data.error || 'Could not delete submission.'));
+                alert('Error: ' + (data.error || 'Could not delete inquiry.'));
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while deleting the submission.');
+            alert('An error occurred while deleting the inquiry.');
         });
     }
 }

@@ -24,7 +24,7 @@
       </div>
     </div>
 <section class="renewal-section py-5 px-5 my-3" style="border-radius:2rem; background-color: #d9a90f; width: 100%; display: flex; justify-content: center; align-items: center;">
-    <form id="renewalForm" enctype="multipart/form-data">
+    <form id="renewalForm" method="POST" enctype="multipart/form-data">
       <div class="row mt-4 g-3">
         <div class="col-md-6">
           <label for="firstName" class="form-label">First Name*</label>
@@ -53,8 +53,8 @@
           <input type="text" class="form-control" id="age" name="age" readonly>
         </div>
 
-        \<div class="col-md-6">
-=======
+        <div class="col-md-6">
+
           <label for="insuranceType" class="form-label">Insurance Type*</label>
           <select class="form-select" id="insuranceType" name="insuranceType" required>
             <option value="" selected disabled>Select Insurance Type</option>
@@ -328,60 +328,11 @@
     const formData = new FormData(form);
 
     // Log form data for debugging
-    console.log('Form data entries:');
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
-    formData.append('to', 'sparksolutionfreelancing@gmail.com');
-    formData.append('name', form.firstName.value + ' ' + form.lastName.value);
-    formData.append('email', form.email.value || 'renewal@bima.com');
-    formData.append('subject', 'Renewal Form Submission - ' + form.insuranceType.value);
-
-    let message = `Renewal Form Submission\n\n`;
-    message += `First Name: ${form.firstName.value}\n`;
-    message += `Last Name: ${form.lastName.value}\n`;
-    message += `Email: ${form.email.value}\n`;
-    message += `Phone: ${form.phone.value}\n`;
-    message += `Date of Birth: ${form.dateOfBirth.value}\n`;
-    message += `Insurance Type: ${form.insuranceType.value}\n`;
-    message += `Aadhaar: ${form.aadhaar.value}\n`;
-
-    // Add dynamic fields based on insurance type
-    const insuranceType = form.insuranceType.value;
-    if (insuranceType === 'motor') {
-      message += `Vehicle RC: Attached\n`;
-      message += `Previous Policy: Attached\n`;
-    } else if (insuranceType === 'health') {
-      message += `Previous Policy: Attached\n`;
-      message += `Pre-existing Disease: ${form.preExistingDisease.value}\n`;
-    } else if (insuranceType === 'travel') {
-      message += `Country: ${form.travelCountry.value}\n`;
-      message += `Duration: ${form.travelDuration.value} days\n`;
-      message += `Age: ${form.travelAge.value}\n`;
-    } else if (insuranceType === 'marine') {
-      message += `Commodity Type: ${form.commodityType.value}\n`;
-      message += `Transport Mode: ${form.transportMode.value}\n`;
-      message += `Pre-carrying Unit: ${form.preCarryingUnit.value}\n`;
-    } else if (insuranceType === 'shopkeeper') {
-      message += `Nature of Business: ${form.businessNature.value}\n`;
-      message += `Previous Policy: Attached\n`;
-      message += `Claim Occurred: ${form.claimOccurred.value}\n`;
-    } else if (insuranceType === 'workmen') {
-      message += `Number of Members: ${form.numberOfMembers.value}\n`;
-      message += `Salary: ${form.salary.value}\n`;
-      message += `Nature of Work: ${form.workNature.value}\n`;
-    } else if (insuranceType === 'fire') {
-      message += `Sum Insured: ${form.sumInsured.value}\n`;
-      message += `Locality: ${form.locality.value}\n`;
-      message += `Pincode: ${form.pincode.value}\n`;
-      message += `Occupancy: ${form.occupancy.value}\n`;
-    } else if (insuranceType === 'others') {
-      message += `Type of Insurance: ${form.typeOfInsurance.value}\n`;
-      message += `Previous Policy: Attached\n`;
-    }
-
-    formData.append('message', message);
+    // The backend will read all fields directly from the FormData object.
+    // No need to manually construct a message string here.
+    formData.append('name', formData.get('firstName') + ' ' + formData.get('lastName'));
+    formData.append('subject', 'Renewal Form Submission - ' + formData.get('insuranceType'));
+    formData.append('message', 'This is a renewal form submission. Please see attached data.');
 
     console.log('About to fetch /send-email');
     fetch('/send-email', {

@@ -135,42 +135,42 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name*</label>
-              <input type="text" class="form-control" id="firstName" required />
+              <input type="text" class="form-control" id="firstName" name="firstName" required />
             </div>
             <div class="col-md-6">
               <label for="lastName" class="form-label">Last Name*</label>
-              <input type="text" class="form-control" id="lastName" required />
+              <input type="text" class="form-control" id="lastName" name="lastName" required />
             </div>
             <div class="col-md-6">
               <label for="phone" class="form-label">Phone*</label>
-              <input type="tel" class="form-control" id="phone" required />
+              <input type="tel" class="form-control" id="phone" name="phone" required />
             </div>
             <div class="col-md-6">
               <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" />
+              <input type="email" class="form-control" id="email" name="email" />
             </div>
             <div class="col-12">
               <label class="form-label d-block">I Want To*</label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="action" id="buyPolicy" value="buy" required />
+                <input class="form-check-input" type="radio" name="action" id="buyPolicy" value="Buy Policy" required />
                 <label class="form-check-label" for="buyPolicy">Buy policy</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="action" id="renewPolicy" value="renew" required />
+                <input class="form-check-input" type="radio" name="action" id="renewPolicy" value="Renew Policy" required />
                 <label class="form-check-label" for="renewPolicy">Renew Policy</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="action" id="underwriteClaim" value="underwrite" required />
+                <input class="form-check-input" type="radio" name="action" id="underwriteClaim" value="Underwrite Claim" required />
                 <label class="form-check-label" for="underwriteClaim">Underwrite Claim</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="action" id="claimAssistance" value="claim_assistance" required />
+                <input class="form-check-input" type="radio" name="action" id="claimAssistance" value="Claim Assistance" required />
                 <label class="form-check-label" for="claimAssistance">Claim Assistance</label>
               </div>
             </div>
             <div class="col-md-6">
               <label for="insuranceType" class="form-label">Insurance Type*</label>
-              <select class="form-select" id="insuranceType" required>
+              <select class="form-select" id="insuranceType" name="insuranceType" required>
                 <option value="" selected disabled>Select Insurance Type</option>
                 <option value="motor">Motor</option>
                 <option value="health">Health</option>
@@ -197,7 +197,7 @@
             <p>Mon - Sat : 11:00 am to 8:30 pm</p>
           </div>
           <div class="map-container" style="max-width: 100%; overflow: hidden; border-radius: 20px; border: 3px solid rgba(240, 173, 0, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3552.8105679623486!2d82.14328497511165!3d22.078887879846384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a280b6b8dd7a907%3A0x1e4110d50ffe1d2a!2sAmbe%20Business%20Centre!5e1!3m2!1sen!2sin!4v1757824876077!5m2!1sen!2sin" width="100%" height="300" style="border:0; border-radius: 17px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3552.8105679623486!2d82.14328497511165!3d22.078887879846384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a280b6b8dd7a907%3A0x1e4110d50ffe1d2a!2sAmbe%20Business%20Centre!5e1!3m2!1sen!2sin" width="100%" height="300" style="border:0; border-radius: 17px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>
@@ -212,42 +212,27 @@
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
 
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const action = document.querySelector('input[name="action"]:checked').value;
-    const insuranceType = document.getElementById('insuranceType').value;
+    const form = event.target;
+    const formData = new FormData(form);
 
-    const message = `First Name: ${firstName}\nLast Name: ${lastName}\nPhone: ${phone}\nEmail: ${email}\nAction: ${action}\nInsurance Type: ${insuranceType}`;
-
-    fetch('/send-email', {
+    fetch('/contact-submission', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        to: 'sparksolutionfreelancing@gmail.com',
-        name: `${firstName} ${lastName}`,
-        email: email,
-        subject: 'Contact Form Submission',
-        message: message
-      })
+      body: formData
     })
     .then(response => response.json())
     .then(data => {
       const messageDiv = document.getElementById('form-message');
       if (data.message) {
-        messageDiv.innerHTML = '<div class="alert alert-success">Email sent successfully!</div>';
-        document.querySelector('form').reset();
+        messageDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+        form.reset();
       } else {
-        messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+        messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + (data.error || 'Unknown error') + '</div>';
       }
       submitButton.disabled = false;
       submitButton.textContent = 'Submit';
     })
     .catch(error => {
-      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error sending email.</div>';
+      document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error submitting the form. Please try again later.</div>';
       submitButton.disabled = false;
       submitButton.textContent = 'Submit';
     });
