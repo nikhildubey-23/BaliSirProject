@@ -62,6 +62,7 @@ def init_mongodb():
         logger.error(f"❌ MongoDB connection failed: {e}")
 
 # Configure Groq API safely
+# WARNING: Hardcoding API keys is a security risk. It is highly recommended to use environment variables instead.
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if GROQ_API_KEY:
     try:
@@ -1189,6 +1190,77 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
     except Exception as e:
         logger.error(f"Error in /contact-submission: {e}")
         return jsonify({"error": "An internal server error occurred."}), 500
+
+@app.route('/api/chat', methods=['POST'])
+def api_chat():
+    """Handles chat messages and gets a response from the Groq AI."""
+    # 1. Check if the Groq client is configured
+    if not client:
+        logger.error("Attempted to use /api/chat but Groq client is not configured.")
+        return jsonify({"error": "AI service is not configured on the server."}), 503
+
+    try:
+        # 2. Get the user's message from the JSON request body
+        data = request.get_json()
+        messages = data.get('messages')
+
+        if not messages:
+            return jsonify({"error": "No messages provided in the request."}), 400
+
+        # 3. Define a generator function to stream the response
+        def generate_chunks():
+            try:
+                # Create a streaming chat completion request to Groq
+                stream = client.chat.completions.create(
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": """You are a friendly and professional AI assistant for 'Bima With Bali', an insurance services company named Bali. Your name is Bali.
+Your primary goal is to answer user questions about the insurance products we offer.
+
+The user has been shown this menu:
+1: Motor Insurance, 2: Health Insurance, 3: Life & Term Insurance, 4: Fire & Property Insurance, 5: Shopkeeper Insurance, 6: Workmen/Employee Insurance, 7: Marine Insurance, 8: Travel Insurance, 9: Miscellaneous Insurance, 10: Claim Support, 0: Talk to Human Expert.
+
+When a user selects a number, respond accordingly:
+- If user selects 1 (Motor): First respond with ONLY: "Zaroor! Aap kaunsa motor insurance chahte hain?\n\nA) Car 🚘\nB) Bike 🏍️\nC) Commercial Vehicle 🚛". After they reply, ask for details with ONLY: "Please share:\n* Vehicle model\n* Registration year\n* Previous policy active? (Yes/No)".
+- If user selects 2 (Health): Respond with ONLY: "Health insurance se medical bills ka stress zero 👍\n\nOptions:\nA) Individual\nB) Family Floater\nC) Senior Citizen\nD) Corporate / Group Mediclaim\n\nPlease share 👇\n\n* Age(s)\n* City\n* Any medical history? (Yes/No)".
+- If user selects 3 (Life/Term): Respond with ONLY: "Family security is priority 💛\n\nPlease share:\n\n* Age\n* Income\n* Tobacco user? (Yes/No)".
+- If user selects 4 (Fire/Property): Respond with ONLY: "Perfect — fire & property insurance assets ko secure karta hai 🔥 🏢\n\nPlease specify:\nA) Home\nB) Office\nC) Factory / Warehouse\nD) Commercial Property\n\nNeed details 👇\n\n* Property type\n* Location\n* Value / square ft area".
+- If user selects 5 (Shopkeeper): Respond with ONLY: "Shop owners ke liye perfect protection 🏪💼\n\nShare details:\n\n* Business type\n* Shop area (sq ft)\n* Location".
+- If user selects 6 (Workmen/Employee): Respond with ONLY: "Employee safety is company strength 🧑‍💼🛠️\n\nWhich cover?\nA) Workmen Compensation (WC)\nB) Employer Liability\nC) Group Personal Accident (GPA)\nD) ESIC/Employee Health cover\n\nRequired:\n\n* No. of employees\n* Nature of work\n* Salary details (approx)".
+- If user selects 7 (Marine): Respond with ONLY: "Goods movement secure karna smart choice 🚚🚢✈️\n\nType choose karein:\nA) Inland Transit\nB) Import / Export\nC) Courier / Logistics Goods\n\nRequired details:\n\n* Goods type\n* Start & end location\n* Invoice value".
+- If user selects 8 (Travel): Respond with ONLY: "Travel tension-free banate hain ✈️😇\n\nPlease share:\n\n* Travel destination\n* Duration\n* Age".
+- If user selects 9 (Miscellaneous): Respond with ONLY: "Hum almost sab cover karte hain 😊\n\nOptions include:\n✅ Home Insurance\n✅ Office Insurance\n✅ Professional Indemnity\n✅ Public Liability\n✅ Cyber Insurance\n✅ Pet Insurance\n✅ Wedding / Event Cancellation\n✅ Burglary\n✅ Electronic Equipment\n✅ Credit / Surety Bonds\n✅ Many More\n\nWrite your requirement 👇".
+- If user selects 10 (Claim Support): Respond with ONLY: "Claim processing support mil jayega 🤝\n\nShare:\n\n* Policy Type\n* Insurance Company\n* Claim Type\n* Your Phone Number\n\nOur expert team will call you 📞".
+- If user selects 0 (Talk to Expert): Respond with ONLY: "Sure! Human expert aapko guide karega 📞\n\nPlease share:\n\n* Name\n* Phone Number".
+- If the user gives a wrong or unclear input, respond with ONLY: "Oops 😅 Yeh option samajh nahi aaya.\nPlease reply with menu number (0–10) ya apna requirement type karein 💬".
+
+General rules:
+- Your name is Bali. You are a friendly and professional AI assistant for 'Bima With Bali'.
+- Follow the instructions for menu selections exactly.
+- Provide clear, helpful information. Do not invent policy details.
+- Communicate directly and do not use special symbols like parentheses unless they are in the instructions.
+- If you don't know an answer, advise the user that an expert will help.
+- When ending a conversation, you can use a closing message like: "Thank you for trusting Bima With Bali 🤗 Humara mission hai — Insurance ko easy, simple & friendly banana. Have a secure day! 🌟 *Bima ho toh Bali ke saath!*".
+"""
+                        }
+                    ] + messages, # Append the conversation history
+                    model="llama-3.1-8b-instant",
+                    stream=True,  # Enable streaming
+                )
+                # Yield each chunk of content as it arrives
+                for chunk in stream:
+                    content = chunk.choices[0].delta.content
+                    if content:
+                        yield content
+            except Exception as e:
+                logger.error(f"Error during Groq stream generation: {e}")
+
+        # 4. Return a streaming response
+        return Response(generate_chunks(), mimetype='text/plain')
+    except Exception as e:
+        logger.error(f"Error in /api/chat: {e}")
+        return jsonify({"error": "An internal error occurred while processing your message."}), 500
 
 @app.route('/uploads/<path:filename>')
 def uploaded_files(filename):
