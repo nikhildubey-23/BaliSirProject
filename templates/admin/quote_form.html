@@ -46,12 +46,9 @@
                                 <label for="policyProvider" class="form-label">Policy Provider</label>
                                 <select class="form-select" id="policyProvider" name="policyProvider" required>
                                     <option value="" selected disabled>Select a provider...</option>
-                                    <option value="Tata AIG">Tata AIG</option>
-                                    <option value="Bajaj Allianz">Bajaj Allianz</option>
-                                    <option value="HDFC ERGO">HDFC ERGO</option>
-                                    <option value="ICICI Lombard">ICICI Lombard</option>
-                                    <option value="United India">United India</option>
-                                    <option value="Other">Other</option>
+                                    {% for provider in providers %}
+                                    <option value="{{ provider }}">{{ provider }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -87,4 +84,32 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const basePremiumInput = document.getElementById('basePremium');
+        const gstInput = document.getElementById('gst');
+        const totalPremiumInput = document.getElementById('totalPremium');
+
+        function calculateTotalPremium() {
+            const basePremium = parseFloat(basePremiumInput.value) || 0;
+            const gst = parseFloat(gstInput.value) || 0;
+
+            if (basePremium > 0) {
+                const totalPremium = basePremium + (basePremium * (gst / 100));
+                totalPremiumInput.value = totalPremium.toFixed(2);
+            } else {
+                totalPremiumInput.value = '';
+            }
+        }
+
+        basePremiumInput.addEventListener('input', calculateTotalPremium);
+        gstInput.addEventListener('input', calculateTotalPremium);
+
+        // Initial calculation in case of pre-filled values
+        calculateTotalPremium();
+    });
+</script>
 {% endblock %}

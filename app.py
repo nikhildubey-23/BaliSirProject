@@ -643,6 +643,11 @@ def admin_logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('admin_login'))
 
+@app.route('/admin/renewals')
+@admin_required
+def admin_renewals():
+    return redirect(url_for('admin_submissions', want_to='renewal'))
+
 @app.route('/admin/submissions')
 @admin_required
 def admin_submissions():
@@ -656,12 +661,15 @@ def admin_submissions():
         search_query = request.args.get('search', '')
         status_filter = request.args.get('status', '')
         insurance_type_filter = request.args.get('insurance_type', '')
+        want_to_filter = request.args.get('want_to', '')
 
         query_filters = {}
         if status_filter:
             query_filters['status'] = status_filter
         if insurance_type_filter:
             query_filters['insurance_type'] = insurance_type_filter
+        if want_to_filter:
+            query_filters['want_to'] = want_to_filter
         
         if search_query:
             search_regex = {'$regex': search_query, '$options': 'i'}
@@ -689,7 +697,7 @@ def admin_submissions():
             'processing': mongo_db.form_submissions.count_documents({'status': 'processing'}),
             'completed': mongo_db.form_submissions.count_documents({'status': 'completed'}),
         }
-        return render_template('admin/submissions.html', submissions=submissions, stats=stats, total_pages=total_pages, current_page=page, filters={'search': search_query, 'status': status_filter, 'insurance_type': insurance_type_filter})
+        return render_template('admin/submissions.html', submissions=submissions, stats=stats, total_pages=total_pages, current_page=page, filters={'search': search_query, 'status': status_filter, 'insurance_type': insurance_type_filter, 'want_to': want_to_filter})
     except Exception as e:
         logger.error(f"Error fetching submissions: {e}")
         flash("An error occurred while fetching submissions.", "danger")
@@ -1010,6 +1018,21 @@ def admin_blog_new():
 
     return render_template('admin/blog_form.html', post=None, title="Create New Post")
 
+
+POLICY_PROVIDERS = [
+    "Acko General Insurance", "Aditya Birla Health Insurance", "Bajaj Allianz General Insurance",
+    "Bharti AXA General Insurance", "Care Health Insurance", "Cholamandalam MS General Insurance",
+    "Digit General Insurance", "Edelweiss General Insurance", "Future Generali India Insurance",
+    "HDFC ERGO General Insurance", "ICICI Lombard General Insurance", "IFFCO Tokio General Insurance",
+    "Kotak Mahindra General Insurance", "Liberty General Insurance", "Magma HDI General Insurance",
+    "National Insurance Company", "Navi General Insurance", "New India Assurance",
+    "Niva Bupa Health Insurance", "Oriental Insurance Company", "Raheja QBE General Insurance",
+    "Reliance General Insurance", "Royal Sundaram General Insurance", "SBI General Insurance",
+    "Shriram General Insurance", "Star Health & Allied Insurance", "Tata AIG General Insurance",
+    "United India Insurance", "Universal Sompo General Insurance", "Zuno General Insurance",
+    "Other"
+]
+
 @app.route('/admin/quotes/new', methods=['GET', 'POST'])
 @admin_required
 def admin_quotes_new():
@@ -1024,10 +1047,90 @@ def admin_quotes_new():
         except Exception as e:
             logger.error(f"Error fetching submission for new quote: {e}")
             flash("Could not load submission data for the quote.", "danger")
-    
-    # For now, this just renders a placeholder page.
-    # POST logic can be added later to save the quote.
-    return render_template('admin/quote_form.html', submission=submission, title="Create New Quote")
+
+    if request.method == 'POST':
+        try:
+            # 1. Get Form Data
+            quote_data = {
+                "customer_name": request.form.get('customerName'),
+                "customer_email": request.form.get('customerEmail'),
+                "insurance_type": request.form.get('insuranceType'),
+                "policy_provider": request.form.get('policyProvider'),
+                "policy_details": request.form.get('policyDetails'),
+                "base_premium": float(request.form.get('basePremium')),
+                "gst": float(request.form.get('gst')),
+                "total_premium": float(request.form.get('totalPremium')),
+                "submission_id": submission_id,
+                "created_date": datetime.now()
+            }
+
+            # 2. Save Quote to Database
+            if mongo_db is not None:
+                mongo_db.quotes.insert_one(quote_data)
+                logger.info("Quote saved to database.")
+            else:
+                flash("Database not configured. Quote not saved.", "warning")
+
+            # 3. Send Email to Customer
+            customer_email = quote_data["customer_email"]
+            if customer_email:
+                msg = MIMEMultipart()
+                msg['From'] = SMTP_USERNAME
+                msg['To'] = customer_email
+                msg['Subject'] = f"Your Insurance Quote from Bima with Bali"
+
+                body = f"""
+<html>
+<head></head>
+<body>
+    <p>Dear {quote_data['customer_name']},</p>
+    <p>Thank you for your interest. Here is your insurance quote:</p>
+    <p>
+        <b>Insurance Type:</b> {quote_data['insurance_type']}<br>
+        <b>Provider:</b> {quote_data['policy_provider']}
+    </p>
+    <h3>Pricing:</h3>
+    <p>
+        <b>Base Premium:</b> ₹{quote_data['base_premium']:.2f}<br>
+        <b>GST:</b> {quote_data['gst']}%<br>
+        <b>Total Premium:</b> ₹{quote_data['total_premium']:.2f}
+    </p>
+    <h3>Policy Details:</h3>
+    <p>{quote_data['policy_details']}</p>
+    <p>If you have any questions or wish to proceed, please contact us.</p>
+    <p>Best regards,<br>The Bima with Bali Team</p>
+</body>
+</html>
+"""
+                msg.attach(MIMEText(body, 'html'))
+
+                try:
+                    logger.info(f"Preparing to send quote email to {customer_email} from {SMTP_USERNAME}")
+                    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30)
+                    logger.info("SMTP server connected.")
+                    server.starttls()
+                    logger.info("TLS started.")
+                    server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                    logger.info("SMTP server logged in.")
+                    server.sendmail(SMTP_USERNAME, customer_email, msg.as_string())
+                    logger.info("Email sent.")
+                    server.quit()
+                    logger.info(f"Quote email sent to {customer_email}")
+                    flash('Quote sent to customer successfully!', 'success')
+                except Exception as email_error:
+                    logger.error(f"Failed to send quote email: {email_error}", exc_info=True)
+                    flash(f"Quote saved, but failed to send email. Please check the server logs for more details.", 'danger')
+            else:
+                flash("No customer email provided. Quote saved but not sent.", "warning")
+
+            return redirect(url_for('admin_submissions'))
+
+        except Exception as e:
+            logger.error(f"Error processing new quote: {e}")
+            flash(f"An error occurred while creating the quote: {e}", 'danger')
+
+    logger.info(f"Rendering quote form with {len(POLICY_PROVIDERS)} providers.")
+    return render_template('admin/quote_form.html', submission=submission, title="Create New Quote", providers=POLICY_PROVIDERS)
 
 @app.route('/admin/api/submissions-over-time')
 @admin_required
