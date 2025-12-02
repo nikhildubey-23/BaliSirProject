@@ -514,15 +514,11 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"""
                     admin_msg.attach(MIMEText(admin_body, 'plain'))
 
                     try:
+                        if not SMTP_USERNAME or not SMTP_PASSWORD:
+                            raise ValueError("SMTP credentials are not configured in environment variables.")
                         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30)
                         server.starttls()
-                        try:
-                            server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                        except Exception as login_err:
-                            app.logger.error(f"SMTP login failed (renewal form): {login_err}")
-                            server.quit()
-                            raise login_err
-
+                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
                         server.sendmail(SMTP_USERNAME, SMTP_USERNAME, admin_msg.as_string())
                         server.quit()
                         app.logger.info("Admin notification sent successfully")
@@ -1106,6 +1102,8 @@ def admin_quotes_new():
 
                 try:
                     logger.info(f"Preparing to send quote email to {customer_email} from {SMTP_USERNAME}")
+                    if not SMTP_USERNAME or not SMTP_PASSWORD:
+                        raise ValueError("SMTP credentials are not configured in environment variables.")
                     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30)
                     logger.info("SMTP server connected.")
                     server.starttls()
@@ -1272,14 +1270,11 @@ Submission Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
             admin_msg.attach(MIMEText(admin_body, 'plain'))
 
             try:
+                if not SMTP_USERNAME or not SMTP_PASSWORD:
+                    raise ValueError("SMTP credentials are not configured in environment variables.")
                 server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30)
                 server.starttls()
-                try:
-                    server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                except Exception as login_err:
-                    logger.error(f"SMTP login failed (contact form notification): {login_err}")
-                    server.quit()
-
+                server.login(SMTP_USERNAME, SMTP_PASSWORD)
                 server.sendmail(SMTP_USERNAME, admin_email, admin_msg.as_string())
                 server.quit()
                 logger.info("Contact form admin notification sent successfully.")
