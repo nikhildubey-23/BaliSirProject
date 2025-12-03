@@ -1,3 +1,4 @@
+import pymongo
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, send_from_directory, session, redirect, url_for, flash, Response
@@ -970,16 +971,79 @@ def admin_form_submission_delete(submission_id):
 @app.route('/admin/blog')
 @admin_required
 def admin_blog():
-    """Admin page for managing blog posts."""
+    """Admin page for managing blog posts with pagination, filters, and sorting."""
     if mongo_db is None:
         flash("Database not configured.", "danger")
-        return render_template('admin/blog_management.html', posts=[])
+        return render_template('admin/blog.html', posts=[], total_count=0, total_pages=1, current_page=1, status_filter='', search_query='', sort_by='created_date', sort_order='desc')
 
-    posts = list(mongo_db.blog_posts.find().sort('created_date', -1))
-    for post in posts:
-        post['id'] = str(post['_id'])
+    try:
+        page = request.args.get('page', 1, type=int)
+        PER_PAGE = 15 # Number of posts per page
+        search_query = request.args.get('search', '')
+        status_filter = request.args.get('status', '')
+        # New sorting parameters
+        sort_by = request.args.get('sort_by', 'created_date') # Default sort by created_date
+        sort_order_str = request.args.get('sort_order', 'desc') # Default sort order descending
 
-    return render_template('admin/blog_management.html', posts=posts)
+        # Convert sort_order_str to pymongo sort order
+        if sort_order_str == 'asc':
+            sort_order = pymongo.ASCENDING
+        else:
+            sort_order = pymongo.DESCENDING # Default to descending
+
+        query_filters = {}
+        if status_filter:
+            query_filters['status'] = status_filter
+        
+        if search_query:
+            search_regex = {'$regex': search_query, '$options': 'i'}
+            query_filters['$or'] = [
+                {'title': search_regex},
+                {'content': search_regex},
+                {'author': search_regex},
+                {'tags': search_regex}
+            ]
+
+        total_posts = mongo_db.blog_posts.count_documents(query_filters)
+        published_posts_count = mongo_db.blog_posts.count_documents({'status': 'published'})
+        draft_posts_count = mongo_db.blog_posts.count_documents({'status': 'draft'})
+        archived_posts_count = mongo_db.blog_posts.count_documents({'status': 'archived'})
+
+        total_pages = (total_posts + PER_PAGE - 1) // PER_PAGE
+        
+        # Ensure current_page is within valid range
+        if page < 1:
+            page = 1
+        elif page > total_pages and total_pages > 0:
+            page = total_pages
+        elif total_pages == 0:
+            page = 1
+
+        posts = list(mongo_db.blog_posts.find(query_filters)
+                           .sort(sort_by, sort_order) # Apply dynamic sorting
+                           .skip((page - 1) * PER_PAGE)
+                           .limit(PER_PAGE))
+        
+        for post in posts:
+            post['id'] = str(post['_id'])
+
+        return render_template('admin/blog.html', 
+                               posts=posts, 
+                               total_count=total_posts,
+                               published_posts_count=published_posts_count,
+                               draft_posts_count=draft_posts_count,
+                               archived_posts_count=archived_posts_count,
+                               total_pages=total_pages, 
+                               current_page=page, 
+                               status_filter=status_filter,
+                               search_query=search_query,
+                               sort_by=sort_by,           # Pass sort_by to template
+                               sort_order=sort_order_str, # Pass sort_order_str to template
+                               request=request) 
+    except Exception as e:
+        logger.error(f"Error fetching blog posts for admin panel: {e}")
+        flash("An error occurred while fetching blog posts.", "danger")
+        return render_template('admin/blog.html', posts=[], total_count=0, published_posts_count=0, draft_posts_count=0, archived_posts_count=0, total_pages=1, current_page=1, status_filter='', search_query='', sort_by='created_date', sort_order='desc')
 
 @app.route('/admin/blog/new', methods=['GET', 'POST'])
 @admin_required
@@ -1013,6 +1077,97 @@ def admin_blog_new():
             flash(f"An error occurred: {e}", 'danger')
 
     return render_template('admin/blog_form.html', post=None, title="Create New Post")
+
+@app.route('/admin/blog/<string:post_id>/edit', methods=['GET', 'POST'])
+@admin_required
+def admin_blog_edit(post_id):
+    """Edit an existing blog post."""
+    if mongo_db is None:
+        flash("Database not configured.", "danger")
+        return redirect(url_for('admin_blog'))
+
+    post = mongo_db.blog_posts.find_one({'_id': ObjectId(post_id)})
+    if not post:
+        flash('Blog post not found.', 'danger')
+        return redirect(url_for('admin_blog'))
+
+    if request.method == 'POST':
+        try:
+            updated_data = {
+                "title": request.form.get('title'),
+                "slug": request.form.get('slug'),
+                "content": request.form.get('content'),
+                "excerpt": request.form.get('excerpt'),
+                "author": request.form.get('author', 'Bima With Bali'),
+                "status": request.form.get('status', 'draft'),
+                "tags": request.form.get('tags'),
+                "featured_image": request.form.get('featured_image'),
+                "meta_description": request.form.get('meta_description'),
+                "updated_date": datetime.now(),
+            }
+            # Update published_date only if status changes to 'published' and it wasn't published before
+            if post.get('status') != 'published' and updated_data['status'] == 'published':
+                updated_data['published_date'] = datetime.now()
+            elif updated_data['status'] != 'published':
+                updated_data['published_date'] = None # Clear published date if not published
+
+            mongo_db.blog_posts.update_one({'_id': ObjectId(post_id)}, {'$set': updated_data})
+            flash('Blog post updated successfully!', 'success')
+            return redirect(url_for('admin_blog'))
+        except Exception as e:
+            logger.error(f"Error updating blog post {post_id}: {e}")
+            flash(f"An error occurred: {e}", 'danger')
+
+    # Convert ObjectId to string for template
+    post['id'] = str(post['_id'])
+    return render_template('admin/blog_form.html', post=post, title="Edit Post")
+
+@app.route('/admin/blog/<string:post_id>/delete', methods=['POST'])
+@admin_required
+def admin_blog_delete(post_id):
+    """Delete a blog post."""
+    if mongo_db is None:
+        return jsonify({"success": False, "message": "Database not configured."}), 500
+    try:
+        result = mongo_db.blog_posts.delete_one({'_id': ObjectId(post_id)})
+        if result.deleted_count == 1:
+            return jsonify({"success": True, "message": "Blog post deleted successfully."}), 200
+        else:
+            return jsonify({"success": False, "message": "Blog post not found."}), 404
+    except Exception as e:
+        logger.error(f"Error deleting blog post {post_id}: {e}")
+        return jsonify({"success": False, "message": "An error occurred while deleting the post."}), 500
+
+@app.route('/admin/blog/<string:post_id>/status', methods=['POST'])
+@admin_required
+def admin_blog_status(post_id):
+    """Update the status of a blog post."""
+    if mongo_db is None:
+        return jsonify({"success": False, "message": "Database not configured."}), 500
+    try:
+        data = request.get_json()
+        new_status = data.get('status')
+        if new_status not in ['draft', 'published', 'archived']:
+            return jsonify({"success": False, "message": "Invalid status provided."}), 400
+
+        update_data = {
+            "status": new_status,
+            "updated_date": datetime.now()
+        }
+        # Update published_date if status changes to 'published', otherwise clear it
+        if new_status == 'published':
+            update_data['published_date'] = datetime.now()
+        else:
+            update_data['published_date'] = None 
+
+        result = mongo_db.blog_posts.update_one({'_id': ObjectId(post_id)}, {'$set': update_data})
+        if result.matched_count == 1:
+            return jsonify({"success": True, "message": f"Blog post status updated to {new_status}."}), 200
+        else:
+            return jsonify({"success": False, "message": "Blog post not found."}), 404
+    except Exception as e:
+        logger.error(f"Error updating status for blog post {post_id}: {e}")
+        return jsonify({"success": False, "message": "An error occurred while updating the post status."}), 500
 
 
 POLICY_PROVIDERS = [

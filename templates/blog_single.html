@@ -22,9 +22,9 @@
                         <div class="me-4">
                             <i class="fas fa-calendar-alt me-2"></i>
                             {% if post.published_date %}
-                                {{ post.published_date[:10] }}
+                                {{ post.published_date | format_datetime('%Y-%m-%d') }}
                             {% else %}
-                                {{ post.created_date[:10] }}
+                                {{ post.created_date | format_datetime('%Y-%m-%d') }}
                             {% endif %}
                         </div>
                         <div class="me-4">

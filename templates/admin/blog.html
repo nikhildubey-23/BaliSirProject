@@ -39,6 +39,13 @@
                         </select>
                     </div>
                     <div class="col-md-4">
+                        <label for="sortOrder" class="form-label">Sort Order</label>
+                        <select name="sort_order" id="sortOrder" class="form-select">
+                            <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Newest First</option>
+                            <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Oldest First</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
                         <label for="search" class="form-label">Search</label>
                         <input type="text" name="search" id="search" class="form-control" 
                                placeholder="Title or content..." value="{{ search_query }}">
@@ -82,7 +89,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <h6 class="card-title">Published</h6>
-                            <h3 class="mb-0">{{ status_filter == 'published' and total_count or '0' }}</h3>
+                            <h3 class="mb-0">{{ published_posts_count }}</h3>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-globe fa-2x"></i>
@@ -97,7 +104,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <h6 class="card-title">Drafts</h6>
-                            <h3 class="mb-0">{{ status_filter == 'draft' and total_count or '0' }}</h3>
+                            <h3 class="mb-0">{{ draft_posts_count }}</h3>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-edit fa-2x"></i>
@@ -112,7 +119,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <h6 class="card-title">Archived</h6>
-                            <h3 class="mb-0">{{ status_filter == 'archived' and total_count or '0' }}</h3>
+                            <h3 class="mb-0">{{ archived_posts_count }}</h3>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-archive fa-2x"></i>
@@ -151,7 +158,10 @@
                                 <div>
                                     <strong>{{ post.title }}</strong>
                                     {% if post.excerpt %}
-                                    <br><small class="text-muted">{{ post.excerpt[:100] }}{% if post.excerpt|length > 100 %}...{% endif %}</small>
+                                    <br><small class="text-muted">
+                                        {% set display_excerpt = post.excerpt|string %}
+                                        {{ display_excerpt[:100] }}{% if display_excerpt|length > 100 %}...{% endif %}
+                                    </small>
                                     {% endif %}
                                 </div>
                             </td>
@@ -168,11 +178,11 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <small>{{ post.created_date }}</small>
+                                <small>{{ post.created_date | format_datetime }}</small>
                             </td>
                             <td>
                                 {% if post.published_date %}
-                                    <small>{{ post.published_date }}</small>
+                                    <small>{{ post.published_date | format_datetime }}</small>
                                 {% else %}
                                     <span class="text-muted">-</span>
                                 {% endif %}
@@ -195,22 +205,22 @@
                                         <ul class="dropdown-menu">
                                             {% if post.status != 'published' %}
                                             <li><a class="dropdown-item" href="#" 
-                                                   onclick="updateStatus({{ post.id }}, 'published')">
+                                                   onclick="updateStatus('{{ post.id }}', 'published')">
                                                    <i class="fas fa-globe"></i> Publish</a></li>
                                             {% endif %}
                                             {% if post.status != 'draft' %}
                                             <li><a class="dropdown-item" href="#" 
-                                                   onclick="updateStatus({{ post.id }}, 'draft')">
+                                                   onclick="updateStatus('{{ post.id }}', 'draft')">
                                                    <i class="fas fa-edit"></i> Draft</a></li>
                                             {% endif %}
                                             {% if post.status != 'archived' %}
                                             <li><a class="dropdown-item" href="#" 
-                                                   onclick="updateStatus({{ post.id }}, 'archived')">
+                                                   onclick="updateStatus('{{ post.id }}', 'archived')">
                                                    <i class="fas fa-archive"></i> Archive</a></li>
                                             {% endif %}
                                             <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item text-danger" href="#" 
-                                                   onclick="deletePost({{ post.id }})">
+                                                   onclick="deletePost('{{ post.id }}')">
                                                    <i class="fas fa-trash"></i> Delete</a></li>
                                         </ul>
                                     </div>

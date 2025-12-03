@@ -29,9 +29,9 @@
               <img src="{{ url_for('static', filename='image/logo.avif') }}" alt="Author" class="rounded-circle me-2" style="width: 30px; height: 30px;" />
               <small class="text-muted">{{ post.author or 'bimawithbali' }} ·
                 {% if post.published_date %}
-                  {{ post.published_date[:10] }}
+                  {{ post.published_date | format_datetime('%Y-%m-%d') }}
                 {% else %}
-                  {{ post.created_date[:10] }}
+                  {{ post.created_date | format_datetime('%Y-%m-%d') }}
                 {% endif %}
                 · {{ (post.content|length // 200) + 1 }} min read
               </small>
@@ -42,7 +42,10 @@
               </div>
             </div>
             <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.excerpt or post.content[:100] + '...' }}</p>
+            <p class="card-text">
+                {% set display_text = post.excerpt|string if post.excerpt else post.content|string %}
+                {{ display_text[:100] }}{% if display_text|length > 100 %}...{% endif %}
+            </p>
             {% if post.tags %}
             <div class="mt-2">
               {% for tag in post.tags.split(',')[:2] %}
@@ -58,11 +61,10 @@
   </div>
   {% endif %}
 
-  <!-- Static Blog Posts (Fallback) -->
-  {% if not posts %}
+  <!-- Static Blog Posts -->
   <div class="row g-4 mt-5">
     <div class="col-12">
-      <h2 class="mb-4">{% if posts %}More Articles{% else %}Featured Articles{% endif %}</h2>
+      <h2 class="mb-4">Featured Articles</h2>
     </div>
     <!-- Card 1 -->
     <div class="col-md-4">
@@ -696,7 +698,6 @@
         </div>
       </a>
     </div>
-    <!-- Card 30 -->
     <div class="col-md-4">
       <a href="{{ url_for('blog_b30') }}" class="text-decoration-none text-dark">
         <div class="card h-100 shadow-sm">
@@ -717,7 +718,5 @@
         </div>
       </a>
     </div>
-  </div>
-  {% endif %}
-</div>
+
 {% endblock %}
