@@ -37,7 +37,7 @@
 
         <div class="col-md-6">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email">
+          <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="col-md-6">
           <label for="phone" class="form-label">Phone*</label>
@@ -72,7 +72,7 @@
         <!-- Aadhaar Field - shown after insurance type selection -->
         <div class="col-md-6" id="aadhaarContainer" style="display: none;">
           <label for="aadhaar" class="form-label">Aadhaar Number</label>
-          <input type="text" class="form-control" id="aadhaar" name="aadhaar" pattern="[0-9]{12}" maxlength="12" placeholder="Enter 12-digit Aadhaar number">
+          <input type="text" class="form-control" id="aadhaar" name="aadhaar" pattern="[0-9]{12}" maxlength="12" placeholder="Enter 12-digit Aadhaar number" required>
         </div>
 
         <!-- Dynamic Fields -->
@@ -103,7 +103,7 @@
               </div>
               <div class="col-md-6">
                 <label for="preExistingDisease" class="form-label">Pre-existing Disease</label>
-                <input type="text" class="form-control" id="preExistingDisease" name="preExistingDisease">
+                <input type="text" class="form-control" id="preExistingDisease" name="preExistingDisease" required>
               </div>
             </div>
           </div>
@@ -113,15 +113,15 @@
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="travelCountry" class="form-label">Country</label>
-                <input type="text" class="form-control" id="travelCountry" name="travelCountry">
+                <input type="text" class="form-control" id="travelCountry" name="travelCountry" required>
               </div>
               <div class="col-md-4">
                 <label for="travelDuration" class="form-label">Duration (days)</label>
-                <input type="number" class="form-control" id="travelDuration" name="travelDuration">
+                <input type="number" class="form-control" id="travelDuration" name="travelDuration" required>
               </div>
               <div class="col-md-4">
                 <label for="travelAge" class="form-label">Age</label>
-                <input type="number" class="form-control" id="travelAge" name="travelAge">
+                <input type="number" class="form-control" id="travelAge" name="travelAge" required>
               </div>
             </div>
           </div>
@@ -131,11 +131,11 @@
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="commodityType" class="form-label">Type of Commodity</label>
-                <input type="text" class="form-control" id="commodityType" name="commodityType">
+                <input type="text" class="form-control" id="commodityType" name="commodityType" required>
               </div>
               <div class="col-md-4">
                 <label for="transportMode" class="form-label">Mode of Transport</label>
-                <select class="form-select" id="transportMode" name="transportMode">
+                <select class="form-select" id="transportMode" name="transportMode" required>
                   <option value="" selected disabled>Select Mode</option>
                   <option value="sea">Sea</option>
                   <option value="air">Air</option>
@@ -144,7 +144,7 @@
               </div>
               <div class="col-md-4">
                 <label for="preCarryingUnit" class="form-label">Pre-carrying Unit</label>
-                <input type="text" class="form-control" id="preCarryingUnit" name="preCarryingUnit">
+                <input type="text" class="form-control" id="preCarryingUnit" name="preCarryingUnit" required>
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="businessNature" class="form-label">Nature of Business</label>
-                <input type="text" class="form-control" id="businessNature" name="businessNature">
+                <input type="text" class="form-control" id="businessNature" name="businessNature" required>
               </div>
               <div class="col-md-4">
                 <label for="previousPolicyShopkeeper" class="form-label">Previous Policy Document <small class="text-muted">(Max 5MB)</small></label>
@@ -163,7 +163,7 @@
               </div>
               <div class="col-md-4">
                 <label for="claimOccurred" class="form-label">Claim Occurred</label>
-                <select class="form-select" id="claimOccurred" name="claimOccurred">
+                <select class="form-select" id="claimOccurred" name="claimOccurred" required>
                   <option value="" selected disabled>Select</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
@@ -177,15 +177,15 @@
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="numberOfMembers" class="form-label">Number of Members</label>
-                <input type="number" class="form-control" id="numberOfMembers" name="numberOfMembers">
+                <input type="number" class="form-control" id="numberOfMembers" name="numberOfMembers" required>
               </div>
               <div class="col-md-4">
                 <label for="salary" class="form-label">Salary</label>
-                <input type="number" class="form-control" id="salary" name="salary">
+                <input type="number" class="form-control" id="salary" name="salary" required>
               </div>
               <div class="col-md-4">
                 <label for="workNature" class="form-label">Nature of Work</label>
-                <input type="text" class="form-control" id="workNature" name="workNature">
+                <input type="text" class="form-control" id="workNature" name="workNature" required>
               </div>
             </div>
           </div>
@@ -195,19 +195,19 @@
             <div class="row g-3">
               <div class="col-md-3">
                 <label for="sumInsured" class="form-label">Sum Insured</label>
-                <input type="number" class="form-control" id="sumInsured" name="sumInsured">
+                <input type="number" class="form-control" id="sumInsured" name="sumInsured" required>
               </div>
               <div class="col-md-3">
                 <label for="locality" class="form-label">Locality</label>
-                <input type="text" class="form-control" id="locality" name="locality">
+                <input type="text" class="form-control" id="locality" name="locality" required>
               </div>
               <div class="col-md-3">
                 <label for="pincode" class="form-label">Pincode</label>
-                <input type="number" class="form-control" id="pincode" name="pincode">
+                <input type="number" class="form-control" id="pincode" name="pincode" required>
               </div>
               <div class="col-md-3">
                 <label for="occupancy" class="form-label">Occupancy</label>
-                <input type="text" class="form-control" id="occupancy" name="occupancy">
+                <input type="text" class="form-control" id="occupancy" name="occupancy" required>
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="typeOfInsurance" class="form-label">Type of Insurance</label>
-                <input type="text" class="form-control" id="typeOfInsurance" name="typeOfInsurance">
+                <input type="text" class="form-control" id="typeOfInsurance" name="typeOfInsurance" required>
               </div>
               <div class="col-md-6">
                 <label for="previousPolicyOthers" class="form-label">Previous Policy Copy <small class="text-muted">(Max 5MB)</small></label>
@@ -237,25 +237,44 @@
   </div>
 </section>
 <script>
-  console.log('Script loaded');
-
   document.getElementById('insuranceType').addEventListener('change', function() {
     const selectedType = this.value;
     const groups = document.querySelectorAll('.dynamic-group');
-    groups.forEach(group => group.style.display = 'none');
+    
+    // Hide all dynamic groups and remove 'required' attribute from their inputs
+    groups.forEach(group => {
+      group.style.display = 'none';
+      const inputs = group.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        if (input.type !== 'file') {
+          input.required = false;
+        }
+      });
+    });
 
     // Show Aadhaar field when insurance type is selected
     const aadhaarContainer = document.getElementById('aadhaarContainer');
     if (selectedType) {
       aadhaarContainer.style.display = 'block';
-      document.getElementById(selectedType + 'Fields').style.display = 'block';
+      document.getElementById('aadhaar').required = true;
+      
+      const selectedGroup = document.getElementById(selectedType + 'Fields');
+      if (selectedGroup) {
+        selectedGroup.style.display = 'block';
+        const selectedInputs = selectedGroup.querySelectorAll('input, select');
+        selectedInputs.forEach(input => {
+          if (input.type !== 'file') {
+            input.required = true;
+          }
+        });
+      }
     } else {
       aadhaarContainer.style.display = 'none';
+      document.getElementById('aadhaar').required = false;
     }
   });
 
   const renewalForm = document.getElementById('renewalForm');
-  console.log('Form element:', renewalForm);
 
   // File size validation function
   function validateFileSize(input) {
@@ -287,16 +306,14 @@
     input.addEventListener('change', function() {
       validateFileSize(this);
     });
+    input.required = false; // Explicitly make file inputs not required
   });
 
   renewalForm.addEventListener('submit', function(event) {
-    console.log('Form submit event triggered');
     event.preventDefault();
-    console.log('Default prevented');
 
     // Check if form is valid
     if (!renewalForm.checkValidity()) {
-      console.log('Form is not valid');
       renewalForm.reportValidity();
       return;
     }
@@ -305,36 +322,28 @@
     let fileSizeValid = true;
     const fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach(input => {
-      if (!validateFileSize(input)) {
+      if (input.files.length > 0 && !validateFileSize(input)) {
         fileSizeValid = false;
       }
     });
 
     if (!fileSizeValid) {
-      console.log('File size validation failed');
       document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Please ensure all uploaded files are smaller than 5MB.</div>';
       return;
     }
 
-    console.log('Form is valid, proceeding...');
-
     const submitButton = document.querySelector('#renewalForm button[type="submit"]');
-    console.log('Submit button found:', submitButton);
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
-    console.log('Button disabled and text changed');
 
     const form = event.target;
     const formData = new FormData(form);
 
-    // Log form data for debugging
     // The backend will read all fields directly from the FormData object.
-    // No need to manually construct a message string here.
     formData.append('name', formData.get('firstName') + ' ' + formData.get('lastName'));
     formData.append('subject', 'Renewal Form Submission - ' + formData.get('insuranceType'));
     formData.append('message', 'This is a renewal form submission. Please see attached data.');
 
-    console.log('About to fetch /send-email');
     fetch('/send-email', {
       method: 'POST',
       body: formData,
@@ -343,33 +352,26 @@
       }
     })
     .then(response => {
-      console.log('Response received, status:', response.status);
-      console.log('Response headers:', response.headers);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     })
     .then(data => {
-      console.log('Response data:', data);
       const messageDiv = document.getElementById('form-message');
       if (data.message) {
-        console.log('Success: showing success message');
         messageDiv.innerHTML = '<div class="alert alert-success">Renewal form submitted successfully! Our team will contact you shortly.</div>';
         form.reset();
         // Hide dynamic fields after reset
         document.querySelectorAll('.dynamic-group').forEach(group => group.style.display = 'none');
         document.getElementById('aadhaarContainer').style.display = 'none';
       } else if (data.error) {
-        console.log('Error: showing error message');
         messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
       }
-      console.log('Re-enabling submit button');
       submitButton.disabled = false;
       submitButton.textContent = 'Submit';
     })
     .catch(error => {
-      console.error('Fetch error:', error);
       document.getElementById('form-message').innerHTML = '<div class="alert alert-danger">Error: ' + error.message + '</div>';
       submitButton.disabled = false;
       submitButton.textContent = 'Submit';
