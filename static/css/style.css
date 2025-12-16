@@ -850,8 +850,8 @@ html, body {
 }
 
 .cube {
-  width: 25vw;
-  height: 25vw;
+  width: 20vw;
+  height: 20vw;
   position: relative;
   transform-style: preserve-3d;
   animation: rotateCube 10s infinite linear;
@@ -866,7 +866,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #000;
   text-align: center;
@@ -874,12 +874,12 @@ html, body {
   box-sizing: border-box;
 }
 
-.front { transform: translateZ(calc(25vw / 2)); }
-.back { transform: rotateY(180deg) translateZ(calc(25vw / 2)); }
-.right { transform: rotateY(90deg) translateZ(calc(25vw / 2)); }
-.left { transform: rotateY(-90deg) translateZ(calc(25vw / 2)); }
-.top { transform: rotateX(90deg) translateZ(calc(25vw / 2)); }
-.bottom { transform: rotateX(-90deg) translateZ(calc(25vw / 2)); }
+.front { transform: translateZ(calc(20vw / 2)); }
+.back { transform: rotateY(180deg) translateZ(calc(20vw / 2)); }
+.right { transform: rotateY(90deg) translateZ(calc(20vw / 2)); }
+.left { transform: rotateY(-90deg) translateZ(calc(20vw / 2)); }
+.top { transform: rotateX(90deg) translateZ(calc(20vw / 2)); }
+.bottom { transform: rotateX(-90deg) translateZ(calc(20vw / 2)); }
 
 @keyframes rotateCube {
   0% { transform: rotateX(0deg) rotateY(0deg); }

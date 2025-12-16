@@ -1206,6 +1206,68 @@
     }
 }
 </style>
+<div class="container-fluid py-5 fade-in">
+    <h2 class="text-center display-4 fw-bold mb-4">
+        Partners in <span style="color: #ffb800">Service</span>
+    </h2>
+    <div class="partners-names-container">
+        <div class="partners-names">
+            <span class="partner-name">SBALI</span>
+            <span class="partner-name">HBEDI</span>
+            <span class="partner-name">SWARN H</span>
+            <span class="partner-name">SIMMI</span>
+            <span class="partner-name">A GHOSH</span>
+            <span class="partner-name">JOLLY</span>
+            <span class="partner-name">DIGVIJAY</span>
+            <span class="partner-name">CERTIGO BROKERS</span>
+            <span class="partner-name">TARIKA</span>
+            <span class="partner-name">GEETANJALI</span>
+            <span class="partner-name">SIMRAN S MAKKAR</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="partner-name">SBALI</span>
+            <span class="partner-name">HBEDI</span>
+            <span class="partner-name">SWARN H</span>
+            <span class="partner-name">SIMMI</span>
+            <span class="partner-name">A GHOSH</span>
+            <span class="partner-name">JOLLY</span>
+            <span class="partner-name">DIGVIJAY</span>
+            <span class="partner-name">CERTIGO BROKERS</span>
+            <span class="partner-name">TARIKA</span>
+            <span class="partner-name">GEETANJALI</span>
+            <span class="partner-name">SIMRAN S MAKKAR</span>
+        </div>
+    </div>
+</div>
+<style>
+.partners-names-container {
+    overflow: hidden;
+    width: 100%;
+}
+.partners-names {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    animation: scroll-left 40s linear infinite;
+    width: max-content; /* Let the container grow with the content */
+    gap: 40px;
+}
+.partner-name {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap; /* Prevent names from wrapping */
+}
+@media (max-width: 768px) {
+    .partners-names {
+        gap: 30px;
+        animation-duration: 30s;
+    }
+    .partner-name {
+        font-size: 1.2rem;
+    }
+}
+</style>
 <div class="text-center mt-1">
     <img
         src="{{ url_for('static', filename='image/publiclogo.avif') }}"
