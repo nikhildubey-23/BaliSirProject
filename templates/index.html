@@ -964,56 +964,62 @@
     </h2>
     <div class="row g-4">
         <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <img
-                        src="{{ url_for('static', filename='image/buynewpolicy.avif') }}"
-                        alt="Buy new policy"
-                        class="card-img-top rounded-circle mb-3 service-card-img"
-                    />
-                    <h4 class="card-title fw-bold"><u>Buy new policy</u></h4>
-                    <p class="card-text text-muted">
-                        Buying insurance doesn't have to be boring. Let's
-                        simplify your policy purchase with expert tips and zero
-                        jargon.
-                    </p>
+            <a href="{{ url_for('contact') }}" class="card-link">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <img
+                            src="{{ url_for('static', filename='image/buynewpolicy.avif') }}"
+                            alt="Buy new policy"
+                            class="card-img-top rounded-circle mb-3 service-card-img"
+                        />
+                        <h4 class="card-title fw-bold"><u>Buy new policy</u></h4>
+                        <p class="card-text text-muted">
+                            Buying insurance doesn't have to be boring. Let's
+                            simplify your policy purchase with expert tips and zero
+                            jargon.
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <img
-                        src="{{ url_for('static', filename='image/renewpolicy.avif') }}"
-                        alt="Renew policy"
-                        class="card-img-top rounded-circle mb-3 service-card-img"
-                    />
-                    <h4 class="card-title fw-bold"><u>Renew policy</u></h4>
-                    <p class="card-text text-muted">
-                        No queues. No chaos. Just quick renewals. Trust us to
-                        keep your policy active with zero hassle.
-                    </p>
+            <a href="{{ url_for('renewal') }}" class="card-link">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <img
+                            src="{{ url_for('static', filename='image/renewpolicy.avif') }}"
+                            alt="Renew policy"
+                            class="card-img-top rounded-circle mb-3 service-card-img"
+                        />
+                        <h4 class="card-title fw-bold"><u>Renew policy</u></h4>
+                        <p class="card-text text-muted">
+                            No queues. No chaos. Just quick renewals. Trust us to
+                            keep your policy active with zero hassle.
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <img
-                        src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}"
-                        alt="Underwriting & claim"
-                        class="card-img-top rounded-circle mb-3 service-card-img"
-                    />
-                    <h4 class="card-title fw-bold">
-                        <u>Underwriting & claim</u>
-                    </h4>
-                    <p class="card-text text-muted">
-                        Underwriting and claims made simple. Get clear insights,
-                        quick support, and no complicated terms. Just the
-                        coverage you need, stress-free.
-                    </p>
+            <a href="{{ url_for('contact') }}" class="card-link">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <img
+                            src="{{ url_for('static', filename='image/underwritingandclaim.avif') }}"
+                            alt="Underwriting & claim"
+                            class="card-img-top rounded-circle mb-3 service-card-img"
+                        />
+                        <h4 class="card-title fw-bold">
+                            <u>Underwriting & claim</u>
+                        </h4>
+                        <p class="card-text text-muted">
+                            Underwriting and claims made simple. Get clear insights,
+                            quick support, and no complicated terms. Just the
+                            coverage you need, stress-free.
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
