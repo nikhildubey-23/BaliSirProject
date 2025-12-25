@@ -17,6 +17,8 @@ import sqlite3
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 # Load environment variables from .env file
 load_dotenv()
@@ -29,6 +31,17 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'bali_admin_secret_key_2024')
 app.permanent_session_lifetime = timedelta(hours=24)
+
+# Mail configuration - support both MAIL_* and SMTP_* variables
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER') or os.getenv('SMTP_HOST')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT') or os.getenv('SMTP_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'true').lower() in ['true', '1', 't']
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME') or os.getenv('SMTP_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD') or os.getenv('SMTP_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER') or os.getenv('SMTP_USERNAME')
+
+mail = Mail(app)
+s = URLSafeTimedSerializer(app.secret_key)
 
 # Set file upload limits (16MB max per request, 5MB per file)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
@@ -78,13 +91,57 @@ else:
 
 # Admin credentials
 ADMIN_USERNAME = "bali"
-ADMIN_PASSWORD_HASH = generate_password_hash("bali@123")
+# Load password hash from .env, or generate default if not present
+env_password_hash = os.getenv('ADMIN_PASSWORD_HASH')
+if env_password_hash:
+    ADMIN_PASSWORD_HASH = env_password_hash
+else:
+    # Default password hash for initial setup
+    ADMIN_PASSWORD_HASH = generate_password_hash("bali@123")
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', os.getenv('FORGET_PASSWORD_EMAIL', 'admin@example.com'))
 
-# Email server configuration (with error handling)
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = int(os.getenv('SMTP_PORT', 587))
-SMTP_USERNAME = os.getenv('SMTP_USERNAME')
-SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
+def update_env_file(key, value):
+    """Update a key-value pair in the .env file"""
+    env_path = '.env'
+    if not os.path.exists(env_path):
+        logger.error(f".env file not found at {env_path}")
+        return False
+    
+    try:
+        # Read the current .env file
+        with open(env_path, 'r') as f:
+            lines = f.readlines()
+        
+        # Update or add the key-value pair
+        key_found = False
+        updated_lines = []
+        for line in lines:
+            # Handle lines with or without spaces around =
+            if line.strip().startswith(f'{key}=') or line.strip().startswith(f'{key} ='):
+                updated_lines.append(f'{key}={value}\n')
+                key_found = True
+            else:
+                updated_lines.append(line)
+        
+        # If key not found, add it at the end
+        if not key_found:
+            updated_lines.append(f'{key}={value}\n')
+        
+        # Write back to .env file
+        with open(env_path, 'w') as f:
+            f.writelines(updated_lines)
+        
+        logger.info(f"Successfully updated {key} in .env file")
+        return True
+    except Exception as e:
+        logger.error(f"Error updating .env file: {e}")
+        return False
+
+# Email server configuration (with error handling) - support both MAIL_* and SMTP_* variables
+SMTP_SERVER = os.getenv('MAIL_SERVER') or os.getenv('SMTP_HOST')
+SMTP_PORT = int(os.getenv('MAIL_PORT') or os.getenv('SMTP_PORT', 587))
+SMTP_USERNAME = os.getenv('MAIL_USERNAME') or os.getenv('SMTP_USERNAME')
+SMTP_PASSWORD = os.getenv('MAIL_PASSWORD') or os.getenv('SMTP_PASSWORD')
 
 # Authentication decorator
 def admin_required(f):
@@ -639,6 +696,69 @@ def admin_logout():
     session.pop('admin_logged_in', None)
     flash('You have been logged out.', 'success')
     return redirect(url_for('admin_login'))
+
+@app.route('/admin/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        # Check if the email matches the admin email from .env file
+        if email == ADMIN_EMAIL:
+            try:
+                token = s.dumps(email, salt='password-reset-salt')
+                msg = Message('Password Reset Request', recipients=[email])
+                link = url_for('reset_password', token=token, _external=True)
+                msg.body = f'Your link to reset your password is {link}'
+                mail.send(msg)
+                flash('A password reset link has been sent to your email.', 'success')
+                return redirect(url_for('admin_login'))
+            except Exception as e:
+                logger.error(f"Error sending password reset email: {e}")
+                flash('Failed to send password reset email. Please try again.', 'danger')
+        else:
+            flash('Email address not found.', 'danger')
+    return render_template('admin/forgot_password.html')
+
+@app.route('/admin/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    global ADMIN_PASSWORD_HASH
+    
+    try:
+        email = s.loads(token, salt='password-reset-salt', max_age=3600)
+    except SignatureExpired:
+        flash('The password reset link has expired.', 'danger')
+        return redirect(url_for('forgot_password'))
+    except:
+        flash('The password reset link is invalid.', 'danger')
+        return redirect(url_for('forgot_password'))
+
+    if request.method == 'POST':
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return render_template('admin/reset_password.html', token=token)
+
+        # Generate new password hash
+        new_password_hash = generate_password_hash(password)
+        
+        # Update .env file with new password hash
+        if update_env_file('ADMIN_PASSWORD_HASH', new_password_hash):
+            # Reload environment variables
+            load_dotenv(override=True)
+            # Update global variable
+            ADMIN_PASSWORD_HASH = new_password_hash
+            flash('Your password has been updated successfully.', 'success')
+            logger.info("Password reset successful and saved to .env file")
+        else:
+            flash('Password was updated temporarily, but failed to save to .env file. Please contact administrator.', 'warning')
+            # Still update the global variable so it works until server restart
+            ADMIN_PASSWORD_HASH = new_password_hash
+        
+        return redirect(url_for('admin_login'))
+
+    return render_template('admin/reset_password.html', token=token)
+
 
 @app.route('/admin/renewals')
 @admin_required
